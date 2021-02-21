@@ -1,5 +1,5 @@
 """Assorted auxiliary functions"""
-from datetime import datetime
+from datetime import datetime, date
 
 
 def maybe_parse_date_entries(key, value):
@@ -11,6 +11,11 @@ def maybe_parse_date_entries(key, value):
     if key in ['departing_at', 'arriving_at', 'departure_datetime', 'arrival_datetime']:
         return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
 
+    if key in ['departure_date', 'born_on']:
+        # Once we no longer support python 3.6 we can replace these two lines with:
+        # date.fromisoformat(value)
+        t = datetime.strptime(value, '%Y-%m-%d')
+        return date(t.year, t.month, t.day)
     return value
 
 

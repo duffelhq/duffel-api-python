@@ -1,5 +1,3 @@
-from datetime import date
-
 from ..models import Aircraft, Airline, Passenger, Place
 from ..utils import maybe_parse_date_entries
 
@@ -87,10 +85,8 @@ class OfferSlice:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
-            if key == 'departure_date':
-                value = date.fromisoformat(value)
-            elif key in ['destination', 'origin']:
+            value = maybe_parse_date_entries(key, json[key])
+            if key in ['destination', 'origin']:
                 value = Place(value)
             elif key in ['destination_type', 'origin_type']:
                 if value not in OfferSlice.allowed_place_types:

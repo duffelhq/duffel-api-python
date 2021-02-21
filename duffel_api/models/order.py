@@ -1,5 +1,3 @@
-from datetime import date
-
 from ..models import Airline, Place, Aircraft
 from ..utils import maybe_parse_date_entries
 
@@ -33,10 +31,8 @@ class OrderSlice:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
-            if key == 'departure_date':
-                value = date.fromisoformat(value)
-            elif key in ['destination', 'origin']:
+            value = maybe_parse_date_entries(key, json[key])
+            if key in ['destination', 'origin']:
                 value = Place(value)
             elif key in ['destination_type', 'origin_type']:
                 if value not in OrderSlice.allowed_place_types:
@@ -177,10 +173,8 @@ class OrderPassenger:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
-            if key == 'born_on':
-                value = date.fromisoformat(value)
-            elif key == 'gender' and value.lower() not in OrderPassenger.allowed_genders:
+            value = maybe_parse_date_entries(key, json[key])
+            if key == 'gender' and value.lower() not in OrderPassenger.allowed_genders:
                 raise OrderPassenger.InvalidGender(value)
             elif key == 'title' and value.lower() not in OrderPassenger.allowed_titles:
                 raise OrderPassenger.InvalidTitle(value)
