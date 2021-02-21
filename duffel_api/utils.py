@@ -12,3 +12,8 @@ def maybe_parse_date_entries(key, value):
         return datetime.strptime(value, '%Y-%m-%dT%H:%M:%S')
 
     return value
+
+
+def version():
+    import pkg_resources
+    return pkg_resources.require("duffel_api")[0].version

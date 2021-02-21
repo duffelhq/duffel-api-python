@@ -2,6 +2,8 @@
 import os
 from requests import Session, Request, codes as http_codes
 
+from .utils import version
+
 
 class ClientError(Exception):
     """An error originated from the client"""
@@ -63,6 +65,9 @@ class HttpClient:
         if url is not None:
             HttpClient.URL = url
         self.http_session = Session()
+
+        user_agent = f'Duffel/{HttpClient.VERSION} duffel_api_python/{version()}'
+        self.http_session.headers.update({'User-Agent': user_agent})
         self.http_session.headers.update({'Duffel-Version': HttpClient.VERSION})
 
         if not api_token:
