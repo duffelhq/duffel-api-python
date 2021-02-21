@@ -6,48 +6,63 @@ class Duffel:
     """Entry point to the Duffel library"""
 
     def __init__(self, **kwargs):
-        self._aircraft_api = AircraftClient(**kwargs)
-        self._airports_api = AirportClient(**kwargs)
-        self._airlines_api = AirlineClient(**kwargs)
-        self._offer_requests_api = OfferRequestClient(**kwargs)
-        self._offers_api = OfferClient(**kwargs)
-        self._orders_api = OrderClient(**kwargs)
-        self._order_cancellations_api = OrderCancellationClient(**kwargs)
-        self._payments_api = PaymentClient(**kwargs)
-        self._seat_maps_api = SeatMapClient(**kwargs)
+        # TODO(nlopes): I really don't like how I've built this- we shouldn't keep
+        # instantiating the HttpClient through class inheritance.
+        # We should (maybe!) have a singleton pattern on HttpClient and use
+        # composition in all of these instead.
+        self._kwargs = kwargs
 
     @property
     def aircraft(self):
-        return self._aircraft_api
+        if not hasattr(self, 'aircraft_client'):
+            setattr(self, 'aircraft_client', AircraftClient(**self._kwargs))
+        return self.aircraft_client
 
     @property
     def airports(self):
-        return self._airports_api
+        if not hasattr(self, 'airport_client'):
+            setattr(self, 'airport_client', AirportClient(**self._kwargs))
+        return self.airport_client
 
     @property
     def airlines(self):
-        return self._airlines_api
+        if not hasattr(self, 'airline_client'):
+            setattr(self, 'airline_client', AirlineClient(**self._kwargs))
+        return self.airline_client
 
     @property
     def offer_requests(self):
-        return self._offer_requests_api
+        if not hasattr(self, 'offer_request_client'):
+            setattr(self, 'offer_request_client', OfferRequestClient(**self._kwargs))
+        return self.offer_request_client
 
     @property
     def offers(self):
-        return self._offers_api
+        if not hasattr(self, 'offer_client'):
+            setattr(self, 'offer_client', OfferClient(**self._kwargs))
+        return self.offer_client
 
     @property
     def orders(self):
-        return self._orders_api
+        if not hasattr(self, 'order_client'):
+            setattr(self, 'order_client', OrderClient(**self._kwargs))
+        return self.order_client
 
     @property
     def order_cancellations(self):
-        return self._order_cancellations_api
+        if not hasattr(self, 'order_cancellation_client'):
+            setattr(self, 'order_cancellation_client',
+                    OrderCancellationClient(**self._kwargs))
+        return self.order_cancellation_client
 
     @property
     def payments(self):
-        return self._payments_api
+        if not hasattr(self, 'payment_client'):
+            setattr(self, 'payment_client', PaymentClient(**self._kwargs))
+        return self.payment_client
 
     @property
     def seat_maps(self):
-        return self._seat_maps_api
+        if not hasattr(self, 'seat_map_client'):
+            setattr(self, 'seat_map_client', SeatMapClient(**self._kwargs))
+        return self.seat_map_client

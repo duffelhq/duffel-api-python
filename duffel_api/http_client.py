@@ -69,7 +69,6 @@ class HttpClient:
         user_agent = f'Duffel/{HttpClient.VERSION} duffel_api_python/{version()}'
         self.http_session.headers.update({'User-Agent': user_agent})
         self.http_session.headers.update({'Duffel-Version': HttpClient.VERSION})
-
         if not api_token:
             api_token = os.getenv('DUFFEL_API_TOKEN')
             if not api_token:
