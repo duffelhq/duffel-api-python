@@ -1,7 +1,6 @@
 import pytest
 
-from duffel_api.api.offer_requests import InvalidNumberOfPassengers, InvalidSlice, \
-    InvalidPassenger, InvalidNumberOfSlices, InvalidCabinClass
+from duffel_api.api.offer_requests import OfferRequestCreate
 
 from .fixtures import fixture
 
@@ -52,19 +51,19 @@ def test_create_offer_request_with_invalid_data(requests_mock):
     with fixture('create-offer-request', '/offer_requests?return_offers=false',
                  requests_mock.post) as client:
         creation = client.offer_requests.create()
-        with pytest.raises(InvalidNumberOfPassengers):
+        with pytest.raises(OfferRequestCreate.InvalidNumberOfPassengers):
             creation.execute()
 
-        with pytest.raises(InvalidPassenger):
+        with pytest.raises(OfferRequestCreate.InvalidPassenger):
             creation.passengers([{}]).execute()
 
-        with pytest.raises(InvalidCabinClass):
+        with pytest.raises(OfferRequestCreate.InvalidCabinClass):
             creation.cabin_class('invalid').execute()
 
         passengers = [{'type': 'adult'}]
 
         creation = creation.passengers(passengers)
-        with pytest.raises(InvalidNumberOfSlices):
+        with pytest.raises(OfferRequestCreate.InvalidNumberOfSlices):
             creation.execute()
-        with pytest.raises(InvalidSlice):
+        with pytest.raises(OfferRequestCreate.InvalidSlice):
             creation.slices([{}]).execute()

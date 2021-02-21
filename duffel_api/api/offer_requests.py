@@ -2,26 +2,6 @@ from ..http_client import HttpClient, Pagination
 from ..models import OfferRequest
 
 
-class InvalidCabinClass(Exception):
-    pass
-
-
-class InvalidNumberOfPassengers(Exception):
-    pass
-
-
-class InvalidNumberOfSlices(Exception):
-    pass
-
-
-class InvalidPassenger(Exception):
-    pass
-
-
-class InvalidSlice(Exception):
-    pass
-
-
 class OfferRequestClient(HttpClient):
     """To search for flights, you'll need to create an offer request.
 An offer request describes the passengers and where and when they want to
@@ -44,6 +24,21 @@ filters (e.g. a particular cabin to travel in).
 
 
 class OfferRequestCreate(object):
+    class InvalidCabinClass(Exception):
+        pass
+
+    class InvalidNumberOfPassengers(Exception):
+        pass
+
+    class InvalidNumberOfSlices(Exception):
+        pass
+
+    class InvalidPassenger(Exception):
+        pass
+
+    class InvalidSlice(Exception):
+        pass
+
     def __init__(self, client):
         self._client = client
         self._return_offers = 'false'
@@ -53,22 +48,22 @@ class OfferRequestCreate(object):
 
     def _validate_cabin_class(cabin_class):
         if cabin_class not in ['first', 'business', 'economy', 'premium_economy']:
-            raise InvalidCabinClass(cabin_class)
+            raise OfferRequestCreate.InvalidCabinClass(cabin_class)
 
     def _validate_passengers(passengers):
         if len(passengers) == 0:
-            raise InvalidNumberOfPassengers(passengers)
+            raise OfferRequestCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:
             if not ('type' in passenger or 'age' in passenger):
-                raise InvalidPassenger(passenger)
+                raise OfferRequestCreate.InvalidPassenger(passenger)
 
     def _validate_slices(slices):
         if len(slices) == 0:
-            raise InvalidNumberOfSlices(slices)
+            raise OfferRequestCreate.InvalidNumberOfSlices(slices)
         for travel_slice in slices:
             if set(travel_slice.keys()) != set(
                     ['departure_date', 'destination', 'origin']):
-                raise InvalidSlice(travel_slice)
+                raise OfferRequestCreate.InvalidSlice(travel_slice)
 
     def return_offers(self):
         self._return_offers = 'true'
