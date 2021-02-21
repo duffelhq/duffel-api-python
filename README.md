@@ -1,6 +1,6 @@
 # duffel
 
-![Build Status](https://github.com/duffelhq/duffel-api-python/workflows/python.yaml/badge.svg)
+![Build Status](https://github.com/duffelhq/duffel-api-python/actions/workflows/python.yaml/badge.svg)
 
 
 Python client library for the [Duffel API](https://duffel.com/docs/api).
