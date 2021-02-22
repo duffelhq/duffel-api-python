@@ -1,4 +1,4 @@
-# duffel
+# duffel-api
 
 ![Build Status](https://github.com/duffelhq/duffel-api-python/actions/workflows/python.yaml/badge.svg)
 
