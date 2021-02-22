@@ -20,3 +20,7 @@ jobs:
       run: pip install tox tox-gh-actions
     - name: Test using tox
       run: tox
+    - name: Linting
+      run: tox -e linting
+    - name: Check code documentation
+      run: tox -e doc

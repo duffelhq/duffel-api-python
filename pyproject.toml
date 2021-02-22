@@ -1,0 +1,8 @@
+[tool.interrogate]
+ignore-init-method = true
+ignore-init-module = false
+ignore-module = true
+exclude = ["setup.py", "examples"]
+ignore-regex = ["^test_.*"]
+fail-under = 95
+quiet = false
