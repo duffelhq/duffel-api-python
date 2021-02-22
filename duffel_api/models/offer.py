@@ -3,16 +3,28 @@ from ..utils import maybe_parse_date_entries
 
 
 class Offer:
+    """After you've searched for flights by creating an offer request, we'll send your
+    search to a range of airlines, which may return offers.
+
+    Each offer represents flights you can buy from an airline at a particular price that
+    meet your search criteria.
+
+    You'll see slices inside the offers. Each slice will also include a list of one or
+    more specific flights (called segments) that the airline is offering to get the
+    passengers where they want to go.
+
+    """
+
     allowed_passenger_identity_document_types = ['passport']
 
     class InvalidPassengerIdentityDocumentType(Exception):
-        pass
+        """Invalid passenger identity document type"""
 
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
             if key == 'allowed_passenger_identity_document_types':
-                Offer._validate_passenger_types(value)
+                Offer._validate_passenger_identity_document_types(value)
             elif key == 'slices':
                 value = [OfferSlice(v) for v in value]
             elif key == 'passengers':
@@ -25,13 +37,16 @@ class Offer:
                 value = Airline(value)
             setattr(self, key, value)
 
-    def _validate_passenger_types(document_types):
+    def _validate_passenger_identity_document_types(document_types):
+        """Validate passenger identity document types"""
         for doc_type in document_types:
             if doc_type not in Offer.allowed_passenger_identity_document_types:
                 raise Offer.InvalidPassengerIdentityDocumentType(document_types)
 
 
 class PaymentRequirements:
+    """The payment requirements for an offer"""
+
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
@@ -39,10 +54,18 @@ class PaymentRequirements:
 
 
 class Service:
+    """The services that can be booked along with the offer but are not included by
+    default, for example an additional checked bag. This field is only returned in the
+    [Get single offer](https://duffel.com/docs/api/offers/get-offer-by-id) endpoint. When
+    there are no services available, or we don't support services for the airline, this
+    list will be empty. If you want to know which airlines we support services for, please
+    get in touch with the Duffel support team at help@duffel.com.
+
+    """
     allowed_types = ['baggage']
 
     class InvalidType(Exception):
-        pass
+        """Invalid service type"""
 
     def __init__(self, json):
         for key in json:
@@ -62,7 +85,7 @@ class ServiceMetadata:
     allowed_types = ['checked', 'carry_on']
 
     class InvalidType(Exception):
-        pass
+        """Invalid service metadata type for baggage"""
 
     def __init__(self, json):
         for key in json:
@@ -81,7 +104,7 @@ class OfferSlice:
     allowed_place_types = ['airport', 'city']
 
     class InvalidPlaceType(Exception):
-        pass
+        """Invalid type of place"""
 
     def __init__(self, json):
         for key in json:
@@ -117,10 +140,15 @@ class OfferSliceSegment:
 
 
 class OfferSliceSegmentPassenger:
+    """Additional segment-specific information about the passengers included in the offer
+    (e.g. their baggage allowance and the cabin class they will be travelling in)
+
+    """
+
     allowed_cabin_classes = ['economy', 'premium_economy', 'business', 'first']
 
     class InvalidCabinClass(Exception):
-        pass
+        """Invalid cabin class"""
 
     def __init__(self, json):
         for key in json:
@@ -142,7 +170,7 @@ class OfferSliceSegmentPassengerBaggage:
     allowed_types = ['checked', 'carry_on']
 
     class InvalidType(Exception):
-        pass
+        """Invalid baggage type"""
 
     def __init__(self, json):
         for key in json:

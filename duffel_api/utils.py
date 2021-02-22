@@ -20,5 +20,6 @@ def maybe_parse_date_entries(key, value):
 
 
 def version():
+    """Return the version specified in the package (setup.py) during runtime"""
     import pkg_resources
     return pkg_resources.require("duffel_api")[0].version

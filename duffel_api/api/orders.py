@@ -3,19 +3,21 @@ from ..models import Order
 
 
 class OrderClient(HttpClient):
-    """TODO"""
+    """Client to interact with Orders"""
 
     class InvalidSort(Exception):
-        pass
+        """Invalid sort option provided"""
 
     def __init__(self, **kwargs):
         self._url = '/air/orders'
         super().__init__(**kwargs)
 
     def get(self, id_):
+        """GET /air/orders/:id"""
         return Order(self.do_get('{}/{}'.format(self._url, id_))['data'])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
+        """GET /air/orders"""
         params = {'limit': limit}
         if sort:
             if sort not in ['pay_by', '-pay_by']:
@@ -26,30 +28,33 @@ class OrderClient(HttpClient):
         return Pagination(self, Order, params)
 
     def create(self):
+        """Initiate creation of an Order"""
         return OrderCreate(self)
 
 
 class OrderCreate:
+    """Auxiliary class to provide methods for order creation related data"""
+
     class InvalidSelectedOffersLength(Exception):
-        pass
+        """Invalid number of selected_offers provided"""
 
     class InvalidService(Exception):
-        pass
+        """Invalid service data provided"""
 
     class InvalidNumberOfPayments(Exception):
-        pass
+        """Invalid number of payments provided"""
 
     class InvalidPayment(Exception):
-        pass
+        """Invalid payment data provided"""
 
     class InvalidPaymentType(Exception):
-        pass
+        """Invalid payment type provided"""
 
     class InvalidNumberOfPassengers(Exception):
-        pass
+        """Invalid number of passengers provided"""
 
     class InvalidPassenger(Exception):
-        pass
+        """Invalid passenger data provided"""
 
     def __init__(self, client):
         self._client = client
@@ -60,6 +65,8 @@ class OrderCreate:
         self._payment_type = 'instant'
 
     def _validate_payments(payments):
+        """Validate number of payments and the data provided for each if any were given
+        """
         if len(payments) == 0:
             raise OrderCreate.InvalidNumberOfPayments(len(payments))
         for payment in payments:
@@ -69,15 +76,19 @@ class OrderCreate:
                 raise OrderCreate.InvalidPaymentType(payment['type'])
 
     def _validate_services(services):
+        """Validate the data provided for each service if any were given"""
         for service in services:
             if set(service.keys()) != set(['id', 'quantity']):
                 raise OrderCreate.InvalidService(service)
 
     def _validate_selected_offers(selected_offers):
+        """Validate number of selected_offers"""
         if len(selected_offers) != 1:
             raise OrderCreate.InvalidSelectedOffersLength(len(selected_offers))
 
     def _validate_passengers(passengers):
+        """Validate number of passengers and the data provided for each if any were given
+        """
         if len(passengers) == 0:
             raise OrderCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:
@@ -93,11 +104,13 @@ class OrderCreate:
         return self
 
     def selected_offers(self, selected_offers):
+        """Set selected_offers"""
         OrderCreate._validate_selected_offers(selected_offers)
         self._selected_offers = selected_offers
         return self
 
     def services(self, services):
+        """Set services"""
         # TODO(nlopes): this should be its own type to ensure the user *only* passes valid
         # data
         OrderCreate._validate_services(services)
@@ -105,6 +118,7 @@ class OrderCreate:
         return self
 
     def payments(self, payments):
+        """Set payment method"""
         # TODO(nlopes): this should be its own type to ensure the user *only* passes valid
         # data
         OrderCreate._validate_payments(payments)
@@ -112,6 +126,7 @@ class OrderCreate:
         return self
 
     def passengers(self, passengers):
+        """Set passenger information for all passengers that will be travelling"""
         # TODO(nlopes): this should be its own type to ensure the user *only* passes valid
         # data
         OrderCreate._validate_passengers(passengers)
@@ -119,6 +134,7 @@ class OrderCreate:
         return self
 
     def execute(self):
+        """POST /air/orders - trigger the call to create the order"""
         OrderCreate._validate_passengers(self._passengers)
         OrderCreate._validate_payments(self._payments)
         OrderCreate._validate_services(self._services)

@@ -3,6 +3,14 @@ from ..utils import maybe_parse_date_entries
 
 
 class Order:
+    """Once you've searched for flights by creating an offer request, and you've chosen
+    which offer you want to book, you'll then want to create an order.
+
+    To create an order, you just need to provide the offer ID, payment details and some
+    additional information on the passengers (e.g. their full name and date of birth).
+
+    """
+
     def __init__(self, json):
         for key in json:
             value = json[key]
@@ -24,10 +32,15 @@ class Order:
 
 
 class OrderSlice:
+    """A slice is one part of the slices that make up the itinerary of an order.
+    One-way journeys can be expressed using one slice, whereas return trips will need two.
+
+    """
+
     allowed_place_types = ['airport', 'city']
 
     class InvalidPlaceType(Exception):
-        pass
+        """Invalid type of place provided"""
 
     def __init__(self, json):
         for key in json:
@@ -44,6 +57,11 @@ class OrderSlice:
 
 
 class OrderSliceSegment:
+    """The segments - that is, specific flights - that the airline is offering to get the
+    passengers from the `origin` to the `destination`
+
+    """
+
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
@@ -65,7 +83,7 @@ class OrderSliceSegmentPassenger:
     allowed_cabin_classes = ['economy', 'premium_economy', 'business', 'first']
 
     class InvalidCabinClass(Exception):
-        pass
+        """Invalid cabin class"""
 
     def __init__(self, json):
         for key in json:
@@ -92,10 +110,15 @@ class OrderSliceSegmentPassengerSeat:
 
 # TODO(nlopes): maybe this can be strictly equivalent to OfferSliceSegmentPassengerBaggage
 class OrderSliceSegmentPassengerBaggage:
+    """The baggage allowances for the passenger on this segment that were included in the
+    original offer. Any extra baggage items which were booked as services will be listed
+    in the services field instead of here.
+
+    """
     allowed_types = ['checked', 'carry_on']
 
     class InvalidType(Exception):
-        pass
+        """Invalid baggage type"""
 
     def __init__(self, json):
         for key in json:
@@ -107,10 +130,12 @@ class OrderSliceSegmentPassengerBaggage:
 
 
 class OrderService:
+    """The service booked along with this order"""
+
     allowed_types = ['baggage', 'seat']
 
     class InvalidType(Exception):
-        pass
+        """Invalid service type"""
 
     def __init__(self, json):
         service_type = json['type']
@@ -128,6 +153,9 @@ class OrderService:
 
 
 class OrderServiceMetadataSeat:
+    """An object containing metadata about the service, like the designator of the seat.
+    """
+
     def __init__(self, json):
         for key in json:
             value = json[key]
@@ -135,10 +163,15 @@ class OrderServiceMetadataSeat:
 
 
 class OrderServiceMetadataBaggage:
+    """An object containing metadata about the service, like the maximum weight and
+    dimensions of the baggage.
+
+    """
+
     allowed_types = ['checked', 'carry_on']
 
     class InvalidType(Exception):
-        pass
+        """Invalid baggage type"""
 
     def __init__(self, json):
         for key in json:
@@ -149,6 +182,8 @@ class OrderServiceMetadataBaggage:
 
 
 class OrderPaymentStatus:
+    """The payment status for an order"""
+
     def __init__(self, json):
         for key in json:
             value = json[key]
@@ -158,18 +193,20 @@ class OrderPaymentStatus:
 
 
 class OrderPassenger:
+    """A passenger who is travelling"""
+
     allowed_genders = ['m', 'f']
     allowed_types = ['adult', 'child', 'infant_without_seat']
     allowed_titles = ['mr', 'mrs', 'ms', 'miss']
 
     class InvalidGender(Exception):
-        pass
+        """Invalid passenger gender"""
 
     class InvalidTitle(Exception):
-        pass
+        """Invalid passenger title"""
 
     class InvalidType(Exception):
-        pass
+        """Invalid passenger type"""
 
     def __init__(self, json):
         for key in json:
@@ -184,6 +221,8 @@ class OrderPassenger:
 
 
 class OrderDocument:
+    """A document issued for this order."""
+
     allowed_types = [
         'electronic_ticket',
         'electronic_miscellaneous_document_associated',
@@ -191,7 +230,7 @@ class OrderDocument:
     ]
 
     class InvalidType(Exception):
-        pass
+        """Invalid document type"""
 
     def __init__(self, json):
         for key in json:

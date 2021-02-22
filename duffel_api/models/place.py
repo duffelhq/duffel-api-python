@@ -7,7 +7,7 @@ class Place:
     allowed_types = ['airport', 'city']
 
     class InvalidType(Exception):
-        pass
+        """Invalid type of place"""
 
     def __init__(self, json):
         for key in json:

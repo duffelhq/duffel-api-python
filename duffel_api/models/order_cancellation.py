@@ -20,7 +20,7 @@ class OrderCancellation:
     ]
 
     class InvalidRefundType(Exception):
-        pass
+        """Invalid refunt type provided"""
 
     def __init__(self, json):
         for key in json:

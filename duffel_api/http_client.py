@@ -20,6 +20,7 @@ class ApiError(Exception):
         super().__init__(self.message)
 
     def __str__(self):
+        """Custom message for our API errors"""
         err = self.errors[0]
         return f"{err['type']}: {err['title']}: {self.message}"
 
@@ -36,6 +37,7 @@ class Pagination:
         self._params = params
 
     def __iter__(self):
+        """Iterate over the response items and yield one by one"""
         response = self._client.do_get(
             self._client._url,
             query_params=self._params,
@@ -78,6 +80,8 @@ class HttpClient:
             )
 
     def _http_call(self, endpoint, method, query_params=None, body=None):
+        """Perform the http call and wrap the response in a ApiError if an error occurred
+        """
         request_url = HttpClient.URL + endpoint
         request = Request(method, request_url, params=query_params, json=body)
         prepared = self.http_session.prepare_request(request)

@@ -3,6 +3,13 @@ from ..utils import maybe_parse_date_entries
 
 
 class OfferRequest:
+    """To search for flights, you'll need to create an offer request. An offer request
+    describes the passengers and where and when they want to travel (in the form of a
+    list of slices). It may also include additional filters (e.g. a particular cabin to
+    travel in).
+
+    """
+
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
@@ -16,6 +23,11 @@ class OfferRequest:
 
 
 class Slice:
+    """One-way journeys can be expressed using one slice, whereas return trips will need
+    two.
+
+    """
+
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])

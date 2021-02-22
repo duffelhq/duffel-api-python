@@ -4,7 +4,7 @@ class Passenger:
     allowed_types = ['adult']
 
     class InvalidType(Exception):
-        pass
+        """Invalid passenger type provided"""
 
     def __init__(self, json):
         for key in json:

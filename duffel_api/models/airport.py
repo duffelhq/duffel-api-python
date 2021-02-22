@@ -1,5 +1,6 @@
 class Airport:
     """Airports are used to identify origins and destinations in journey slices
+
     """
 
     def __init__(self, json):

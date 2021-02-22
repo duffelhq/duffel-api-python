@@ -3,13 +3,14 @@ from ..models import Offer
 
 
 class OfferClient(HttpClient):
-    """TODO"""
+    """Client to interact with Offers"""
 
     def __init__(self, **kwargs):
         self._url = '/air/offers'
         super().__init__(**kwargs)
 
     def get(self, id_, return_available_services=False):
+        """GET /air/offers/:id"""
         params = {}
         if return_available_services:
             params['return_available_services'] = 'true'
@@ -17,6 +18,7 @@ class OfferClient(HttpClient):
                                  query_params=params)['data'])
 
     def list(self, offer_request_id, sort=None, max_connections=None, limit=50):
+        """GET /air/offers"""
         params = {'limit': limit, 'offer_request_id': offer_request_id}
         if sort:
             params['sort'] = sort
