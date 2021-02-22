@@ -45,7 +45,10 @@ You can find a complete example of booking a flight in [./examples/book-flight.p
 
 ## Development
 
+### Testing
+
 Run all the tests:
+
 ```bash
 tox
 ```
@@ -55,4 +58,41 @@ in a browser, or if in a OS that supports it by using `open` (alternative `xdg-o
 
 ```bash
 open ./htmlcov/index.html
+```
+
+### Packaging
+
+Setup pypi config (`~/.pypirc`):
+```text
+[pypi]
+  username = __token__
+  password = pypi-generated-token
+
+[testpypi]
+  username = __token__
+  password = pypi-generated-token
+```
+
+Install dependencies:
+```bash
+pip install wheel twine
+```
+
+Build the package before uploading:
+
+```bash
+python setup.py sdist bdist_wheel
+```
+
+Upload packages (test):
+
+```bash
+twine upload -r testpypi --verbose dist/*
+```
+
+The above will upload the packages to [test.pypi.org](https://test.pypi.org) which will allow you to verify all is well
+with your upload before uploading it to the main pypi repository.
+
+```bash
+twine upload -r pypi --verbose dist/*
 ```
