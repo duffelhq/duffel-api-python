@@ -6,13 +6,13 @@ class AircraftClient(HttpClient):
     """Client to interact with Aircraft"""
 
     def __init__(self, **kwargs):
-        self._url = '/air/aircraft'
+        self._url = "/air/aircraft"
         super().__init__(**kwargs)
 
     def get(self, id_):
         """GET /air/aircraft/:id"""
-        return Aircraft(self.do_get('{}/{}'.format(self._url, id_))['data'])
+        return Aircraft(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, limit=50):
         """GET /air/aircraft"""
-        return Pagination(self, Aircraft, {'limit': limit})
+        return Pagination(self, Aircraft, {"limit": limit})

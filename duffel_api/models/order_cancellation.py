@@ -12,11 +12,11 @@ class OrderCancellation:
     """
 
     allowed_refund_types = [
-        'arc_bsp_cash',
-        'balance',
-        'card',
-        'voucher',
-        'awaiting_payment',
+        "arc_bsp_cash",
+        "balance",
+        "card",
+        "voucher",
+        "awaiting_payment",
     ]
 
     class InvalidRefundType(Exception):
@@ -25,6 +25,9 @@ class OrderCancellation:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == 'refund_to' and value not in OrderCancellation.allowed_refund_types:
+            if (
+                key == "refund_to"
+                and value not in OrderCancellation.allowed_refund_types
+            ):
                 raise OrderCancellation.InvalidRefundType(value)
             setattr(self, key, value)

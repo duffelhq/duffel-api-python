@@ -9,22 +9,22 @@ class OrderClient(HttpClient):
         """Invalid sort option provided"""
 
     def __init__(self, **kwargs):
-        self._url = '/air/orders'
+        self._url = "/air/orders"
         super().__init__(**kwargs)
 
     def get(self, id_):
         """GET /air/orders/:id"""
-        return Order(self.do_get('{}/{}'.format(self._url, id_))['data'])
+        return Order(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
         """GET /air/orders"""
-        params = {'limit': limit}
+        params = {"limit": limit}
         if sort:
-            if sort not in ['pay_by', '-pay_by']:
+            if sort not in ["pay_by", "-pay_by"]:
                 raise OrderClient.InvalidSort(sort)
-            params['sort'] = sort
+            params["sort"] = sort
         if awaiting_payment:
-            params['awaiting_payment'] = 'true'
+            params["awaiting_payment"] = "true"
         return Pagination(self, Order, params)
 
     def create(self):
@@ -62,23 +62,22 @@ class OrderCreate:
         self._payments = []
         self._selected_offers = []
         self._services = []
-        self._payment_type = 'instant'
+        self._payment_type = "instant"
 
     def _validate_payments(payments):
-        """Validate number of payments and the data provided for each if any were given
-        """
+        """Validate number of payments and the data provided for each if any were given"""
         if len(payments) == 0:
             raise OrderCreate.InvalidNumberOfPayments(len(payments))
         for payment in payments:
-            if set(payment.keys()) != set(['amount', 'currency', 'type']):
+            if set(payment.keys()) != set(["amount", "currency", "type"]):
                 raise OrderCreate.InvalidPayment(payment)
-            if payment['type'] not in ['arc_bsp_cash', 'balance']:
-                raise OrderCreate.InvalidPaymentType(payment['type'])
+            if payment["type"] not in ["arc_bsp_cash", "balance"]:
+                raise OrderCreate.InvalidPaymentType(payment["type"])
 
     def _validate_services(services):
         """Validate the data provided for each service if any were given"""
         for service in services:
-            if set(service.keys()) != set(['id', 'quantity']):
+            if set(service.keys()) != set(["id", "quantity"]):
                 raise OrderCreate.InvalidService(service)
 
     def _validate_selected_offers(selected_offers):
@@ -87,20 +86,25 @@ class OrderCreate:
             raise OrderCreate.InvalidSelectedOffersLength(len(selected_offers))
 
     def _validate_passengers(passengers):
-        """Validate number of passengers and the data provided for each if any were given
-        """
+        """Validate number of passengers and the data provided for each if any were given"""
         if len(passengers) == 0:
             raise OrderCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:
-            if not ('born_on' in passenger or 'email' in passenger or
-                    'family_name' in passenger or 'gender' in passenger or
-                    'given_name' in passenger or 'id' in passenger or
-                    'phone_number' in passenger or 'title' in passenger):
+            if not (
+                "born_on" in passenger
+                or "email" in passenger
+                or "family_name" in passenger
+                or "gender" in passenger
+                or "given_name" in passenger
+                or "id" in passenger
+                or "phone_number" in passenger
+                or "title" in passenger
+            ):
                 raise OrderCreate.InvalidPassenger(passenger)
 
     def pay_later(self):
         """Set payment type to 'pay_later'. If this isn't called the type is 'instant'"""
-        self._payment_type = 'pay_later'
+        self._payment_type = "pay_later"
         return self
 
     def selected_offers(self, selected_offers):
@@ -141,10 +145,14 @@ class OrderCreate:
         OrderCreate._validate_selected_offers(self._selected_offers)
         res = self._client.do_post(
             self._client._url,
-            body={'data': {'type': self._payment_type,
-                           'passengers': self._passengers,
-                           'services': self._services,
-                           'selected_offers': self._selected_offers,
-                           'payments': self._payments}}
+            body={
+                "data": {
+                    "type": self._payment_type,
+                    "passengers": self._passengers,
+                    "services": self._services,
+                    "selected_offers": self._selected_offers,
+                    "payments": self._payments,
+                }
+            },
         )
-        return Order(res['data'])
+        return Order(res["data"])

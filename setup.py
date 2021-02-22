@@ -3,8 +3,7 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setup(
-    name="duffel-api",
+setup(    name="duffel-api",
     version="0.0.1",
     author="Duffel Engineering",
     author_email="client-libraries@duffel.com",
@@ -13,14 +12,14 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/duffelhq/duffel-api-python",
     packages=find_packages(),
-    license='MIT',
+    license="MIT",
     classifiers=[
-        'Development Status :: 3 - Alpha',
-        'Programming Language :: Python :: 3',
-        'License :: OSI Approved :: MIT License',
-        'Intended Audience :: Developers',
+        "Development Status :: 3 - Alpha",
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Intended Audience :: Developers",
     ],
-    keywords='duffel api flights airports airlines aircraft',
-    python_requires='>=3.6',
-    install_requires=['requests'],
+    keywords="duffel api flights airports airlines aircraft",
+    python_requires=">=3.6",
+    install_requires=["requests>=2.25"],
 )

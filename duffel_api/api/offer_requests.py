@@ -4,22 +4,24 @@ from ..models import OfferRequest
 
 class OfferRequestClient(HttpClient):
     """To search for flights, you'll need to create an offer request.
-An offer request describes the passengers and where and when they want to
- travel (in the form of a list of slices). It may also include additional
-filters (e.g. a particular cabin to travel in).
+    An offer request describes the passengers and where and when they want to
+     travel (in the form of a list of slices). It may also include additional
+    filters (e.g. a particular cabin to travel in).
     """
 
     def __init__(self, **kwargs):
-        self._url = '/air/offer_requests'
+        self._url = "/air/offer_requests"
         super().__init__(**kwargs)
 
     def get(self, id_):
         """GET /air/offer_requests/:id"""
-        return OfferRequest(self.do_get('{}/{}'.format(self._url, id_))['data'])
+        return OfferRequest(
+            self.do_get("{}/{}".format(self._url, id_))["data"]
+        )
 
     def list(self, limit=50):
         """GET /air/offer_requests"""
-        return Pagination(self, OfferRequest, {'limit': limit})
+        return Pagination(self, OfferRequest, {"limit": limit})
 
     def create(self):
         """Initiate creation of an Offer Request"""
@@ -46,23 +48,27 @@ class OfferRequestCreate(object):
 
     def __init__(self, client):
         self._client = client
-        self._return_offers = 'false'
-        self._cabin_class = 'economy'
+        self._return_offers = "false"
+        self._cabin_class = "economy"
         self._passengers = []
         self._slices = []
 
     def _validate_cabin_class(cabin_class):
         """Validate cabin class"""
-        if cabin_class not in ['first', 'business', 'economy', 'premium_economy']:
+        if cabin_class not in [
+            "first",
+            "business",
+            "economy",
+            "premium_economy",
+        ]:
             raise OfferRequestCreate.InvalidCabinClass(cabin_class)
 
     def _validate_passengers(passengers):
-        """Validate number of passengers and the data provided for each if any were given
-        """
+        """Validate number of passengers and the data provided for each if any were given"""
         if len(passengers) == 0:
             raise OfferRequestCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:
-            if not ('type' in passenger or 'age' in passenger):
+            if not ("type" in passenger or "age" in passenger):
                 raise OfferRequestCreate.InvalidPassenger(passenger)
 
     def _validate_slices(slices):
@@ -71,12 +77,13 @@ class OfferRequestCreate(object):
             raise OfferRequestCreate.InvalidNumberOfSlices(slices)
         for travel_slice in slices:
             if set(travel_slice.keys()) != set(
-                    ['departure_date', 'destination', 'origin']):
+                ["departure_date", "destination", "origin"]
+            ):
                 raise OfferRequestCreate.InvalidSlice(travel_slice)
 
     def return_offers(self):
         """Set return_offers to 'true'"""
-        self._return_offers = 'true'
+        self._return_offers = "true"
         return self
 
     def cabin_class(self, cabin_class):
@@ -102,9 +109,14 @@ class OfferRequestCreate(object):
         OfferRequestCreate._validate_passengers(self._passengers)
         OfferRequestCreate._validate_slices(self._slices)
         res = self._client.do_post(
-            self._client._url, query_params={'return_offers': self._return_offers},
-            body={'data': {'cabin_class': self._cabin_class,
-                           'passengers': self._passengers,
-                           'slices': self._slices}}
+            self._client._url,
+            query_params={"return_offers": self._return_offers},
+            body={
+                "data": {
+                    "cabin_class": self._cabin_class,
+                    "passengers": self._passengers,
+                    "slices": self._slices,
+                }
+            },
         )
-        return OfferRequest(res['data'])
+        return OfferRequest(res["data"])

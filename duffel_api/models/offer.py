@@ -15,7 +15,7 @@ class Offer:
 
     """
 
-    allowed_passenger_identity_document_types = ['passport']
+    allowed_passenger_identity_document_types = ["passport"]
 
     class InvalidPassengerIdentityDocumentType(Exception):
         """Invalid passenger identity document type"""
@@ -23,17 +23,17 @@ class Offer:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == 'allowed_passenger_identity_document_types':
+            if key == "allowed_passenger_identity_document_types":
                 Offer._validate_passenger_identity_document_types(value)
-            elif key == 'slices':
+            elif key == "slices":
                 value = [OfferSlice(v) for v in value]
-            elif key == 'passengers':
+            elif key == "passengers":
                 value = [Passenger(v) for v in value]
-            elif key == 'payment_requirements':
+            elif key == "payment_requirements":
                 value = PaymentRequirements(value)
-            elif key == 'available_services':
+            elif key == "available_services":
                 value = [Service(v) for v in value]
-            elif key == 'owner':
+            elif key == "owner":
                 value = Airline(value)
             setattr(self, key, value)
 
@@ -41,7 +41,9 @@ class Offer:
         """Validate passenger identity document types"""
         for doc_type in document_types:
             if doc_type not in Offer.allowed_passenger_identity_document_types:
-                raise Offer.InvalidPassengerIdentityDocumentType(document_types)
+                raise Offer.InvalidPassengerIdentityDocumentType(
+                    document_types
+                )
 
 
 class PaymentRequirements:
@@ -62,7 +64,8 @@ class Service:
     get in touch with the Duffel support team at help@duffel.com.
 
     """
-    allowed_types = ['baggage']
+
+    allowed_types = ["baggage"]
 
     class InvalidType(Exception):
         """Invalid service type"""
@@ -70,9 +73,9 @@ class Service:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'metadata':
+            if key == "metadata":
                 value = ServiceMetadata(value)
-            if key == 'type' and value not in Service.allowed_types:
+            if key == "type" and value not in Service.allowed_types:
                 raise Service.InvalidType(value)
             setattr(self, key, value)
 
@@ -82,7 +85,7 @@ class ServiceMetadata:
     and dimensions of the baggage.
     """
 
-    allowed_types = ['checked', 'carry_on']
+    allowed_types = ["checked", "carry_on"]
 
     class InvalidType(Exception):
         """Invalid service metadata type for baggage"""
@@ -90,7 +93,7 @@ class ServiceMetadata:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'type' and value not in ServiceMetadata.allowed_types:
+            if key == "type" and value not in ServiceMetadata.allowed_types:
                 raise ServiceMetadata.InvalidType(value)
             setattr(self, key, value)
 
@@ -101,7 +104,7 @@ class OfferSlice:
     its destination.
     """
 
-    allowed_place_types = ['airport', 'city']
+    allowed_place_types = ["airport", "city"]
 
     class InvalidPlaceType(Exception):
         """Invalid type of place"""
@@ -109,12 +112,12 @@ class OfferSlice:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key in ['destination', 'origin']:
+            if key in ["destination", "origin"]:
                 value = Place(value)
-            elif key in ['destination_type', 'origin_type']:
+            elif key in ["destination_type", "origin_type"]:
                 if value not in OfferSlice.allowed_place_types:
                     raise OfferSlice.InvalidPlaceType(value)
-            elif key == 'segments':
+            elif key == "segments":
                 value = [OfferSliceSegment(v) for v in value]
             # TODO(nlopes): maybe convert duration to a timedelta or Duration
             setattr(self, key, value)
@@ -128,13 +131,13 @@ class OfferSliceSegment:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == 'aircraft' and value:
+            if key == "aircraft" and value:
                 value = Aircraft(value)
-            elif key in ['marketing_carrier', 'operating_carrier'] and value:
+            elif key in ["marketing_carrier", "operating_carrier"] and value:
                 value = Airline(value)
-            elif key in ['destination', 'origin']:
+            elif key in ["destination", "origin"]:
                 value = Place(value)
-            elif key == 'passengers':
+            elif key == "passengers":
                 value = [OfferSliceSegmentPassenger(p) for p in value]
             setattr(self, key, value)
 
@@ -145,7 +148,7 @@ class OfferSliceSegmentPassenger:
 
     """
 
-    allowed_cabin_classes = ['economy', 'premium_economy', 'business', 'first']
+    allowed_cabin_classes = ["economy", "premium_economy", "business", "first"]
 
     class InvalidCabinClass(Exception):
         """Invalid cabin class"""
@@ -153,10 +156,13 @@ class OfferSliceSegmentPassenger:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'baggages':
+            if key == "baggages":
                 value = [OfferSliceSegmentPassengerBaggage(v) for v in value]
-            elif key == 'cabin_class':
-                if value not in OfferSliceSegmentPassenger.allowed_cabin_classes:
+            elif key == "cabin_class":
+                if (
+                    value
+                    not in OfferSliceSegmentPassenger.allowed_cabin_classes
+                ):
                     raise OfferSliceSegmentPassenger.InvalidCabinClass(value)
             setattr(self, key, value)
 
@@ -167,7 +173,7 @@ class OfferSliceSegmentPassengerBaggage:
     `available_services`
     """
 
-    allowed_types = ['checked', 'carry_on']
+    allowed_types = ["checked", "carry_on"]
 
     class InvalidType(Exception):
         """Invalid baggage type"""
@@ -175,7 +181,10 @@ class OfferSliceSegmentPassengerBaggage:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'type' and \
-               value not in OfferSliceSegmentPassengerBaggage.allowed_types:
+            if (
+                key == "type"
+                and value
+                not in OfferSliceSegmentPassengerBaggage.allowed_types
+            ):
                 raise OfferSliceSegmentPassengerBaggage.InvalidType(value)
             setattr(self, key, value)

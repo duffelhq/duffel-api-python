@@ -12,7 +12,7 @@ class OrderCancellationClient(HttpClient):
     """
 
     def __init__(self, **kwargs):
-        self._url = '/air/order_cancellations'
+        self._url = "/air/order_cancellations"
         super().__init__(**kwargs)
 
     def create(self, order_id):
@@ -25,8 +25,8 @@ class OrderCancellationClient(HttpClient):
 
         """
 
-        res = self.do_post(self._url, body={'data': {'order_id': order_id}})
-        return OrderCancellation(res['data'])
+        res = self.do_post(self._url, body={"data": {"order_id": order_id}})
+        return OrderCancellation(res["data"])
 
     def confirm(self, id_):
         """Once you've created a pending order cancellation, you'll know the refund_amount you're
@@ -39,5 +39,5 @@ class OrderCancellationClient(HttpClient):
 
         """
 
-        url = '{}/{}/actions/confirm'.format(self._url, id_)
-        return OrderCancellation(self.do_post(url)['data'])
+        url = "{}/{}/actions/confirm".format(self._url, id_)
+        return OrderCancellation(self.do_post(url)["data"])

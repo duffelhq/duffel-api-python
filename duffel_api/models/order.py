@@ -16,17 +16,17 @@ class Order:
             value = json[key]
             if value is not None:
                 value = maybe_parse_date_entries(key, json[key])
-            if key == 'documents':
+            if key == "documents":
                 value = [OrderDocument(v) for v in value]
-            elif key == 'owner':
+            elif key == "owner":
                 value = Airline(value)
-            elif key == 'passengers':
+            elif key == "passengers":
                 value = [OrderPassenger(v) for v in value]
-            elif key == 'payment_status':
+            elif key == "payment_status":
                 value = OrderPaymentStatus(value)
-            elif key == 'services':
+            elif key == "services":
                 value = [OrderService(v) for v in value]
-            elif key == 'slices':
+            elif key == "slices":
                 value = [OrderSlice(v) for v in value]
             setattr(self, key, value)
 
@@ -37,7 +37,7 @@ class OrderSlice:
 
     """
 
-    allowed_place_types = ['airport', 'city']
+    allowed_place_types = ["airport", "city"]
 
     class InvalidPlaceType(Exception):
         """Invalid type of place provided"""
@@ -45,12 +45,12 @@ class OrderSlice:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key in ['destination', 'origin']:
+            if key in ["destination", "origin"]:
                 value = Place(value)
-            elif key in ['destination_type', 'origin_type']:
+            elif key in ["destination_type", "origin_type"]:
                 if value not in OrderSlice.allowed_place_types:
                     raise OrderSlice.InvalidPlaceType(value)
-            elif key == 'segments':
+            elif key == "segments":
                 value = [OrderSliceSegment(v) for v in value]
             # TODO(nlopes): maybe convert duration to a timedelta or Duration
             setattr(self, key, value)
@@ -65,13 +65,13 @@ class OrderSliceSegment:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == 'aircraft' and value:
+            if key == "aircraft" and value:
                 value = Aircraft(value)
-            elif key in ['marketing_carrier', 'operating_carrier'] and value:
+            elif key in ["marketing_carrier", "operating_carrier"] and value:
                 value = Airline(value)
-            elif key in ['destination', 'origin']:
+            elif key in ["destination", "origin"]:
                 value = Place(value)
-            elif key == 'passengers':
+            elif key == "passengers":
                 value = [OrderSliceSegmentPassenger(p) for p in value]
             setattr(self, key, value)
 
@@ -80,7 +80,8 @@ class OrderSliceSegmentPassenger:
     """Additional segment-specific information about the passengers included in the offer
     (e.g. their baggage allowance and the cabin class they will be travelling in)
     """
-    allowed_cabin_classes = ['economy', 'premium_economy', 'business', 'first']
+
+    allowed_cabin_classes = ["economy", "premium_economy", "business", "first"]
 
     class InvalidCabinClass(Exception):
         """Invalid cabin class"""
@@ -88,19 +89,21 @@ class OrderSliceSegmentPassenger:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'baggages':
+            if key == "baggages":
                 value = [OrderSliceSegmentPassengerBaggage(v) for v in value]
-            elif key == 'seat':
+            elif key == "seat":
                 value = OrderSliceSegmentPassengerSeat(value)
-            elif key == 'cabin_class':
-                if value not in OrderSliceSegmentPassenger.allowed_cabin_classes:
+            elif key == "cabin_class":
+                if (
+                    value
+                    not in OrderSliceSegmentPassenger.allowed_cabin_classes
+                ):
                     raise OrderSliceSegmentPassenger.InvalidCabinClass(value)
             setattr(self, key, value)
 
 
 class OrderSliceSegmentPassengerSeat:
-    """An object containing metadata about the service, like the designator of the seat.
-    """
+    """An object containing metadata about the service, like the designator of the seat."""
 
     def __init__(self, json):
         for key in json:
@@ -115,7 +118,8 @@ class OrderSliceSegmentPassengerBaggage:
     in the services field instead of here.
 
     """
-    allowed_types = ['checked', 'carry_on']
+
+    allowed_types = ["checked", "carry_on"]
 
     class InvalidType(Exception):
         """Invalid baggage type"""
@@ -123,8 +127,11 @@ class OrderSliceSegmentPassengerBaggage:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'type' and \
-               value not in OrderSliceSegmentPassengerBaggage.allowed_types:
+            if (
+                key == "type"
+                and value
+                not in OrderSliceSegmentPassengerBaggage.allowed_types
+            ):
                 raise OrderSliceSegmentPassengerBaggage.InvalidType(value)
             setattr(self, key, value)
 
@@ -132,29 +139,28 @@ class OrderSliceSegmentPassengerBaggage:
 class OrderService:
     """The service booked along with this order"""
 
-    allowed_types = ['baggage', 'seat']
+    allowed_types = ["baggage", "seat"]
 
     class InvalidType(Exception):
         """Invalid service type"""
 
     def __init__(self, json):
-        service_type = json['type']
+        service_type = json["type"]
         if service_type not in OrderService.allowed_types:
             raise OrderService.InvalidType(service_type)
 
         for key in json:
             value = json[key]
-            if key == 'metadata':
-                if service_type == 'baggage':
+            if key == "metadata":
+                if service_type == "baggage":
                     value = OrderServiceMetadataBaggage(value)
-                elif service_type == 'seat':
+                elif service_type == "seat":
                     value = OrderServiceMetadataSeat(value)
             setattr(self, key, value)
 
 
 class OrderServiceMetadataSeat:
-    """An object containing metadata about the service, like the designator of the seat.
-    """
+    """An object containing metadata about the service, like the designator of the seat."""
 
     def __init__(self, json):
         for key in json:
@@ -168,7 +174,7 @@ class OrderServiceMetadataBaggage:
 
     """
 
-    allowed_types = ['checked', 'carry_on']
+    allowed_types = ["checked", "carry_on"]
 
     class InvalidType(Exception):
         """Invalid baggage type"""
@@ -176,7 +182,10 @@ class OrderServiceMetadataBaggage:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'type' and value not in OrderServiceMetadataBaggage.allowed_types:
+            if (
+                key == "type"
+                and value not in OrderServiceMetadataBaggage.allowed_types
+            ):
                 raise OrderServiceMetadataBaggage.InvalidType(value)
             setattr(self, key, value)
 
@@ -195,9 +204,9 @@ class OrderPaymentStatus:
 class OrderPassenger:
     """A passenger who is travelling"""
 
-    allowed_genders = ['m', 'f']
-    allowed_types = ['adult', 'child', 'infant_without_seat']
-    allowed_titles = ['mr', 'mrs', 'ms', 'miss']
+    allowed_genders = ["m", "f"]
+    allowed_types = ["adult", "child", "infant_without_seat"]
+    allowed_titles = ["mr", "mrs", "ms", "miss"]
 
     class InvalidGender(Exception):
         """Invalid passenger gender"""
@@ -211,11 +220,20 @@ class OrderPassenger:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == 'gender' and value.lower() not in OrderPassenger.allowed_genders:
+            if (
+                key == "gender"
+                and value.lower() not in OrderPassenger.allowed_genders
+            ):
                 raise OrderPassenger.InvalidGender(value)
-            elif key == 'title' and value.lower() not in OrderPassenger.allowed_titles:
+            elif (
+                key == "title"
+                and value.lower() not in OrderPassenger.allowed_titles
+            ):
                 raise OrderPassenger.InvalidTitle(value)
-            elif key == 'type' and value.lower() not in OrderPassenger.allowed_types:
+            elif (
+                key == "type"
+                and value.lower() not in OrderPassenger.allowed_types
+            ):
                 raise OrderPassenger.InvalidType(value)
             setattr(self, key, value)
 
@@ -224,9 +242,9 @@ class OrderDocument:
     """A document issued for this order."""
 
     allowed_types = [
-        'electronic_ticket',
-        'electronic_miscellaneous_document_associated',
-        'electronic_miscellaneous_document_standalone',
+        "electronic_ticket",
+        "electronic_miscellaneous_document_associated",
+        "electronic_miscellaneous_document_standalone",
     ]
 
     class InvalidType(Exception):
@@ -235,6 +253,6 @@ class OrderDocument:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'type' and value not in OrderDocument.allowed_types:
+            if key == "type" and value not in OrderDocument.allowed_types:
                 raise OrderDocument.InvalidType(value)
             setattr(self, key, value)

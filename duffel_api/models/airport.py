@@ -1,12 +1,10 @@
 class Airport:
-    """Airports are used to identify origins and destinations in journey slices
-
-    """
+    """Airports are used to identify origins and destinations in journey slices"""
 
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if key == 'city' and value:
+            if key == "city" and value:
                 setattr(self, key, City(value))
             else:
                 setattr(self, key, value)
