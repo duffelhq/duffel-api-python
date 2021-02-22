@@ -69,13 +69,9 @@ class HttpClient:
             HttpClient.URL = url
         self.http_session = Session()
 
-        user_agent = (
-            f"Duffel/{HttpClient.VERSION} duffel_api_python/{version()}"
-        )
+        user_agent = f"Duffel/{HttpClient.VERSION} duffel_api_python/{version()}"
         self.http_session.headers.update({"User-Agent": user_agent})
-        self.http_session.headers.update(
-            {"Duffel-Version": HttpClient.VERSION}
-        )
+        self.http_session.headers.update({"Duffel-Version": HttpClient.VERSION})
         if not api_token:
             api_token = os.getenv("DUFFEL_API_TOKEN")
             if not api_token:
@@ -85,7 +81,10 @@ class HttpClient:
             )
 
     def _http_call(self, endpoint, method, query_params=None, body=None):
-        """Perform the http call and wrap the response in a ApiError if an error occurred"""
+        """Perform the http call and wrap the response in a ApiError in case an error
+        occurred
+
+        """
         request_url = HttpClient.URL + endpoint
         request = Request(method, request_url, params=query_params, json=body)
         prepared = self.http_session.prepare_request(request)
@@ -119,9 +118,7 @@ class HttpClient:
         """Issue a POST request to `endpoint`"""
         return self._http_call(endpoint, method, query_params, body)
 
-    def do_delete(
-        self, endpoint, method="DELETE", query_params=None, body=None
-    ):
+    def do_delete(self, endpoint, method="DELETE", query_params=None, body=None):
         """Issue a DELETE request to `endpoint`"""
         return self._http_call(endpoint, method, query_params, body)
 

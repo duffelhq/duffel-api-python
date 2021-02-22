@@ -94,16 +94,13 @@ class OrderSliceSegmentPassenger:
             elif key == "seat":
                 value = OrderSliceSegmentPassengerSeat(value)
             elif key == "cabin_class":
-                if (
-                    value
-                    not in OrderSliceSegmentPassenger.allowed_cabin_classes
-                ):
+                if value not in OrderSliceSegmentPassenger.allowed_cabin_classes:
                     raise OrderSliceSegmentPassenger.InvalidCabinClass(value)
             setattr(self, key, value)
 
 
 class OrderSliceSegmentPassengerSeat:
-    """An object containing metadata about the service, like the designator of the seat."""
+    """An object containing metadata about the service, like the designator of the seat"""
 
     def __init__(self, json):
         for key in json:
@@ -129,8 +126,7 @@ class OrderSliceSegmentPassengerBaggage:
             value = json[key]
             if (
                 key == "type"
-                and value
-                not in OrderSliceSegmentPassengerBaggage.allowed_types
+                and value not in OrderSliceSegmentPassengerBaggage.allowed_types
             ):
                 raise OrderSliceSegmentPassengerBaggage.InvalidType(value)
             setattr(self, key, value)
@@ -160,7 +156,7 @@ class OrderService:
 
 
 class OrderServiceMetadataSeat:
-    """An object containing metadata about the service, like the designator of the seat."""
+    """An object containing metadata about the service, like the designator of the seat"""
 
     def __init__(self, json):
         for key in json:
@@ -182,10 +178,7 @@ class OrderServiceMetadataBaggage:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if (
-                key == "type"
-                and value not in OrderServiceMetadataBaggage.allowed_types
-            ):
+            if key == "type" and value not in OrderServiceMetadataBaggage.allowed_types:
                 raise OrderServiceMetadataBaggage.InvalidType(value)
             setattr(self, key, value)
 
@@ -220,20 +213,11 @@ class OrderPassenger:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if (
-                key == "gender"
-                and value.lower() not in OrderPassenger.allowed_genders
-            ):
+            if key == "gender" and value.lower() not in OrderPassenger.allowed_genders:
                 raise OrderPassenger.InvalidGender(value)
-            elif (
-                key == "title"
-                and value.lower() not in OrderPassenger.allowed_titles
-            ):
+            elif key == "title" and value.lower() not in OrderPassenger.allowed_titles:
                 raise OrderPassenger.InvalidTitle(value)
-            elif (
-                key == "type"
-                and value.lower() not in OrderPassenger.allowed_types
-            ):
+            elif key == "type" and value.lower() not in OrderPassenger.allowed_types:
                 raise OrderPassenger.InvalidType(value)
             setattr(self, key, value)
 

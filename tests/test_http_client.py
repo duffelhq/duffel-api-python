@@ -23,9 +23,7 @@ def test_http_client_error(requests_mock):
             }
         ],
     }
-    requests_mock.get(
-        "http://someaddress/api/stuff", json=error, status_code=500
-    )
+    requests_mock.get("http://someaddress/api/stuff", json=error, status_code=500)
     client = HttpClient("some_token", "http://someaddress")
     with pytest.raises(
         ApiError, match="The airline responded with an unexpected error"

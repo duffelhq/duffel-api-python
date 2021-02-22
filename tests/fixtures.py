@@ -7,7 +7,7 @@ from duffel_api import Duffel
 
 @contextmanager
 def fixture(name, url_path, mock):
-    """Yields a Duffel client instance that responds to a given `url_path` under `mock`)"""
+    """Yields a Duffel client instance that responds to a given `url_path` under `mock`"""
     url = "http://someaddress"
     with open("tests/fixtures/{}.json".format(name)) as fh:
         response = json.loads(fh.read())

@@ -15,9 +15,7 @@ class OfferRequestClient(HttpClient):
 
     def get(self, id_):
         """GET /air/offer_requests/:id"""
-        return OfferRequest(
-            self.do_get("{}/{}".format(self._url, id_))["data"]
-        )
+        return OfferRequest(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, limit=50):
         """GET /air/offer_requests"""
@@ -64,7 +62,7 @@ class OfferRequestCreate(object):
             raise OfferRequestCreate.InvalidCabinClass(cabin_class)
 
     def _validate_passengers(passengers):
-        """Validate number of passengers and the data provided for each if any were given"""
+        """Validate passenger count and the data provided for each if any were given"""
         if len(passengers) == 0:
             raise OfferRequestCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:

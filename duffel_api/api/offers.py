@@ -15,14 +15,10 @@ class OfferClient(HttpClient):
         if return_available_services:
             params["return_available_services"] = "true"
         return Offer(
-            self.do_get("{}/{}".format(self._url, id_), query_params=params)[
-                "data"
-            ]
+            self.do_get("{}/{}".format(self._url, id_), query_params=params)["data"]
         )
 
-    def list(
-        self, offer_request_id, sort=None, max_connections=None, limit=50
-    ):
+    def list(self, offer_request_id, sort=None, max_connections=None, limit=50):
         """GET /air/offers"""
         params = {"limit": limit, "offer_request_id": offer_request_id}
         if sort:

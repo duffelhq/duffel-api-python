@@ -86,7 +86,7 @@ class OrderCreate:
             raise OrderCreate.InvalidSelectedOffersLength(len(selected_offers))
 
     def _validate_passengers(passengers):
-        """Validate number of passengers and the data provided for each if any were given"""
+        """Validate passenger count and the data provided for each if any were given"""
         if len(passengers) == 0:
             raise OrderCreate.InvalidNumberOfPassengers(passengers)
         for passenger in passengers:

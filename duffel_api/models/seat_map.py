@@ -47,10 +47,7 @@ class SeatMapCabin:
     def __init__(self, json):
         for key in json:
             value = json[key]
-            if (
-                key == "cabin_class"
-                and value not in SeatMapCabin.allowed_classes
-            ):
+            if key == "cabin_class" and value not in SeatMapCabin.allowed_classes:
                 raise SeatMapCabin.InvalidClass(value)
             elif key == "wings" and value:
                 value = SeatMapCabinWings(value)
@@ -110,10 +107,7 @@ class SeatMapCabinRowSectionElement:
             for key in json:
                 value = json[key]
                 if key == "available_services":
-                    value = [
-                        SeatMapCabinRowSectionElementSeatService(s)
-                        for s in value
-                    ]
+                    value = [SeatMapCabinRowSectionElementSeatService(s) for s in value]
                 setattr(self, key, value)
         else:
             setattr(self, "type", element_type)

@@ -41,9 +41,7 @@ class Offer:
         """Validate passenger identity document types"""
         for doc_type in document_types:
             if doc_type not in Offer.allowed_passenger_identity_document_types:
-                raise Offer.InvalidPassengerIdentityDocumentType(
-                    document_types
-                )
+                raise Offer.InvalidPassengerIdentityDocumentType(document_types)
 
 
 class PaymentRequirements:
@@ -159,10 +157,7 @@ class OfferSliceSegmentPassenger:
             if key == "baggages":
                 value = [OfferSliceSegmentPassengerBaggage(v) for v in value]
             elif key == "cabin_class":
-                if (
-                    value
-                    not in OfferSliceSegmentPassenger.allowed_cabin_classes
-                ):
+                if value not in OfferSliceSegmentPassenger.allowed_cabin_classes:
                     raise OfferSliceSegmentPassenger.InvalidCabinClass(value)
             setattr(self, key, value)
 
@@ -183,8 +178,7 @@ class OfferSliceSegmentPassengerBaggage:
             value = json[key]
             if (
                 key == "type"
-                and value
-                not in OfferSliceSegmentPassengerBaggage.allowed_types
+                and value not in OfferSliceSegmentPassengerBaggage.allowed_types
             ):
                 raise OfferSliceSegmentPassengerBaggage.InvalidType(value)
             setattr(self, key, value)

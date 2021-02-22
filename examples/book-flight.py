@@ -74,7 +74,5 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print(
-        "\n🎉 Flight booked. Congrats! You can start packing your (duffel?) bags"
-    )
+    print("\n🎉 Flight booked. Congrats! You can start packing your (duffel?) bags")
     print(f"Booking reference: {order.booking_reference}")
