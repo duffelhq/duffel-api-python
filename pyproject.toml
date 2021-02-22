@@ -1,3 +1,6 @@
+[tool.black]
+line-length = 79
+
 [tool.interrogate]
 ignore-init-method = true
 ignore-init-module = false

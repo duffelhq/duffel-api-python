@@ -24,3 +24,5 @@ jobs:
       run: tox -e linting
     - name: Check code documentation
       run: tox -e doc
+    - name: Check formatting
+      run: tox -e format -- --check

@@ -3,7 +3,8 @@ from setuptools import setup, find_packages
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
-setup(    name="duffel-api",
+setup(
+    name="duffel-api",
     version="0.0.1",
     author="Duffel Engineering",
     author_email="client-libraries@duffel.com",
