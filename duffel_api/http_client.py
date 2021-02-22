@@ -64,10 +64,11 @@ class HttpClient:
     URL = "https://api.duffel.com"
     VERSION = "beta"
 
-    def __init__(self, api_token=None, url=None):
+    def __init__(self, api_token=None, url=None, **settings):
         if url is not None:
             HttpClient.URL = url
         self.http_session = Session()
+        self._settings = settings
 
         user_agent = f"Duffel/{HttpClient.VERSION} duffel_api_python/{version()}"
         self.http_session.headers.update({"User-Agent": user_agent})
@@ -88,8 +89,7 @@ class HttpClient:
         request_url = HttpClient.URL + endpoint
         request = Request(method, request_url, params=query_params, json=body)
         prepared = self.http_session.prepare_request(request)
-        # TODO(nlopes): WE MUST HAVE TIMEOUTS, TIMEOUTS!
-        response = self.http_session.send(prepared)
+        response = self.http_session.send(prepared, **self._settings)
         if response.status_code in [
             http_codes.ok,
             http_codes.created,
