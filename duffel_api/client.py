@@ -9,12 +9,12 @@ from .api import (
     OrderClient,
     PaymentClient,
     SeatMapClient,
+    WebhookClient,
 )
 
 
 class Duffel:
     """Client to the entire API"""
-
     def __init__(self, **kwargs):
         # TODO(nlopes): I really don't like how I've built this- we shouldn't keep
         # instantiating the HttpClient through class inheritance.
@@ -92,3 +92,10 @@ class Duffel:
         if not hasattr(self, "seat_map_client"):
             setattr(self, "seat_map_client", SeatMapClient(**self._kwargs))
         return self.seat_map_client
+
+    @property
+    def webhooks(self):
+        """Webhooks API - /air/webhooks"""
+        if not hasattr(self, "webhook_client"):
+            setattr(self, "webhook_client", WebhookClient(**self._kwargs))
+        return self.webhook_client

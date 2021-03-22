@@ -8,6 +8,7 @@ from .order_cancellations import OrderCancellationClient
 from .order_change_offers import OrderChangeOffersClient
 from .payments import PaymentClient
 from .seat_maps import SeatMapClient
+from .webhooks import WebhookClient
 
 __all__ = [
     AircraftClient,
@@ -20,4 +21,5 @@ __all__ = [
     OrderCancellationClient,
     PaymentClient,
     SeatMapClient,
+    WebhookClient,
 ]
