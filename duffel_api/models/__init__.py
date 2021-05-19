@@ -7,6 +7,7 @@ from .offer import Offer
 from .offer_request import OfferRequest
 from .order import Order
 from .order_cancellation import OrderCancellation
+from .order_change_offer import OrderChangeOffer
 from .payment import Payment
 from .seat_map import SeatMap
 
@@ -21,6 +22,7 @@ __all__ = [
     OfferRequest,
     Order,
     OrderCancellation,
+    OrderChangeOffer,
     Payment,
     SeatMap,
 ]
