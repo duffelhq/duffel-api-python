@@ -1,4 +1,10 @@
-from ..models import Airline, Place, Aircraft
+from ..models import (
+    Airline,
+    Place,
+    Aircraft,
+    OfferConditionChangeBeforeDeparture,
+    OfferConditionRefundBeforeDeparture,
+)
 from ..utils import maybe_parse_date_entries
 
 
@@ -18,6 +24,8 @@ class Order:
                 value = maybe_parse_date_entries(key, json[key])
             if key == "documents":
                 value = [OrderDocument(v) for v in value]
+            elif key == "conditions":
+                value = OrderConditions(value)
             elif key == "owner":
                 value = Airline(value)
             elif key == "passengers":
@@ -29,6 +37,31 @@ class Order:
             elif key == "slices":
                 value = [OrderSlice(v) for v in value]
             setattr(self, key, value)
+
+
+class OrderConditions:
+    """The conditions associated with this order, describing the kinds of modifications you
+    can make to it and any penalties that will apply to those modifications. This
+    information assumes the condition is applied to all of the slices and passengers
+    associated with this order - for information at the slice level (e.g. "what happens if
+    I just want to change the first slice?") refer to the slices. If a particular kind of
+    modification is allowed, you may not always be able to take action through the Duffel
+    API. In some cases, you may need to contact the Duffel support team or the airline
+    directly.
+
+    """
+
+    def __init__(self, json):
+        for key in json:
+            if key == "change_before_departure":
+                value = OrderConditionChangeBeforeDeparture(json[key])
+            elif key == "refund_before_departure":
+                value = OrderConditionRefundBeforeDeparture(json[key])
+            setattr(self, key, value)
+
+
+OrderConditionChangeBeforeDeparture = OfferConditionChangeBeforeDeparture
+OrderConditionRefundBeforeDeparture = OfferConditionRefundBeforeDeparture
 
 
 class OrderSlice:

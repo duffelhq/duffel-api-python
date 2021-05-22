@@ -25,6 +25,8 @@ class Offer:
             value = maybe_parse_date_entries(key, json[key])
             if key == "allowed_passenger_identity_document_types":
                 Offer._validate_passenger_identity_document_types(value)
+            elif key == "conditions":
+                value = OfferConditions(value)
             elif key == "slices":
                 value = [OfferSlice(v) for v in value]
             elif key == "passengers":
@@ -44,7 +46,55 @@ class Offer:
                 raise Offer.InvalidPassengerIdentityDocumentType(document_types)
 
 
+class OfferConditions:
+    """The conditions associated with this offer, describing the kinds of modifications you
+    can make post-booking and any penalties that will apply to those modifications.
+
+    """
+
+    def __init__(self, json):
+        for key in json:
+            if key == "change_before_departure":
+                value = OfferConditionChangeBeforeDeparture(json[key])
+            elif key == "refund_before_departure":
+                value = OfferConditionRefundBeforeDeparture(json[key])
+            setattr(self, key, value)
+
+
+class OfferConditionChangeBeforeDeparture:
+    """Whether the whole offer can be changed before the departure of the first slice. If all
+    of the slices on the offer can be changed then the allowed property will be
+    true. Refer to the slices for information about change penalties. If any of the slices
+    on the offer can't be changed then the allowed property will be false. In this case
+    you should refer to the slices conditions to determine if any part of the offer is
+    changeable. If the airline hasn't provided any information about whether this offer
+    can be changed then this property will be null.
+
+    """
+
+    def __init__(self, json):
+        for key in json:
+            setattr(self, key, json[key])
+
+
+class OfferConditionRefundBeforeDeparture:
+    """Whether the whole offer can be refunded before the departure of the first slice.
+
+    If all of the slices on the offer can be refunded then the allowed property will be
+    true and information will be provided about any penalties. If any of the slices on the
+    offer can't be refunded then the allowed property will be false. If the airline hasn't
+    provided any information about whether this offer can be refunded then this property
+    will be null.
+
+    """
+
+    def __init__(self, json):
+        for key in json:
+            setattr(self, key, json[key])
+
+
 class PaymentRequirements:
+
     """The payment requirements for an offer"""
 
     def __init__(self, json):
@@ -54,12 +104,12 @@ class PaymentRequirements:
 
 
 class Service:
-    """The services that can be booked along with the offer but are not included by
-    default, for example an additional checked bag. This field is only returned in the
-    [Get single offer](https://duffel.com/docs/api/offers/get-offer-by-id) endpoint. When
-    there are no services available, or we don't support services for the airline, this
-    list will be empty. If you want to know which airlines we support services for, please
-    get in touch with the Duffel support team at help@duffel.com.
+    """The services that can be booked along with the offer but are not included by default,
+    for example an additional checked bag. This field is only returned in the [Get single
+    offer](https://duffel.com/docs/api/offers/get-offer-by-id) endpoint. When there are no
+    services available, or we don't support services for the airline, this list will be
+    empty. If you want to know which airlines we support services for, please get in touch
+    with the Duffel support team at help@duffel.com.
 
     """
 
@@ -97,9 +147,9 @@ class ServiceMetadata:
 
 
 class OfferSlice:
-    """Each slice will include one or more segments, the specific flights that
-    the airline is offering to take the passengers from the slice's origin to
-    its destination.
+    """Each slice will include one or more segments, the specific flights that the airline is
+    offering to take the passengers from the slice's origin to its destination.
+
     """
 
     allowed_place_types = ["airport", "city"]

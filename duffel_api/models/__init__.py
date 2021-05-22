@@ -3,9 +3,17 @@ from .airport import Airport, City
 from .airline import Airline
 from .passenger import Passenger
 from .place import Place
-from .offer import Offer
+from .offer import (
+    Offer,
+    OfferConditionChangeBeforeDeparture,
+    OfferConditionRefundBeforeDeparture,
+)
 from .offer_request import OfferRequest
-from .order import Order
+from .order import (
+    Order,
+    OrderConditionChangeBeforeDeparture,
+    OrderConditionRefundBeforeDeparture,
+)
 from .order_cancellation import OrderCancellation
 from .order_change_offer import OrderChangeOffer
 from .payment import Payment
@@ -19,8 +27,12 @@ __all__ = [
     Passenger,
     Place,
     Offer,
+    OfferConditionChangeBeforeDeparture,
+    OfferConditionRefundBeforeDeparture,
     OfferRequest,
     Order,
+    OrderConditionChangeBeforeDeparture,
+    OrderConditionRefundBeforeDeparture,
     OrderCancellation,
     OrderChangeOffer,
     Payment,
