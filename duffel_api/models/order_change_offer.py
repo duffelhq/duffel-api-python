@@ -1,15 +1,18 @@
+from ..models import Place
 from ..utils import maybe_parse_date_entries
 
 
 class OrderChangeOffer:
-    """After you've searched for flights to add to your order by creating an order change request, we'll send your search to
-a range of airlines, which may return order change offers.
+    """After you've searched for flights to add to your order by creating an order change
+    request, we'll send your search to a range of airlines, which may return order change
+    offers.
 
-    Each order change offer represents flights you can buy from an airline at a particular price that meets your search
-    criteria.
+    Each order change offer represents flights you can buy from an airline at a particular
+    price that meets your search criteria.
 
-    You'll see slices inside the offers. Each slice will also include a list of one or more specific flights (called
-    segments) that the airline is offering to get the passengers where they want to go.
+    You'll see slices inside the offers. Each slice will also include a list of one or
+    more specific flights (called segments) that the airline is offering to get the
+    passengers where they want to go.
 
     """
 
@@ -64,4 +67,3 @@ class OrderChangeOfferSlicesAdd:
 
 
 OrderChangeOfferSlicesRemove = OrderChangeOfferSlicesAdd
-
