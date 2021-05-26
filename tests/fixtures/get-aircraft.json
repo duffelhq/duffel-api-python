@@ -1,1 +1,13 @@
-{"meta": {"limit": 50, "after": "g2wAAAACbQAAABBBZXJvbWlzdC1LaGFya2l2bQAAAB="}, "data": [{"name": "Airbus Industries A380", "id": "arc_00009UhD4ongolulWd91Ky", "iata_code": "380"}]}
+{
+  "data": [
+    {
+      "iata_code": "380",
+      "id": "arc_00009UhD4ongolulWd91Ky",
+      "name": "Airbus Industries A380"
+    }
+  ],
+  "meta": {
+    "after": "g2wAAAACbQAAABBBZXJvbWlzdC1LaGFya2l2bQAAAB=",
+    "limit": 50
+  }
+}

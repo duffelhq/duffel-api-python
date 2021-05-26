@@ -1,1 +1,25 @@
-{"meta": {"limit": 50, "after": "g2wAAAACbQAAABBBZXJvbWlzdC1LaGFya2l2bQAAAB="}, "data": [{"time_zone": "Europe/London", "name": "Heathrow", "longitude": -141.951519, "latitude": 64.068865, "id": "arp_lhr_gb", "icao_code": "EGLL", "iata_country_code": "GB", "iata_code": "LHR", "city_name": "London", "city": {"name": "London", "id": "cit_lon_gb", "iata_country_code": "GB", "iata_code": "LON"}}]}
+{
+  "data": [
+    {
+      "city": {
+        "iata_code": "LON",
+        "iata_country_code": "GB",
+        "id": "cit_lon_gb",
+        "name": "London"
+      },
+      "city_name": "London",
+      "iata_code": "LHR",
+      "iata_country_code": "GB",
+      "icao_code": "EGLL",
+      "id": "arp_lhr_gb",
+      "latitude": 64.068865,
+      "longitude": -141.951519,
+      "name": "Heathrow",
+      "time_zone": "Europe/London"
+    }
+  ],
+  "meta": {
+    "after": "g2wAAAACbQAAABBBZXJvbWlzdC1LaGFya2l2bQAAAB=",
+    "limit": 50
+  }
+}

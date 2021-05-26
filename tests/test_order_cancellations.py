@@ -38,7 +38,7 @@ def test_create_order_cancellation(requests_mock):
         "create-order-cancellation", "/order_cancellations", requests_mock.post
     ) as client:
         cancellation = client.order_cancellations.create("order-id")
-        assert cancellation.id == "orc_001"
+        assert cancellation.id == "ore_00009qzZWzjDipIkqpaUAj"
         assert cancellation.refund_to == "arc_bsp_cash"
         assert cancellation.refund_currency == "GBP"
         assert cancellation.refund_amount == "90.80"
@@ -51,7 +51,7 @@ def test_confirm_order_cancellation(requests_mock):
         requests_mock.post,
     ) as client:
         cancellation = client.order_cancellations.confirm("some-id")
-        assert cancellation.id == "orc_001"
+        assert cancellation.id == "ore_00009qzZWzjDipIkqpaUAj"
         assert cancellation.refund_to == "arc_bsp_cash"
         assert cancellation.refund_currency == "GBP"
         assert cancellation.refund_amount == "90.80"
