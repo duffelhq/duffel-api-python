@@ -3,7 +3,9 @@ from ..models import OrderCancellation
 
 
 class OrderCancellationClient(HttpClient):
-    """To cancel an order, you'll need to create an order cancellation, check the
+    """Entrypoint to create to cancel orders.
+
+    To cancel an order, you'll need to create an order cancellation, check the
     refund_amount returned, and, if you're happy to go ahead and cancel the order.
 
     The refund specified by refund_amount, if any, will be returned to your original
@@ -12,11 +14,14 @@ class OrderCancellationClient(HttpClient):
     """
 
     def __init__(self, **kwargs):
+        """Instantiate an order cancellation client."""
         self._url = "/air/order_cancellations"
         super().__init__(**kwargs)
 
     def create(self, order_id):
-        """To begin the process of cancelling an order you need to create an order
+        """Create an order cancellation.
+
+        To begin the process of cancelling an order you need to create an order
         cancellation. The OrderCancellation will contain the refund_amount due from the
         Airline.
 
@@ -24,13 +29,14 @@ class OrderCancellationClient(HttpClient):
         cancellation endpoint.
 
         """
-
         res = self.do_post(self._url, body={"data": {"order_id": order_id}})
         return OrderCancellation(res["data"])
 
     def confirm(self, id_):
-        """Once you've created a pending order cancellation, you'll know the refund_amount you're
-        due to get back.
+        """Confirm an order cancellation.
+
+        Once you've created a pending order cancellation, you'll know the refund_amount
+        you're due to get back.
 
         To actually cancel the order, you'll need to confirm the cancellation. The booking
         with the airline will be cancelled, and the refund_amount will be returned to the
@@ -38,6 +44,5 @@ class OrderCancellationClient(HttpClient):
         your customer (e.g. back to their credit/debit card).
 
         """
-
         url = "{}/{}/actions/confirm".format(self._url, id_)
         return OrderCancellation(self.do_post(url)["data"])

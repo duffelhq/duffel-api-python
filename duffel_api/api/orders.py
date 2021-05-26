@@ -3,21 +3,22 @@ from ..models import Order
 
 
 class OrderClient(HttpClient):
-    """Client to interact with Orders"""
+    """Client to interact with Orders."""
 
     class InvalidSort(Exception):
         """Invalid sort option provided"""
 
     def __init__(self, **kwargs):
+        """Instantiate an Order client."""
         self._url = "/air/orders"
         super().__init__(**kwargs)
 
     def get(self, id_):
-        """GET /air/orders/:id"""
+        """GET /air/orders/:id."""
         return Order(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
-        """GET /air/orders"""
+        """GET /air/orders."""
         params = {"limit": limit}
         if sort:
             if sort not in ["pay_by", "-pay_by"]:
@@ -28,7 +29,7 @@ class OrderClient(HttpClient):
         return Pagination(self, Order, params)
 
     def create(self):
-        """Initiate creation of an Order"""
+        """Initiate creation of an Order."""
         return OrderCreate(self)
 
 
