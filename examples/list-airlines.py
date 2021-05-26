@@ -1,4 +1,4 @@
-from duffel_api import Duffel, ApiError
+from duffel_api import Duffel
 
 
 if __name__ == "__main__":
