@@ -1,4 +1,4 @@
-from ..http_client import HttpClient
+from ..http_client import HttpClient, Pagination
 from ..models import OrderCancellation
 
 
@@ -17,6 +17,15 @@ class OrderCancellationClient(HttpClient):
         """Instantiate an order cancellation client."""
         self._url = "/air/order_cancellations"
         super().__init__(**kwargs)
+
+    def get(self, id_):
+        """GET /air/order_cancellations/:id."""
+        return OrderCancellation(self.do_get("{}/{}".format(self._url, id_))["data"])
+
+    def list(self, order_id, limit=50):
+        """Retrieve a paginated list of order cancellations."""
+        params = {"limit": limit, "order_id": order_id}
+        return Pagination(self, OrderCancellation, params)
 
     def create(self, order_id):
         """Create an order cancellation.
