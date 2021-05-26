@@ -13,4 +13,4 @@ def fixture(name, url_path, mock):
         response = json.loads(fh.read())
         uri = "{}/air{}".format(url, url_path)
         mock(uri, complete_qs=True, json=response)
-        yield Duffel(api_token="some_token", url=url)
+        yield Duffel(api_token="some_token", api_url=url)

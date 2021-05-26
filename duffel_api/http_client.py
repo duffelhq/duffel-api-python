@@ -64,16 +64,23 @@ class HttpClient:
     URL = "https://api.duffel.com"
     VERSION = "beta"
 
-    def __init__(self, api_token=None, url=None, **settings):
-        if url is not None:
-            HttpClient.URL = url
+    def __init__(self, api_token=None, api_url=None, api_version=None, **settings):
+        if api_url is not None:
+            self._api_url = api_url
+        else:
+            self._api_url = HttpClient.URL
+        if api_version is not None:
+            self._api_version = api_version
+        else:
+            self._api_version = HttpClient.VERSION
+
         self.http_session = Session()
         self._settings = settings
 
-        user_agent = f"Duffel/{HttpClient.VERSION} duffel_api_python/{version()}"
+        user_agent = f"Duffel/{self._api_version} duffel_api_python/{version()}"
         self.http_session.headers.update({"User-Agent": user_agent})
         self.http_session.headers.update({"Accept": "application/json"})
-        self.http_session.headers.update({"Duffel-Version": HttpClient.VERSION})
+        self.http_session.headers.update({"Duffel-Version": self._api_version})
         if not api_token:
             api_token = os.getenv("DUFFEL_API_TOKEN")
             if not api_token:
@@ -87,7 +94,7 @@ class HttpClient:
         occurred
 
         """
-        request_url = HttpClient.URL + endpoint
+        request_url = self._api_url + endpoint
         request = Request(method, request_url, params=query_params, json=body)
         prepared = self.http_session.prepare_request(request)
         response = self.http_session.send(prepared, **self._settings)
