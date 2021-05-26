@@ -12,7 +12,12 @@ def test_create_payment(requests_mock):
             "currency": "GBP",
             "amount": "30.20",
         }
-        payment = client.payments.create("order-id", payment_details)
+        payment = (
+            client.payments.create()
+            .order_id("order-id")
+            .payment(payment_details)
+            .execute()
+        )
         assert payment.id == "pay_00009hthhsUZ8W4LxQgkjo"
         assert payment.type == "balance"
         assert payment.amount == "30.20"
@@ -25,11 +30,12 @@ def test_create_payment_with_invalid_payment_details(requests_mock):
             "currency": "GBP",
             "amount": "30.20",
         }
+        payments_create_client = client.payments.create().order_id("order-id")
         with pytest.raises(
             PaymentClient.InvalidPayment,
             match="{'currency': 'GBP', 'amount': '30.20'}",
         ):
-            client.payments.create("order-id", payment_details)
+            payments_create_client.payment(payment_details).execute()
         payment_details["type"] = "credit"
         with pytest.raises(PaymentClient.InvalidPaymentType, match="credit"):
-            client.payments.create("order-id", payment_details)
+            payments_create_client.payment(payment_details).execute()

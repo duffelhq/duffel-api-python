@@ -10,7 +10,7 @@ class Payment:
 
     """
 
-    allowed_types = ["arc_bsp_cash", "balance"]
+    allowed_types = ["arc_bsp_cash", "balance", "payments"]
 
     class InvalidType(Exception):
         """Invalid payment type provided"""

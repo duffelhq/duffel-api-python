@@ -3,7 +3,7 @@ from ..models import Payment
 
 
 class PaymentClient(HttpClient):
-    """Client to interact with Payments"""
+    """Client to interact with Payments."""
 
     class InvalidPayment(Exception):
         """Invalid payment data provided"""
@@ -15,14 +15,36 @@ class PaymentClient(HttpClient):
         self._url = "/air/payments"
         super().__init__(**kwargs)
 
-    def create(self, order_id, payment):
-        """POST /air/payments"""
+    def create(self):
+        """Initiate creation of a Payment."""
+        return PaymentCreate(self)
+
+
+class PaymentCreate:
+    def __init__(self, client):
+        self._client = client
+        self._order_id = None
+        self._payment = None
+
+    def _validate_payment(payment):
         if set(payment.keys()) != set(["amount", "currency", "type"]):
             raise PaymentClient.InvalidPayment(payment)
-        if payment["type"] not in ["arc_bsp_cash", "balance"]:
+        if payment["type"] not in ["arc_bsp_cash", "balance", "payments"]:
             raise PaymentClient.InvalidPaymentType(payment["type"])
-        res = self.do_post(
-            self._url,
-            body={"data": {"order_id": order_id, "payment": payment}},
+
+    def order_id(self, order_id):
+        self._order_id = order_id
+        return self
+
+    def payment(self, payment):
+        self._payment = payment
+        return self
+
+    def execute(self):
+        """POST /air/payments."""
+        PaymentCreate._validate_payment(self._payment)
+        res = self._client.do_post(
+            self._client._url,
+            body={"data": {"order_id": self._order_id, "payment": self._payment}},
         )
         return Payment(res["data"])
