@@ -12,7 +12,8 @@ class ClientError(Exception):
 class ApiError(Exception):
     """An error originated from the API"""
 
-    def __init__(self, json, message=None):
+    def __init__(self, headers, json, message=None):
+        self._headers = headers
         self.meta = json["meta"]
         self.errors = json["errors"]
         # We always only print the first error message
@@ -24,7 +25,17 @@ class ApiError(Exception):
         err = self.errors[0]
         return f"{err['type']}: {err['title']}: {self.message}"
 
+    @property
+    def headers(self):
+        """Request headers"""
+        return self._headers
 
+
+# TODO(nlopes): I don't like this. Pagination in this way means the user will be
+# constrained by this flow.  A better way would be to return a ListObject that contains
+# the first list of objects and then if the user wants auto pagination, they can call
+# something like `auto_paginate` or something along those lines.  We also don't provide
+# good mechanisms for the user to react to rate limiting when auto paginating.
 class Pagination:
     """A way to do pagination on list() calls"""
 
@@ -111,7 +122,7 @@ class HttpClient:
                 ) from err
         else:
             try:
-                raise ApiError(response.json())
+                raise ApiError(response.headers, response.json())
             except ValueError as err:
                 raise Exception(
                     "something bad happened: {}".format(response.text)
