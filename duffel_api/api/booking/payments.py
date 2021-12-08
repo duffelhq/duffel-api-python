@@ -1,5 +1,5 @@
-from ..http_client import HttpClient
-from ..models import Payment
+from ...http_client import HttpClient
+from ...models import Payment
 
 
 class PaymentClient(HttpClient):

@@ -1,5 +1,5 @@
-from ..http_client import HttpClient, Pagination
-from ..models import Order
+from ...http_client import HttpClient, Pagination
+from ...models import Order
 
 
 class OrderClient(HttpClient):

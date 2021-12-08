@@ -1,6 +1,6 @@
 import pytest
 
-from duffel_api.api.orders import OrderCreate
+from duffel_api.api import OrderCreate
 
 from .fixtures import fixture
 

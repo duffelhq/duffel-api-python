@@ -1,6 +1,6 @@
 import pytest
 
-from duffel_api.api.offer_requests import OfferRequestCreate
+from duffel_api.api import OfferRequestCreate
 
 from .fixtures import fixture
 

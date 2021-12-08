@@ -1,5 +1,5 @@
-from ..http_client import HttpClient, Pagination
-from ..models import Airline
+from ...http_client import HttpClient, Pagination
+from ...models import Airline
 
 
 class AirlineClient(HttpClient):
