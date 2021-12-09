@@ -3,7 +3,7 @@ from .fixtures import fixture
 
 def test_get_order_cancellation_by_id(requests_mock):
     with fixture(
-        "get-order-cancellation-by-id", "/order_cancellations/id", requests_mock.get
+        "get-order-cancellation-by-id", "air/order_cancellations/id", requests_mock.get
     ) as client:
         order_cancellation = client.order_cancellations.get("id")
         assert order_cancellation.id == "ore_00009qzZWzjDipIkqpaUAj"
@@ -24,7 +24,7 @@ def test_get_order_cancellations(requests_mock):
         end_pagination_url, complete_qs=True, json=end_pagination_response
     )
 
-    url = "/order_cancellations?limit=50&order_id=order-id"
+    url = "air/order_cancellations?limit=50&order_id=order-id"
     with fixture("get-order-cancellations", url, requests_mock.get) as client:
         paginated_order_cancellations = client.order_cancellations.list("order-id")
         order_cancellations = list(paginated_order_cancellations)
@@ -35,7 +35,7 @@ def test_get_order_cancellations(requests_mock):
 
 def test_create_order_cancellation(requests_mock):
     with fixture(
-        "create-order-cancellation", "/order_cancellations", requests_mock.post
+        "create-order-cancellation", "air/order_cancellations", requests_mock.post
     ) as client:
         cancellation = client.order_cancellations.create("order-id")
         assert cancellation.id == "ore_00009qzZWzjDipIkqpaUAj"
@@ -47,7 +47,7 @@ def test_create_order_cancellation(requests_mock):
 def test_confirm_order_cancellation(requests_mock):
     with fixture(
         "confirm-order-cancellation",
-        "/order_cancellations/some-id/actions/confirm",
+        "air/order_cancellations/some-id/actions/confirm",
         requests_mock.post,
     ) as client:
         cancellation = client.order_cancellations.confirm("some-id")
