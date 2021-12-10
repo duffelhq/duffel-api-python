@@ -8,6 +8,7 @@ from .booking.order_cancellations import OrderCancellationClient
 from .booking.order_change_offers import OrderChangeOffersClient
 from .booking.payments import PaymentClient
 from .booking.seat_maps import SeatMapClient
+from .notifications.webhooks import WebhookClient
 
 __all__ = [
     AircraftClient,
@@ -22,4 +23,5 @@ __all__ = [
     OrderCancellationClient,
     PaymentClient,
     SeatMapClient,
+    WebhookClient,
 ]

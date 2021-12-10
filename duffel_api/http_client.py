@@ -144,3 +144,7 @@ class HttpClient:
     def do_put(self, endpoint, method="PUT", query_params=None, body=None):
         """Issue a PUT request to `endpoint`"""
         return self._http_call(endpoint, method, query_params, body)
+
+    def do_patch(self, endpoint, method="PATCH", query_params=None, body=None):
+        """Issue a PATCH request to `endpoint`"""
+        return self._http_call(endpoint, method, query_params, body)
