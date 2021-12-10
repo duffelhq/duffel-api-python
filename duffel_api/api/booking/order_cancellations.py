@@ -1,5 +1,5 @@
-from ..http_client import HttpClient, Pagination
-from ..models import OrderCancellation
+from ...http_client import HttpClient, Pagination
+from ...models import OrderCancellation
 
 
 class OrderCancellationClient(HttpClient):

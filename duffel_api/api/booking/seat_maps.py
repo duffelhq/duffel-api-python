@@ -1,5 +1,5 @@
-from ..http_client import HttpClient
-from ..models import SeatMap
+from ...http_client import HttpClient
+from ...models import SeatMap
 
 
 class SeatMapClient(HttpClient):

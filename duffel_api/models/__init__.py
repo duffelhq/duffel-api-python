@@ -18,6 +18,7 @@ from .order_cancellation import OrderCancellation
 from .order_change_offer import OrderChangeOffer
 from .payment import Payment
 from .seat_map import SeatMap
+from .webhook import Webhook
 
 __all__ = [
     Aircraft,
@@ -37,4 +38,5 @@ __all__ = [
     OrderChangeOffer,
     Payment,
     SeatMap,
+    Webhook,
 ]

@@ -1,12 +1,13 @@
 import pytest
 
-from duffel_api.api.orders import OrderCreate
+from duffel_api.api import OrderCreate
 
 from .fixtures import fixture
 
 
 def test_get_order_by_id(requests_mock):
-    with fixture("get-order-by-id", "/orders/id", requests_mock.get) as client:
+    url = "air/orders/id"
+    with fixture("get-order-by-id", url, requests_mock.get) as client:
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
         assert len(order.slices) == 1
@@ -27,7 +28,7 @@ def test_get_orders(requests_mock):
         end_pagination_url, complete_qs=True, json=end_pagination_response
     )
 
-    url = "/orders?limit=50"
+    url = "air/orders?limit=50"
     with fixture("get-orders", url, requests_mock.get) as client:
         paginated_orders = client.orders.list()
         orders = list(paginated_orders)
@@ -37,7 +38,8 @@ def test_get_orders(requests_mock):
 
 
 def test_create_order(requests_mock):
-    with fixture("create-order", "/orders", requests_mock.post) as client:
+    url = "air/orders"
+    with fixture("create-order", url, requests_mock.post) as client:
         passengers = [
             {
                 "born_on": "2000-02-21",
@@ -65,7 +67,8 @@ def test_create_order(requests_mock):
 
 
 def test_create_order_with_invalid_data(requests_mock):
-    with fixture("create-order", "/orders", requests_mock.post) as client:
+    url = "air/orders"
+    with fixture("create-order", url, requests_mock.post) as client:
         creation = client.orders.create()
         with pytest.raises(OrderCreate.InvalidNumberOfPassengers):
             creation.execute()

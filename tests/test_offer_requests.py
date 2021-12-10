@@ -1,14 +1,13 @@
 import pytest
 
-from duffel_api.api.offer_requests import OfferRequestCreate
+from duffel_api.api import OfferRequestCreate
 
 from .fixtures import fixture
 
 
 def test_get_offer_request_by_id(requests_mock):
-    with fixture(
-        "get-offer-request-by-id", "/offer_requests/id", requests_mock.get
-    ) as client:
+    url = "air/offer_requests/id"
+    with fixture("get-offer-request-by-id", url, requests_mock.get) as client:
         offer_request = client.offer_requests.get("id")
         assert offer_request.id == "orq_00009hjdomFOCJyxHG7k7k"
         assert len(offer_request.slices) == 1
@@ -28,7 +27,7 @@ def test_get_offer_requests(requests_mock):
         end_pagination_url, complete_qs=True, json=end_pagination_response
     )
 
-    url = "/offer_requests?limit=50"
+    url = "air/offer_requests?limit=50"
     with fixture("get-offer-requests", url, requests_mock.get) as client:
         paginated_offer_requests = client.offer_requests.list()
         offer_requests = list(paginated_offer_requests)
@@ -38,9 +37,10 @@ def test_get_offer_requests(requests_mock):
 
 
 def test_create_offer_request(requests_mock):
+    url = "air/offer_requests?return_offers=false"
     with fixture(
         "create-offer-request",
-        "/offer_requests?return_offers=false",
+        url,
         requests_mock.post,
     ) as client:
         passengers = [{"type": "adult"}]
@@ -64,9 +64,10 @@ def test_create_offer_request(requests_mock):
 
 
 def test_create_offer_request_with_invalid_data(requests_mock):
+    url = "air/offer_requests?return_offers=false"
     with fixture(
         "create-offer-request",
-        "/offer_requests?return_offers=false",
+        url,
         requests_mock.post,
     ) as client:
         creation = client.offer_requests.create()

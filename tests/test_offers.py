@@ -2,7 +2,8 @@ from .fixtures import fixture
 
 
 def test_get_offer_by_id(requests_mock):
-    with fixture("get-offer-by-id", "/offers/id", requests_mock.get) as client:
+    url = "air/offers/id"
+    with fixture("get-offer-by-id", url, requests_mock.get) as client:
         offer = client.offers.get("id")
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
         assert len(offer.slices) == 1
@@ -27,7 +28,7 @@ def test_get_offers(requests_mock):
         end_pagination_url, complete_qs=True, json=end_pagination_response
     )
 
-    url = "/offers?limit=50&offer_request_id=offer_request_id"
+    url = "air/offers?limit=50&offer_request_id=offer_request_id"
     with fixture("get-offers", url, requests_mock.get) as client:
         paginated_offers = client.offers.list("offer_request_id")
         offers = list(paginated_offers)

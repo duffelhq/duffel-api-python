@@ -1,5 +1,5 @@
-from ..http_client import HttpClient, Pagination
-from ..models import OfferRequest
+from ...http_client import HttpClient, Pagination
+from ...models import OfferRequest
 
 
 class OfferRequestClient(HttpClient):
