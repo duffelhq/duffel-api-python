@@ -2,7 +2,8 @@ from .fixtures import fixture
 
 
 def test_get_offer_by_id(requests_mock):
-    with fixture("get-offer-by-id", "air/offers/id", requests_mock.get) as client:
+    url = "air/offers/id"
+    with fixture("get-offer-by-id", url, requests_mock.get) as client:
         offer = client.offers.get("id")
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
         assert len(offer.slices) == 1

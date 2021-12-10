@@ -2,7 +2,8 @@ from .fixtures import fixture
 
 
 def test_get_aircraft_by_id(requests_mock):
-    with fixture("get-aircraft-by-id", "air/aircraft/id", requests_mock.get) as client:
+    url = "air/aircraft/id"
+    with fixture("get-aircraft-by-id", url, requests_mock.get) as client:
         aircraft = client.aircraft.get("id")
         assert aircraft.id == "arc_00009UhD4ongolulWd91Ky"
         assert aircraft.name == "Airbus Industries A380"

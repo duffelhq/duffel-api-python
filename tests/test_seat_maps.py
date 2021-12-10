@@ -2,9 +2,8 @@ from .fixtures import fixture
 
 
 def test_get_seat_maps(requests_mock):
-    with fixture(
-        "get-seat-maps", "air/seat_maps?offer_id=offer-id", requests_mock.get
-    ) as client:
+    url = "air/seat_maps?offer_id=offer-id"
+    with fixture("get-seat-maps", url, requests_mock.get) as client:
         seat_maps = client.seat_maps.get("offer-id")
         assert len(seat_maps) == 1
         seat_map = seat_maps[0]

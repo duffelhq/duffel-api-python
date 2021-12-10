@@ -2,7 +2,8 @@ from .fixtures import fixture
 
 
 def test_get_airport_by_id(requests_mock):
-    with fixture("get-airport-by-id", "air/airports/id", requests_mock.get) as client:
+    url = "air/airports/id"
+    with fixture("get-airport-by-id", url, requests_mock.get) as client:
         airport = client.airports.get("id")
         assert airport.id == "arp_lhr_gb"
         assert airport.name == "Heathrow"

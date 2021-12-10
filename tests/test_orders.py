@@ -6,7 +6,8 @@ from .fixtures import fixture
 
 
 def test_get_order_by_id(requests_mock):
-    with fixture("get-order-by-id", "air/orders/id", requests_mock.get) as client:
+    url = "air/orders/id"
+    with fixture("get-order-by-id", url, requests_mock.get) as client:
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
         assert len(order.slices) == 1
@@ -37,7 +38,8 @@ def test_get_orders(requests_mock):
 
 
 def test_create_order(requests_mock):
-    with fixture("create-order", "air/orders", requests_mock.post) as client:
+    url = "air/orders"
+    with fixture("create-order", url, requests_mock.post) as client:
         passengers = [
             {
                 "born_on": "2000-02-21",
@@ -65,7 +67,8 @@ def test_create_order(requests_mock):
 
 
 def test_create_order_with_invalid_data(requests_mock):
-    with fixture("create-order", "air/orders", requests_mock.post) as client:
+    url = "air/orders"
+    with fixture("create-order", url, requests_mock.post) as client:
         creation = client.orders.create()
         with pytest.raises(OrderCreate.InvalidNumberOfPassengers):
             creation.execute()
