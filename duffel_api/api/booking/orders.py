@@ -65,6 +65,7 @@ class OrderCreate:
         self._services = []
         self._payment_type = "instant"
 
+    @staticmethod
     def _validate_payments(payments):
         """Validate number of payments and the data provided for each if any were given"""
         if len(payments) == 0:
@@ -75,17 +76,20 @@ class OrderCreate:
             if payment["type"] not in ["arc_bsp_cash", "balance"]:
                 raise OrderCreate.InvalidPaymentType(payment["type"])
 
+    @staticmethod
     def _validate_services(services):
         """Validate the data provided for each service if any were given"""
         for service in services:
             if set(service.keys()) != set(["id", "quantity"]):
                 raise OrderCreate.InvalidService(service)
 
+    @staticmethod
     def _validate_selected_offers(selected_offers):
         """Validate number of selected_offers"""
         if len(selected_offers) != 1:
             raise OrderCreate.InvalidSelectedOffersLength(len(selected_offers))
 
+    @staticmethod
     def _validate_passengers(passengers):
         """Validate passenger count and the data provided for each if any were given"""
         if len(passengers) == 0:

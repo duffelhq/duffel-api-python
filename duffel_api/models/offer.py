@@ -39,6 +39,7 @@ class Offer:
                 value = Airline(value)
             setattr(self, key, value)
 
+    @staticmethod
     def _validate_passenger_identity_document_types(document_types):
         """Validate passenger identity document types"""
         for doc_type in document_types:

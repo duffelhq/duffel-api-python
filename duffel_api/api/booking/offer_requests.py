@@ -51,6 +51,7 @@ class OfferRequestCreate(object):
         self._passengers = []
         self._slices = []
 
+    @staticmethod
     def _validate_cabin_class(cabin_class):
         """Validate cabin class"""
         if cabin_class not in [
@@ -61,6 +62,7 @@ class OfferRequestCreate(object):
         ]:
             raise OfferRequestCreate.InvalidCabinClass(cabin_class)
 
+    @staticmethod
     def _validate_passengers(passengers):
         """Validate passenger count and the data provided for each if any were given"""
         if len(passengers) == 0:
@@ -69,6 +71,7 @@ class OfferRequestCreate(object):
             if not ("type" in passenger or "age" in passenger):
                 raise OfferRequestCreate.InvalidPassenger(passenger)
 
+    @staticmethod
     def _validate_slices(slices):
         """Validate number of slices and the data provided for each if any were given"""
         if len(slices) == 0:
