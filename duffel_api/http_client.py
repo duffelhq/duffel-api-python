@@ -112,7 +112,6 @@ class HttpClient:
         if response.status_code in [
             http_codes.ok,
             http_codes.created,
-            http_codes.no_content,
         ]:
             try:
                 return response.json()
@@ -120,6 +119,8 @@ class HttpClient:
                 raise Exception(
                     "something bad happened: {}".format(response.text)
                 ) from err
+        elif response.status_code == http_codes.no_content:
+            return None
         else:
             try:
                 raise ApiError(response.headers, response.json())

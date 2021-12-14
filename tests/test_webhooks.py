@@ -1,5 +1,3 @@
-import pytest
-
 from .fixtures import fixture
 
 
@@ -31,13 +29,11 @@ def test_update_webhook(requests_mock):
         assert webhook.url == "https://www.example.com:4000/webhooks"
 
 
-@pytest.mark.skip(
-    reason="""Webhook#Ping does not return a body. Our current tests do not look
-    at status codes, so there isn't anything in particular to test here."""
-)
 def test_ping_webhook(requests_mock):
     url = "air/webhooks/some-id/actions/ping"
-    with fixture("ping-webhook", url, requests_mock.post) as client:
+    with fixture(
+        "ping-webhook", url, requests_mock.post, with_response=False, status_code=204
+    ) as client:
         webhook = client.webhooks.ping("some-id")
 
         assert webhook is None
