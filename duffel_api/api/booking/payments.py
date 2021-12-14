@@ -26,6 +26,7 @@ class PaymentCreate:
         self._order_id = None
         self._payment = None
 
+    @staticmethod
     def _validate_payment(payment):
         if set(payment.keys()) != set(["amount", "currency", "type"]):
             raise PaymentClient.InvalidPayment(payment)
