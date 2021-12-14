@@ -32,6 +32,10 @@ class OrderClient(HttpClient):
         """Initiate creation of an Order."""
         return OrderCreate(self)
 
+    def update(self, id_):
+        """Initiate updating of an Order."""
+        return OrderUpdate(self, id_)
+
 
 class OrderCreate:
     """Auxiliary class to provide methods for order creation related data"""
@@ -159,5 +163,39 @@ class OrderCreate:
                     "payments": self._payments,
                 }
             },
+        )
+        return Order(res["data"])
+
+
+class OrderUpdate:
+    class InvalidMetadata(Exception):
+        """Invalid metadata data provided"""
+
+    def __init__(self, client, id_):
+        self._client = client
+        self._id = id_
+        self._metadata = {}
+
+    @staticmethod
+    def _validate_metadata(metadata):
+        """Validate structure of Metadata"""
+        if type(metadata) is not dict:
+            raise OrderUpdate.InvalidMetadata(metadata)
+
+    def metadata(self, metadata):
+        """Set the Order Metadata."""
+        self._metadata = metadata
+        OrderUpdate._validate_metadata(self._metadata)
+        return self
+
+    def execute(self):
+        """PATCH /air/orders/{:id} - trigger the call to update the order."""
+        OrderUpdate._validate_metadata(self._metadata)
+
+        url = f"{self._client._url}/{self._id}"
+
+        res = self._client.do_patch(
+            url,
+            body={"data": {"metadata": self._metadata}},
         )
         return Order(res["data"])

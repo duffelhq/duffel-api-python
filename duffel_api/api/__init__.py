@@ -3,7 +3,7 @@ from .supporting.airports import AirportClient
 from .supporting.airlines import AirlineClient
 from .booking.offer_requests import OfferRequestClient, OfferRequestCreate
 from .booking.offers import OfferClient
-from .booking.orders import OrderClient, OrderCreate
+from .booking.orders import OrderClient, OrderCreate, OrderUpdate
 from .booking.order_cancellations import OrderCancellationClient
 from .booking.order_change_offers import OrderChangeOffersClient
 from .booking.payments import PaymentClient
@@ -20,6 +20,7 @@ __all__ = [
     OrderChangeOffersClient,
     OrderClient,
     OrderCreate,
+    OrderUpdate,
     OrderCancellationClient,
     PaymentClient,
     SeatMapClient,
