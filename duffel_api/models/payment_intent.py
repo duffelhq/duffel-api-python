@@ -1,7 +1,9 @@
 class PaymentIntent:
-    """To begin the process of collecting a card payment from your customer, you need to create a Payment Intent.
+    """To begin the process of collecting a card payment from your customer, you
+    need to create a Payment Intent.
 
-    The Payment Intent will contain a client_token that you use to collect the card payment in your application.
+    The Payment Intent will contain a client_token that you use to collect the
+    card payment in your application.
 
     If the Payment Intent is created in test mode you should use a test card.
     """

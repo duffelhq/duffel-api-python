@@ -12,7 +12,8 @@ def test_create_payment_intent(requests_mock):
             "amount": "30.20",
             "currency": "GBP",
         }
-        payment_intent = client.payment_intents.create().payment(payment_intent_details).execute()
+        creation = client.payment_intents.create()
+        payment_intent = creation.payment(payment_intent_details).execute()
 
         assert payment_intent.id == "pit_0000AEQIx7Swvd9nmMNGkq"
         assert payment_intent.status == "requires_payment_method"
@@ -32,5 +33,3 @@ def test_create_payment_intent_with_invalid_data(requests_mock):
 
         with pytest.raises(PaymentIntentCreate.InvalidPayment):
             creation.payment({"currency": "AUD"})
-
-

@@ -3,9 +3,11 @@ from ...models import PaymentIntent
 
 
 class PaymentIntentClient(HttpClient):
-    """To begin the process of collecting a card payment from your customer, you need to create a Payment Intent.
+    """To begin the process of collecting a card payment from your customer, you
+    need to create a Payment Intent.
 
-    The Payment Intent will contain a client_token that you use to collect the card payment in your application.
+    The Payment Intent will contain a client_token that you use to collect the
+    card payment in your application.
 
     If the Payment Intent is created in test mode you should use a test card.
     """
@@ -17,6 +19,14 @@ class PaymentIntentClient(HttpClient):
     def create(self):
         """Initiate creation of a Payment Intent"""
         return PaymentIntentCreate(self)
+
+    def get(self, id_):
+        """GET /payments/payment_intents/:id"""
+        return PaymentIntent(self.do_get("{}/{}".format(self._url, id_))["data"])
+
+    def list(self, limit=50):
+        """GET /payments/payment_intents"""
+        return Pagination(self, PaymentIntent, {"limit": limit})
 
 
 class PaymentIntentCreate:
@@ -46,20 +56,19 @@ class PaymentIntentCreate:
 
     def execute(self):
         """POST /payments/payment_intents"""
-        if self._amount == None:
-            raise PaymentIntentCreate.InvalidPayment(payment_details)
+        if self._amount is None:
+            raise PaymentIntentCreate.InvalidPayment()
 
-        if self._currency == None:
-            raise PaymentIntentCreate.InvalidPayment(payment_details)
+        if self._currency is None:
+            raise PaymentIntentCreate.InvalidPayment()
 
         res = self._client.do_post(
-                self._client._url,
-                body={
-                    "data": {
-                        "amount": self._amount,
-                        "currency": self._currency,
-                        }
-                    }
-                )
+            self._client._url,
+            body={
+                "data": {
+                    "amount": self._amount,
+                    "currency": self._currency,
+                }
+            },
+        )
         return PaymentIntent(res["data"])
-

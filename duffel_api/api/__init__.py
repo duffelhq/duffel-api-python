@@ -25,6 +25,7 @@ __all__ = [
     OrderCancellationClient,
     PaymentClient,
     PaymentIntentClient,
+    PaymentIntentCreate,
     SeatMapClient,
     WebhookClient,
 ]
