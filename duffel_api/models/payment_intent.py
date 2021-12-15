@@ -1,3 +1,6 @@
+from ..utils import maybe_parse_date_entries
+
+
 class PaymentIntent:
     """To begin the process of collecting a card payment from your customer, you
     need to create a Payment Intent.
@@ -10,5 +13,5 @@ class PaymentIntent:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
+            value = maybe_parse_date_entries(key, json[key])
             setattr(self, key, value)
