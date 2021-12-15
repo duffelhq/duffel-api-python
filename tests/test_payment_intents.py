@@ -81,3 +81,33 @@ def test_get_payment_intent(requests_mock):
         assert payment_intent.refunds == []
         assert payment_intent.status == "succeeded"
         assert payment_intent.updated_at == datetime(2020, 4, 11, 15, 48, 39, 246000)
+
+
+def test_confirm_payment_intent(requests_mock):
+    url = "payments/payment_intents/id/actions/confirm"
+    with fixture("confirm-payment-intent", url, requests_mock.post) as client:
+        payment_intent = client.payment_intents.confirm("id")
+
+        assert payment_intent.amount == "30.20"
+        assert (
+            payment_intent.client_token
+            == "eyJjbGllbnRfc2VjcmV0IjoicGlfM0s2dFMyQW5rMVRkeXJvRDA0eVVzM1BxX3NlY3JldF9VY"
+            + "zV3VjRYU0hUc2VHWHlSOHhpTTNsdFdjIiwicHVibGlzaGFibGVfa2V5IjoicGtfdGVzdF81MUl"
+            + "0Q3YwQW5rMVRkeXJvRGxFTGExeGdZZkpBMUdUdzh2VmRRVmVRUEl3S1hiVjk5MVNnNnJpY1Nac"
+            + "1hJWGtTZ2VGWGF1c1RBcVVQSkhUNXNMZWpIdFlIUjAwVEVESVh4cnMifQ=="
+        )
+        assert payment_intent.confirmed_at == datetime(2020, 4, 11, 15, 48, 30, 321000)
+        assert payment_intent.card_country_code == "GB"
+        assert payment_intent.card_last_four_digits == "0000"
+        assert payment_intent.card_network == "visa"
+        assert payment_intent.created_at == datetime(2020, 4, 11, 15, 48, 11, 642000)
+        assert payment_intent.currency == "GBP"
+        assert payment_intent.fees_amount == "0.42"
+        assert payment_intent.fees_currency == "GBP"
+        assert payment_intent.id == "pit_0000AEQIx7Swvd9nmMNGkq"
+        assert payment_intent.live_mode is True
+        assert payment_intent.net_amount == "29.78"
+        assert payment_intent.net_currency == "GBP"
+        assert payment_intent.refunds == []
+        assert payment_intent.status == "succeeded"
+        assert payment_intent.updated_at == datetime(2020, 4, 11, 15, 48, 39, 246000)

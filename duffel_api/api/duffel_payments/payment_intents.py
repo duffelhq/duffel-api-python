@@ -1,4 +1,4 @@
-from ...http_client import HttpClient, Pagination
+from ...http_client import HttpClient
 from ...models import PaymentIntent
 
 
@@ -21,12 +21,25 @@ class PaymentIntentClient(HttpClient):
         return PaymentIntentCreate(self)
 
     def get(self, id_):
-        """GET /payments/payment_intents/:id"""
+        """Get a single Payment Intent.
+
+        You should use this API to get the complete, up-to-date information
+        about a Payment Intent.
+        """
         return PaymentIntent(self.do_get("{}/{}".format(self._url, id_))["data"])
 
-    def list(self, limit=50):
-        """GET /payments/payment_intents"""
-        return Pagination(self, PaymentIntent, {"limit": limit})
+    def confirm(self, id_):
+        """Confirm a Payment Intent
+
+        Once you've successfully collected the customer's card details, using
+        the client_token from when you first created the Payment Intent, you
+        then need to confirm it using this endpoint.
+
+        Once confirmed, the amount charged to your customer's card will be added
+        to your Balance (minus any Duffel Payment fees).
+        """
+        url = "{}/{}/actions/confirm".format(self._url, id_)
+        return PaymentIntent(self.do_post(url)["data"])
 
 
 class PaymentIntentCreate:
