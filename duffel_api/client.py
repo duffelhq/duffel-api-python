@@ -7,6 +7,7 @@ from .api import (
     OfferClient,
     OrderCancellationClient,
     OrderClient,
+    OrderChangeOfferClient,
     PaymentClient,
     PaymentIntentClient,
     SeatMapClient,
@@ -36,6 +37,7 @@ class Duffel:
         self.payment_client = None
         self.seat_map_client = None
         self.webhook_client = None
+        self.order_change_offer_client = None
 
     @property
     def aircraft(self):
@@ -93,6 +95,17 @@ class Duffel:
                 OrderCancellationClient(**self._kwargs),
             )
         return self.order_cancellation_client
+
+    @property
+    def order_change_offers(self):
+        """Order Change Offers API - /air/order_change_offers"""
+        if isinstance(self.order_change_offer_client, type(None)):
+            setattr(
+                self,
+                "order_change_offer_client",
+                OrderChangeOfferClient(**self._kwargs),
+            )
+        return self.order_change_offer_client
 
     @property
     def payment_intents(self):
