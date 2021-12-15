@@ -7,7 +7,7 @@ from .fixtures import fixture
 
 def test_create_payment(requests_mock):
     url = "air/payments"
-    with fixture("create-payment", url, requests_mock.post) as client:
+    with fixture("create-payment", url, requests_mock.post, status_code=201) as client:
         payment_details = {
             "type": "balance",
             "currency": "GBP",
@@ -27,7 +27,7 @@ def test_create_payment(requests_mock):
 
 def test_create_payment_with_invalid_payment_details(requests_mock):
     url = "air/payments"
-    with fixture("create-payment", url, requests_mock.post) as client:
+    with fixture("create-payment", url, requests_mock.post, status_code=422) as client:
         payment_details = {
             "currency": "GBP",
             "amount": "30.20",

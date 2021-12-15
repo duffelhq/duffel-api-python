@@ -7,7 +7,9 @@ from .fixtures import fixture
 
 def test_get_offer_request_by_id(requests_mock):
     url = "air/offer_requests/id"
-    with fixture("get-offer-request-by-id", url, requests_mock.get) as client:
+    with fixture(
+        "get-offer-request-by-id", url, requests_mock.get, status_code=200
+    ) as client:
         offer_request = client.offer_requests.get("id")
         assert offer_request.id == "orq_00009hjdomFOCJyxHG7k7k"
         assert len(offer_request.slices) == 1
@@ -28,7 +30,9 @@ def test_get_offer_requests(requests_mock):
     )
 
     url = "air/offer_requests?limit=50"
-    with fixture("get-offer-requests", url, requests_mock.get) as client:
+    with fixture(
+        "get-offer-requests", url, requests_mock.get, status_code=200
+    ) as client:
         paginated_offer_requests = client.offer_requests.list()
         offer_requests = list(paginated_offer_requests)
         assert len(offer_requests) == 1
@@ -39,9 +43,7 @@ def test_get_offer_requests(requests_mock):
 def test_create_offer_request(requests_mock):
     url = "air/offer_requests?return_offers=false"
     with fixture(
-        "create-offer-request",
-        url,
-        requests_mock.post,
+        "create-offer-request", url, requests_mock.post, status_code=201
     ) as client:
         passengers = [{"type": "adult"}]
         slices = [
@@ -66,9 +68,7 @@ def test_create_offer_request(requests_mock):
 def test_create_offer_request_with_invalid_data(requests_mock):
     url = "air/offer_requests?return_offers=false"
     with fixture(
-        "create-offer-request",
-        url,
-        requests_mock.post,
+        "create-offer-request", url, requests_mock.post, status_code=422
     ) as client:
         creation = client.offer_requests.create()
         with pytest.raises(OfferRequestCreate.InvalidNumberOfPassengers):

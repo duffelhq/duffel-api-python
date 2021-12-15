@@ -7,7 +7,7 @@ from .fixtures import fixture
 
 def test_get_order_by_id(requests_mock):
     url = "air/orders/id"
-    with fixture("get-order-by-id", url, requests_mock.get) as client:
+    with fixture("get-order-by-id", url, requests_mock.get, status_code=200) as client:
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
         assert len(order.slices) == 1
@@ -29,7 +29,7 @@ def test_get_orders(requests_mock):
     )
 
     url = "air/orders?limit=50"
-    with fixture("get-orders", url, requests_mock.get) as client:
+    with fixture("get-orders", url, requests_mock.get, status_code=200) as client:
         paginated_orders = client.orders.list()
         orders = list(paginated_orders)
         assert len(orders) == 1
@@ -39,7 +39,7 @@ def test_get_orders(requests_mock):
 
 def test_create_order(requests_mock):
     url = "air/orders"
-    with fixture("create-order", url, requests_mock.post) as client:
+    with fixture("create-order", url, requests_mock.post, status_code=201) as client:
         passengers = [
             {
                 "born_on": "2000-02-21",
@@ -68,7 +68,7 @@ def test_create_order(requests_mock):
 
 def test_create_order_with_invalid_data(requests_mock):
     url = "air/orders"
-    with fixture("create-order", url, requests_mock.post) as client:
+    with fixture("create-order", url, requests_mock.post, status_code=422) as client:
         creation = client.orders.create()
         with pytest.raises(OrderCreate.InvalidNumberOfPassengers):
             creation.execute()
@@ -111,7 +111,9 @@ def test_create_order_with_invalid_data(requests_mock):
 
 def test_update_order(requests_mock):
     url = "air/orders/ord_00009hthhsUZ8W4LxQgkjo"
-    with fixture("update-order-by-id", url, requests_mock.patch) as client:
+    with fixture(
+        "update-order-by-id", url, requests_mock.patch, status_code=200
+    ) as client:
         order = (
             client.orders.update("ord_00009hthhsUZ8W4LxQgkjo")
             .metadata(
@@ -132,7 +134,9 @@ def test_update_order(requests_mock):
 
 def test_update_order_with_invalid_data(requests_mock):
     url = "air/orders/ord_00009hthhsUZ8W4LxQgkjo"
-    with fixture("update-order-by-id", url, requests_mock.patch) as client:
+    with fixture(
+        "update-order-by-id", url, requests_mock.patch, status_code=422
+    ) as client:
         updating = client.orders.update("ord_00009hthhsUZ8W4LxQgkjo")
 
         with pytest.raises(OrderUpdate.InvalidMetadata):
