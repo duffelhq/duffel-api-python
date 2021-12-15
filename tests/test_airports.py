@@ -3,7 +3,7 @@ from .fixtures import fixture
 
 def test_get_airport_by_id(requests_mock):
     url = "air/airports/id"
-    with fixture("get-airport-by-id", url, requests_mock.get) as client:
+    with fixture("get-airport-by-id", url, requests_mock.get, 200) as client:
         airport = client.airports.get("id")
         assert airport.id == "arp_lhr_gb"
         assert airport.name == "Heathrow"
@@ -23,7 +23,7 @@ def test_get_airports(requests_mock):
     )
 
     url = "air/airports?limit=50"
-    with fixture("get-airports", url, requests_mock.get) as client:
+    with fixture("get-airports", url, requests_mock.get, 200) as client:
         paginated_airports = client.airports.list()
         airports = list(paginated_airports)
         assert len(airports) == 1

@@ -3,7 +3,7 @@ from .fixtures import fixture
 
 def test_get_aircraft_by_id(requests_mock):
     url = "air/aircraft/id"
-    with fixture("get-aircraft-by-id", url, requests_mock.get) as client:
+    with fixture("get-aircraft-by-id", url, requests_mock.get, 200) as client:
         aircraft = client.aircraft.get("id")
         assert aircraft.id == "arc_00009UhD4ongolulWd91Ky"
         assert aircraft.name == "Airbus Industries A380"
@@ -22,7 +22,7 @@ def test_get_aircraft(requests_mock):
     )
 
     url = "air/aircraft?limit=50"
-    with fixture("get-aircraft", url, requests_mock.get) as client:
+    with fixture("get-aircraft", url, requests_mock.get, 200) as client:
         paginated_aircraft = client.aircraft.list()
         aircraft = list(paginated_aircraft)
         assert len(aircraft) == 1
