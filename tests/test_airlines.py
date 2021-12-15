@@ -3,9 +3,7 @@ from .fixtures import fixture
 
 def test_get_airline_by_id(requests_mock):
     url = "air/airlines/id"
-    with fixture(
-        "get-airline-by-id", url, requests_mock.get, status_code=200
-    ) as client:
+    with fixture("get-airline-by-id", url, requests_mock.get, 200) as client:
         airline = client.airlines.get("id")
         assert airline.id == "aln_00001876aqC8c5umZmrRds"
         assert airline.name == "British Airways"
@@ -15,7 +13,7 @@ def test_get_airline_by_id(requests_mock):
 def test_get_airline_by_id_without_iata_code(requests_mock):
     url = "air/airlines/id"
     with fixture(
-        "get-airline-without-iata-code", url, requests_mock.get, status_code=200
+        "get-airline-without-iata-code", url, requests_mock.get, 200
     ) as client:
         airline = client.airlines.get("id")
         assert airline.id == "some-id"
@@ -35,7 +33,7 @@ def test_get_airlines(requests_mock):
     )
 
     url = "air/airlines?limit=50"
-    with fixture("get-airlines", url, requests_mock.get, status_code=200) as client:
+    with fixture("get-airlines", url, requests_mock.get, 200) as client:
         paginated_airlines = client.airlines.list()
         airlines = list(paginated_airlines)
         assert len(airlines) == 1

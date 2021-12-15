@@ -3,7 +3,7 @@ from .fixtures import fixture
 
 def test_create_webhook(requests_mock):
     url = "air/webhooks"
-    with fixture("create-webhook", url, requests_mock.post, status_code=201) as client:
+    with fixture("create-webhook", url, requests_mock.post, 201) as client:
         webhook = (
             client.webhooks.create()
             .url("https://www.example.com:4000/webhooks")
@@ -20,7 +20,7 @@ def test_create_webhook(requests_mock):
 
 def test_update_webhook(requests_mock):
     url = "air/webhooks/some-id"
-    with fixture("update-webhook", url, requests_mock.patch, status_code=200) as client:
+    with fixture("update-webhook", url, requests_mock.patch, 200) as client:
         webhook = client.webhooks.update("some-id").active(False).execute()
 
         assert webhook.id == "sev_0000A3tQSmKyqOrcySrGbo"
@@ -32,7 +32,7 @@ def test_update_webhook(requests_mock):
 def test_ping_webhook(requests_mock):
     url = "air/webhooks/some-id/actions/ping"
     with fixture(
-        "ping-webhook", url, requests_mock.post, with_response=False, status_code=204
+        "ping-webhook", url, requests_mock.post, 204, with_response=False
     ) as client:
         webhook = client.webhooks.ping("some-id")
 

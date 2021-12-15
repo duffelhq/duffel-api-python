@@ -3,7 +3,7 @@ from .fixtures import fixture
 
 def test_get_offer_by_id(requests_mock):
     url = "air/offers/id"
-    with fixture("get-offer-by-id", url, requests_mock.get, status_code=200) as client:
+    with fixture("get-offer-by-id", url, requests_mock.get, 200) as client:
         offer = client.offers.get("id")
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
         assert len(offer.slices) == 1
@@ -29,7 +29,7 @@ def test_get_offers(requests_mock):
     )
 
     url = "air/offers?limit=50&offer_request_id=offer_request_id"
-    with fixture("get-offers", url, requests_mock.get, status_code=200) as client:
+    with fixture("get-offers", url, requests_mock.get, 200) as client:
         paginated_offers = client.offers.list("offer_request_id")
         offers = list(paginated_offers)
         assert len(offers) == 1
