@@ -8,6 +8,7 @@ from .api import (
     OrderCancellationClient,
     OrderClient,
     PaymentClient,
+    PaymentIntentClient,
     SeatMapClient,
     WebhookClient,
 )
@@ -98,6 +99,13 @@ class Duffel:
         if isinstance(self.payments_client, type(None)):
             setattr(self, "payments_client", PaymentClient(**self._kwargs))
         return self.payments_client
+
+    @property
+    def payment_intents(self):
+        """Payment Intents API - /payments/payment_intents"""
+        if not hasattr(self, "payment_intent_client"):
+            setattr(self, "payment_intent_client", PaymentIntentClient(**self._kwargs))
+        return self.payment_intent_client
 
     @property
     def seat_maps(self):
