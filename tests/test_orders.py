@@ -1,6 +1,6 @@
 import pytest
 
-from duffel_api.api import OrderCreate
+from duffel_api.api import OrderCreate, OrderUpdate
 
 from .fixtures import fixture
 
@@ -107,3 +107,33 @@ def test_create_order_with_invalid_data(requests_mock):
 
         with pytest.raises(OrderCreate.InvalidService):
             creation.selected_offers(selected_offers).services([{}]).execute()
+
+
+def test_update_order(requests_mock):
+    url = "air/orders/ord_00009hthhsUZ8W4LxQgkjo"
+    with fixture("update-order-by-id", url, requests_mock.patch) as client:
+        order = (
+            client.orders.update("ord_00009hthhsUZ8W4LxQgkjo")
+            .metadata(
+                {
+                    "customer_prefs": "window seat",
+                    "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2",
+                }
+            )
+            .execute()
+        )
+
+        assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.metadata == {
+            "customer_prefs": "window seat",
+            "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2",
+        }
+
+
+def test_update_order_with_invalid_data(requests_mock):
+    url = "air/orders/ord_00009hthhsUZ8W4LxQgkjo"
+    with fixture("update-order-by-id", url, requests_mock.patch) as client:
+        updating = client.orders.update("ord_00009hthhsUZ8W4LxQgkjo")
+
+        with pytest.raises(OrderUpdate.InvalidMetadata):
+            updating.metadata(1).execute()
