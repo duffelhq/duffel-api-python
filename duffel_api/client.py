@@ -8,6 +8,7 @@ from .api import (
     OrderCancellationClient,
     OrderClient,
     PaymentClient,
+    PaymentIntentClient,
     SeatMapClient,
     WebhookClient,
 )
@@ -31,6 +32,7 @@ class Duffel:
         self.offer_client = None
         self.order_client = None
         self.order_cancellation_client = None
+        self.payment_intents_client = None
         self.payments_client = None
         self.seat_map_client = None
         self.webhook_client = None
@@ -91,6 +93,13 @@ class Duffel:
                 OrderCancellationClient(**self._kwargs),
             )
         return self.order_cancellation_client
+
+    @property
+    def payment_intents(self):
+        """Payment Intents API - /payments/payment_intents"""
+        if isinstance(self.payment_intents_client, type(None)):
+            setattr(self, "payment_intent_client", PaymentIntentClient(**self._kwargs))
+        return self.payment_intent_client
 
     @property
     def payments(self):

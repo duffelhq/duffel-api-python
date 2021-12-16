@@ -4,6 +4,9 @@ from datetime import datetime, date
 
 def maybe_parse_date_entries(key, value):
     """Parse datetime entries, depending on the value of `key`"""
+    if value is None:
+        return value
+
     if key in [
         "created_at",
         "updated_at",
