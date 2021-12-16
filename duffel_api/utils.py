@@ -11,6 +11,9 @@ def maybe_parse_date_entries(key, value):
         "pay_by",
         "confirmed_at",
         "cancelled_at",
+        "price_guarantee_expires_at",
+        "synced_at",
+        "payment_required_by",
     ]:
         return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
 
