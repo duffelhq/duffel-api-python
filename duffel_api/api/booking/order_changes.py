@@ -37,7 +37,6 @@ class OrderChangeClient(HttpClient):
 
         To proceed, you must confirm the change using the Confirm an order
         change endpoint.
-
         """
         res = self.do_post(
             self._url,
@@ -59,8 +58,7 @@ class OrderChangeClient(HttpClient):
         If the amount of change_total_amount is negative, then this will be
         returned to the refund_to method (e.g. your Duffel balance). You'll
         then need to refund your customer (e.g. back to their credit/debit
-                card).
-
+        card).
         """
         OrderChangeClient._validate_payment(payment_)
 
