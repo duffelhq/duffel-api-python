@@ -17,7 +17,6 @@ def test_get_order_change_offer_by_id(requests_mock):
         assert order_change_offer.expires_at == datetime.datetime(
             2020, 1, 17, 10, 42, 14, 545000
         )
-        assert order_change_offer.id == "oco_0000A3vUda8dKRtUSQPSXw"
         assert order_change_offer.new_total_amount == "35.50"
         assert order_change_offer.new_total_currency == "GBP"
         assert order_change_offer.order_change_id == "oce_0000A4QasEUIjJ6jHKfhHU"
