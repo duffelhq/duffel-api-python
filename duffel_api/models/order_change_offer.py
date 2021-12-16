@@ -44,8 +44,13 @@ class OrderChangeOfferSlices:
     """The slices to be added and/or removed"""
 
     def __init__(self, json):
-        setattr(self, "add", OrderChangeOfferSlicesAdd(json["add"]))
-        setattr(self, "remove", OrderChangeOfferSlicesRemove(json["remove"]))
+        add = list(map(lambda add: OrderChangeOfferSlicesAdd(add), json["add"]))
+        remove = list(
+            map(lambda remove: OrderChangeOfferSlicesRemove(remove), json["remove"])
+        )
+
+        setattr(self, "add", add)
+        setattr(self, "remove", remove)
 
 
 class OrderChangeOfferSlicesAdd:
