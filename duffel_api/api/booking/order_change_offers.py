@@ -2,7 +2,7 @@ from ...http_client import HttpClient, Pagination
 from ...models import OrderChangeOffer
 
 
-class OrderChangeOffersClient(HttpClient):
+class OrderChangeOfferClient(HttpClient):
     """Client to interact with Order Change Offers"""
 
     def __init__(self, **kwargs):
