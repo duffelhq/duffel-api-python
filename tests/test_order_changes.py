@@ -29,8 +29,8 @@ def test_get_order_change_by_id(requests_mock):
         assert order_change.order_id == "ord_0000A3tQcCRZ9R8OY0QlxA"
         assert isinstance(order_change.slices.add, type([]))
         assert isinstance(order_change.slices.remove, type([]))
-        order_change.slices.add[0].id == "sli_00009htYpSCXrwaB9Dn123"
-        order_change.slices.remove[0].id == "sli_00009htYpSCXrwaB9Dn123"
+        assert order_change.slices.add[0].id == "sli_00009htYpSCXrwaB9Dn123"
+        assert order_change.slices.remove[0].id == "sli_00009htYpSCXrwaB9Dn123"
 
 
 def test_create_order_change(requests_mock):
