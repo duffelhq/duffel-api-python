@@ -9,7 +9,7 @@ from .fixtures import fixture
 
 def test_create_payment_intent(requests_mock):
     url = "payments/payment_intents"
-    with fixture("create-payment-intent", url, requests_mock.post) as client:
+    with fixture("create-payment-intent", url, requests_mock.post, 201) as client:
         payment_intent_details = {
             "amount": "30.20",
             "currency": "GBP",
@@ -41,7 +41,7 @@ def test_create_payment_intent(requests_mock):
 
 def test_create_payment_intent_with_invalid_data(requests_mock):
     url = "payments/payment_intents"
-    with fixture("create-payment-intent", url, requests_mock.post) as client:
+    with fixture("create-payment-intent", url, requests_mock.post, 422) as client:
         creation = client.payment_intents.create()
         with pytest.raises(PaymentIntentCreate.InvalidPayment):
             creation.payment({})
@@ -55,7 +55,7 @@ def test_create_payment_intent_with_invalid_data(requests_mock):
 
 def test_get_payment_intent(requests_mock):
     url = "payments/payment_intents/id"
-    with fixture("get-payment-intent-by-id", url, requests_mock.get) as client:
+    with fixture("get-payment-intent-by-id", url, requests_mock.get, 200) as client:
         payment_intent = client.payment_intents.get("id")
 
         assert payment_intent.amount == "30.20"
@@ -85,7 +85,7 @@ def test_get_payment_intent(requests_mock):
 
 def test_confirm_payment_intent(requests_mock):
     url = "payments/payment_intents/id/actions/confirm"
-    with fixture("confirm-payment-intent", url, requests_mock.post) as client:
+    with fixture("confirm-payment-intent", url, requests_mock.post, 200) as client:
         payment_intent = client.payment_intents.confirm("id")
 
         assert payment_intent.amount == "30.20"
