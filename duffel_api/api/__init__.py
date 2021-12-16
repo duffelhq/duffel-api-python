@@ -5,6 +5,7 @@ from .booking.offer_requests import OfferRequestClient, OfferRequestCreate
 from .booking.offers import OfferClient
 from .booking.orders import OrderClient, OrderCreate, OrderUpdate
 from .booking.order_cancellations import OrderCancellationClient
+from .booking.order_changes import OrderChangeClient
 from .booking.order_change_offers import OrderChangeOfferClient
 from .booking.payments import PaymentClient
 from .booking.seat_maps import SeatMapClient
@@ -18,6 +19,7 @@ __all__ = [
     OfferRequestClient,
     OfferRequestCreate,
     OfferClient,
+    OrderChangeClient,
     OrderChangeOfferClient,
     OrderClient,
     OrderCreate,

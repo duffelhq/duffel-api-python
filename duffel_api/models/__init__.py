@@ -15,6 +15,7 @@ from .order import (
     OrderConditionRefundBeforeDeparture,
 )
 from .order_cancellation import OrderCancellation
+from .order_change import OrderChange
 from .order_change_offer import OrderChangeOffer
 from .payment import Payment
 from .payment_intent import PaymentIntent
@@ -36,6 +37,7 @@ __all__ = [
     OrderConditionChangeBeforeDeparture,
     OrderConditionRefundBeforeDeparture,
     OrderCancellation,
+    OrderChange,
     OrderChangeOffer,
     Payment,
     PaymentIntent,
