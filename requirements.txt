@@ -9,7 +9,7 @@ flake8==4.0.1
 greenlet==1.1.2
 isort==5.10.1
 kaptan==0.5.12
-lazy-object-proxy==1.6.0
+lazy-object-proxy==1.7.1
 libtmux==0.10.2
 mccabe==0.6.1
 msgpack==1.0.3
