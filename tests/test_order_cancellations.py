@@ -1,3 +1,5 @@
+import datetime
+
 from .fixtures import fixture
 
 
@@ -50,3 +52,6 @@ def test_confirm_order_cancellation(requests_mock):
         assert cancellation.refund_to == "arc_bsp_cash"
         assert cancellation.refund_currency == "GBP"
         assert cancellation.refund_amount == "90.80"
+        assert cancellation.confirmed_at == datetime.datetime(
+            2020, 1, 17, 11, 51, 43, 114803
+        )

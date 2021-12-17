@@ -21,6 +21,8 @@ class PaymentClient(HttpClient):
 
 
 class PaymentCreate:
+    """Auxiliary class to provide methods for payment creation related data"""
+
     def __init__(self, client):
         self._client = client
         self._order_id = None
