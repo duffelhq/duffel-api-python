@@ -14,8 +14,8 @@ def fixture(name, url_path, mock, status_code, with_response=True):
             response = json.loads(fh.read())
             uri = "{}/{}".format(url, url_path)
             mock(uri, complete_qs=True, json=response, status_code=status_code)
-            yield Duffel(api_token="some_token", api_url=url)
+            yield Duffel(access_token="some_token", api_url=url)
         else:
             uri = "{}/{}".format(url, url_path)
             mock(uri, complete_qs=True, status_code=status_code)
-            yield Duffel(api_token="some_token", api_url=url)
+            yield Duffel(access_token="some_token", api_url=url)

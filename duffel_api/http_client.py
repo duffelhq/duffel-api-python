@@ -75,7 +75,7 @@ class HttpClient:
     URL = "https://api.duffel.com"
     VERSION = "beta"
 
-    def __init__(self, api_token=None, api_url=None, api_version=None, **settings):
+    def __init__(self, access_token=None, api_url=None, api_version=None, **settings):
         if api_url is not None:
             self._api_url = api_url
         else:
@@ -92,12 +92,12 @@ class HttpClient:
         self.http_session.headers.update({"User-Agent": user_agent})
         self.http_session.headers.update({"Accept": "application/json"})
         self.http_session.headers.update({"Duffel-Version": self._api_version})
-        if not api_token:
-            api_token = os.getenv("DUFFEL_API_TOKEN")
-            if not api_token:
-                raise ClientError("must set DUFFEL_API_TOKEN")
+        if not access_token:
+            access_token = os.getenv("DUFFEL_ACCESS_TOKEN")
+            if not access_token:
+                raise ClientError("must set DUFFEL_ACCESS_TOKEN")
             self.http_session.headers.update(
-                {"Authorization": "Bearer {}".format(api_token)}
+                {"Authorization": "Bearer {}".format(access_token)}
             )
 
     def _http_call(self, endpoint, method, query_params=None, body=None):

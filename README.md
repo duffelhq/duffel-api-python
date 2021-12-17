@@ -25,8 +25,8 @@ Once you have the token, you can call `Duffel()` with the value:
 ```python
 from duffel_api import Duffel
 
-api_token = 'test_...'
-client = Duffel(api_token = api_token)
+access_token = 'test_...'
+client = Duffel(access_token = access_token)
 ```
 
 After you have a client you can interact with, you can make calls to the Duffel API:
@@ -34,7 +34,7 @@ After you have a client you can interact with, you can make calls to the Duffel 
 ```python
 from duffel_api import Duffel
 
-client = Duffel(api_token = 'test...')
+client = Duffel(access_token = 'test...')
 
 offer_requests = client.offer_requests.list()
 for offer_request in offer_requests:
