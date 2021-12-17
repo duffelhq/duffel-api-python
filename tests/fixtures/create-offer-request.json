@@ -3,7 +3,7 @@
     "cabin_class": "economy",
     "created_at": "2020-02-12T15:21:01.927Z",
     "id": "orq_00009hjdomFOCJyxHG7k7k",
-    "live_mode": false,
+    "live_mode": true,
     "offers": [
       {
         "allowed_passenger_identity_document_types": [
