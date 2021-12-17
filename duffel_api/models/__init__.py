@@ -1,6 +1,7 @@
 from .aircraft import Aircraft
 from .airport import Airport, City
 from .airline import Airline
+from .loyalty_programme_account import LoyaltyProgrammeAccount
 from .passenger import Passenger
 from .place import Place
 from .offer import (
@@ -26,6 +27,7 @@ __all__ = [
     Airline,
     Airport,
     City,
+    LoyaltyProgrammeAccount,
     Passenger,
     Place,
     Offer,

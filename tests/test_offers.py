@@ -1,4 +1,7 @@
+import pytest
 from .fixtures import fixture
+
+from duffel_api.api import OfferClient
 
 
 def test_get_offer_by_id(requests_mock):
@@ -35,3 +38,93 @@ def test_get_offers(requests_mock):
         assert len(offers) == 1
         offer = offers[0]
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
+
+
+def test_offer_update_passenger(requests_mock):
+    offer_id = "off_00009htYpSCXrwaB9DnUm0"
+    offer_passenger_id = "pas_00009hj8USM7Ncg31cBCL"
+
+    url = f"air/offers/{offer_id}/passengers/{offer_passenger_id}"
+
+    with fixture(
+        "update-offer-passenger-by-id", url, requests_mock.patch, 200
+    ) as client:
+        offer_passenger = client.offers.update_passenger(
+            offer_id,
+            offer_passenger_id,
+            "Earhart",
+            "Amelia",
+            [{"account_number": "12901014", "airline_iata_code": "BA"}],
+        )
+
+        assert offer_passenger.id == offer_passenger_id
+        assert offer_passenger.family_name == "Earhart"
+        assert offer_passenger.given_name == "Amelia"
+        assert (
+            offer_passenger.loyalty_programme_accounts[0].account_number == "12901014"
+        )
+        assert offer_passenger.loyalty_programme_accounts[0].airline_iata_code == "BA"
+
+
+def test_offer_update_passenger_with_invalid_data(requests_mock):
+    offer_id = "off_00009htYpSCXrwaB9DnUm0"
+    offer_passenger_id = "pas_00009hj8USM7Ncg31cBCL"
+
+    url = f"air/offers/{offer_id}/passengers/{offer_passenger_id}"
+
+    with fixture(
+        "update-offer-passenger-by-id", url, requests_mock.patch, 200
+    ) as client:
+        with pytest.raises(OfferClient.InvalidOfferId):
+            client.offers.update_passenger(
+                "",
+                offer_passenger_id,
+                "Earhart",
+                "Amelia",
+                [{"account_number": "12901014", "airline_iata_code": "BA"}],
+            )
+
+        with pytest.raises(OfferClient.InvalidOfferPassengerId):
+            client.offers.update_passenger(
+                offer_id,
+                "",
+                "Earhart",
+                "Amelia",
+                [{"account_number": "12901014", "airline_iata_code": "BA"}],
+            )
+
+        with pytest.raises(OfferClient.InvalidFamilyName):
+            client.offers.update_passenger(
+                offer_id,
+                offer_passenger_id,
+                "",
+                "Amelia",
+                [{"account_number": "12901014", "airline_iata_code": "BA"}],
+            )
+
+        with pytest.raises(OfferClient.InvalidGivenName):
+            client.offers.update_passenger(
+                offer_id,
+                offer_passenger_id,
+                "Earhart",
+                "",
+                [{"account_number": "12901014", "airline_iata_code": "BA"}],
+            )
+
+        with pytest.raises(OfferClient.InvalidLoyaltyProgrammeAirlineIataCode):
+            client.offers.update_passenger(
+                offer_id,
+                offer_passenger_id,
+                "Earhart",
+                "Amelia",
+                [{"account_number": "12901014", "airline_iata_code": ""}],
+            )
+
+        with pytest.raises(OfferClient.InvalidLoyaltyProgrammeAccountNumber):
+            client.offers.update_passenger(
+                offer_id,
+                offer_passenger_id,
+                "Earhart",
+                "Amelia",
+                [{"account_number": "", "airline_iata_code": "BA"}],
+            )
