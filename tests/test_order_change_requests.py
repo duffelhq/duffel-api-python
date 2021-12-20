@@ -40,3 +40,32 @@ def test_create_order_change_request(requests_mock):
         assert change_request.slices.add.destination.id == "arp_jfk_us"
         assert change_request.slices.add.origin.id == "arp_lhr_gb"
         assert change_request.slices.remove.slice_id == "sli_00009htYpSCXrwaB9Dn123"
+
+
+def test_get_order_change_request(requests_mock):
+    url = "air/order_change_requests/order-id"
+    with fixture(
+        "get-order-change-request-by-id", url, requests_mock.get, 200
+    ) as client:
+        change_request = client.order_change_requests.get("order-id")
+        assert change_request.id == "ocr_0000A3bQP9RLVfNUcdpLpw"
+        assert change_request.live_mode is True
+        assert change_request.order_id == "ord_0000A3bQ8FJIQoEfuC07n6"
+        assert isinstance(change_request.order_change_offers, type([]))
+        assert (
+            change_request.order_change_offers[0].slices.add[0].id
+            == "sli_00009htYpSCXrwaB9Dn123"
+        )
+        assert isinstance(change_request.order_change_offers[0].slices.remove, type([]))
+        assert (
+            change_request.order_change_offers[0].slices.remove[0].id
+            == "sli_00009htYpSCXrwaB9Dn123"
+        )
+        assert change_request.order_change_offers[0].updated_at == datetime.datetime(
+            2020, 1, 17, 10, 12, 14, 545000
+        )
+        assert change_request.slices.add.cabin_class == "economy"
+        assert change_request.slices.add.departure_date == datetime.date(2020, 4, 24)
+        assert change_request.slices.add.destination.id == "arp_jfk_us"
+        assert change_request.slices.add.origin.id == "arp_lhr_gb"
+        assert change_request.slices.remove.slice_id == "sli_00009htYpSCXrwaB9Dn123"

@@ -14,6 +14,10 @@ class OrderChangeRequestClient(HttpClient):
         """POST /air/order_change_requests"""
         return OrderChangeRequestCreate(self, order_id)
 
+    def get(self, id_):
+        """GET /air/order_change_requests/:id"""
+        return OrderChangeRequest(self.do_get("{}/{}".format(self._url, id_))["data"])
+
 
 class OrderChangeRequestCreate:
     """Auxiliary class for order change request creation related data"""
