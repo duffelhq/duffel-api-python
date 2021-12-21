@@ -27,9 +27,9 @@ class OrderChangeRequestSlice:
         for key in json:
             value = json[key]
             if key == "add":
-                value = OrderChangeRequestSliceAdd(value)
+                value = [OrderChangeRequestSliceAdd(v) for v in value]
             if key == "remove":
-                value = OrderChangeRequestSliceRemove(value)
+                value = [OrderChangeRequestSliceRemove(v) for v in value]
             setattr(self, key, value)
 
 
