@@ -33,7 +33,6 @@ jobs:
         password: ${{ secrets.PYPI_API_TOKEN }}
 
   test:
-
     runs-on: ubuntu-latest
     strategy:
       matrix:
