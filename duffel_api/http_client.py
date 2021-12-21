@@ -96,9 +96,9 @@ class HttpClient:
             access_token = os.getenv("DUFFEL_ACCESS_TOKEN")
             if not access_token:
                 raise ClientError("must set DUFFEL_ACCESS_TOKEN")
-            self.http_session.headers.update(
-                {"Authorization": "Bearer {}".format(access_token)}
-            )
+        self.http_session.headers.update(
+            {"Authorization": "Bearer {}".format(access_token)}
+        )
 
     def _http_call(self, endpoint, method, query_params=None, body=None):
         """Perform the http call and wrap the response in a ApiError in case an error
