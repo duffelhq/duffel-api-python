@@ -47,8 +47,12 @@ def test_get_offers(requests_mock):
         assert (
             slice_1.conditions["change_before_departure"]["penalty_currency"] == "GBP"
         )
+        assert len(slice_1.segments) == 1
+        assert slice_1.segments[0].id == "seg_00009htYpSCXrwaB9Dn456"
         slice_2 = offer.slices[1]
         assert slice_2.conditions["change_before_departure"] is None
+        assert len(slice_2.segments) == 1
+        assert slice_2.segments[0].id == "seg_0000AEfTff29Oo8LXf7FYG"
 
 
 def test_offer_update_passenger(requests_mock):
