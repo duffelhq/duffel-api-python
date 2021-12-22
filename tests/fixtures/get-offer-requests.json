@@ -42,8 +42,8 @@
             }
           ],
           "payment_requirements": {
-            "payment_required_by": "2020-01-17T10:42:14.545Z",
-            "price_guarantee_expires_at": "2020-01-17T10:42:14.545Z",
+            "payment_required_by": "2020-01-17T10:42:14Z",
+            "price_guarantee_expires_at": "2020-01-17T10:42:14Z",
             "requires_instant_payment": false
           },
           "slices": [
