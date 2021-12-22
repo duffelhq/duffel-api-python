@@ -206,6 +206,168 @@
               ]
             }
           ]
+        },
+        {
+          "conditions": {
+            "change_before_departure": null
+          },
+          "destination": {
+            "airports": [
+              {
+                "city": {
+                  "iata_code": "NYC",
+                  "iata_country_code": "US",
+                  "id": "cit_nyc_us",
+                  "name": "New York"
+                },
+                "city_name": "New York",
+                "iata_code": "JFK",
+                "iata_country_code": "US",
+                "icao_code": "KJFK",
+                "id": "arp_jfk_us",
+                "latitude": 40.640556,
+                "longitude": -73.778519,
+                "name": "John F. Kennedy International Airport",
+                "time_zone": "America/New_York"
+              }
+            ],
+            "city": {
+              "iata_code": "NYC",
+              "iata_country_code": "US",
+              "id": "cit_nyc_us",
+              "name": "New York"
+            },
+            "city_name": "New York",
+            "iata_city_code": "NYC",
+            "iata_code": "JFK",
+            "iata_country_code": "US",
+            "icao_code": "KJFK",
+            "id": "arp_jfk_us",
+            "latitude": 40.640556,
+            "longitude": -73.778519,
+            "name": "John F. Kennedy International Airport",
+            "time_zone": "America/New_York",
+            "type": "airport"
+          },
+          "destination_type": "airport",
+          "duration": "PT02H26M",
+          "fare_brand_name": "Basic",
+          "id": "sli_0000A3yHBEDgVnr4RLnm9k",
+          "origin": {
+            "airports": [
+              {
+                "city": {
+                  "iata_code": "LON",
+                  "iata_country_code": "GB",
+                  "id": "cit_lon_gb",
+                  "name": "London"
+                },
+                "city_name": "London",
+                "iata_code": "LHR",
+                "iata_country_code": "GB",
+                "icao_code": "EGLL",
+                "id": "arp_lhr_gb",
+                "latitude": 64.068865,
+                "longitude": -141.951519,
+                "name": "Heathrow",
+                "time_zone": "Europe/London"
+              }
+            ],
+            "city": {
+              "iata_code": "LON",
+              "iata_country_code": "GB",
+              "id": "cit_lon_gb",
+              "name": "London"
+            },
+            "city_name": "London",
+            "iata_city_code": "LON",
+            "iata_code": "LHR",
+            "iata_country_code": "GB",
+            "icao_code": "EGLL",
+            "id": "arp_lhr_gb",
+            "latitude": 64.068865,
+            "longitude": -141.951519,
+            "name": "Heathrow",
+            "time_zone": "Europe/London",
+            "type": "airport"
+          },
+          "origin_type": "airport",
+          "segments": [
+            {
+              "aircraft": {
+                "iata_code": "380",
+                "id": "arc_00009UhD4ongolulWd91Ky",
+                "name": "Airbus Industries A380"
+              },
+              "arriving_at": "2020-06-13T16:38:02",
+              "departing_at": "2020-06-13T16:38:02",
+              "destination": {
+                "city": {
+                  "iata_code": "NYC",
+                  "iata_country_code": "US",
+                  "id": "cit_nyc_us",
+                  "name": "New York"
+                },
+                "city_name": "New York",
+                "iata_code": "JFK",
+                "iata_country_code": "US",
+                "icao_code": "KJFK",
+                "id": "arp_jfk_us",
+                "latitude": 40.640556,
+                "longitude": -73.778519,
+                "name": "John F. Kennedy International Airport",
+                "time_zone": "America/New_York"
+              },
+              "destination_terminal": "5",
+              "distance": "424.2",
+              "duration": "PT02H26M",
+              "id": "seg_0000AEfTff29Oo8LXf7FYG",
+              "marketing_carrier": {
+                "iata_code": "BA",
+                "id": "aln_00001876aqC8c5umZmrRds",
+                "name": "British Airways"
+              },
+              "marketing_carrier_flight_number": "1234",
+              "operating_carrier": {
+                "iata_code": "BA",
+                "id": "aln_00001876aqC8c5umZmrRds",
+                "name": "British Airways"
+              },
+              "operating_carrier_flight_number": "4321",
+              "origin": {
+                "city": {
+                  "iata_code": "LON",
+                  "iata_country_code": "GB",
+                  "id": "cit_lon_gb",
+                  "name": "London"
+                },
+                "city_name": "London",
+                "iata_code": "LHR",
+                "iata_country_code": "GB",
+                "icao_code": "EGLL",
+                "id": "arp_lhr_gb",
+                "latitude": 64.068865,
+                "longitude": -141.951519,
+                "name": "Heathrow",
+                "time_zone": "Europe/London"
+              },
+              "origin_terminal": "B",
+              "passengers": [
+                {
+                  "baggages": [
+                    {
+                      "quantity": 1,
+                      "type": "checked"
+                    }
+                  ],
+                  "cabin_class": "economy",
+                  "cabin_class_marketing_name": "Economy Basic",
+                  "fare_basis_code": "OXZ0RO",
+                  "passenger_id": "passenger_0"
+                }
+              ]
+            }
+          ]
         }
       ],
       "tax_amount": "40.80",

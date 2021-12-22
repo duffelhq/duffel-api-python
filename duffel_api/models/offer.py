@@ -56,9 +56,15 @@ class OfferConditions:
     def __init__(self, json):
         for key in json:
             if key == "change_before_departure":
-                value = OfferConditionChangeBeforeDeparture(json[key])
+                if not json[key] is None:
+                    value = OfferConditionChangeBeforeDeparture(json[key])
+                else:
+                    value = json[key]
             elif key == "refund_before_departure":
-                value = OfferConditionRefundBeforeDeparture(json[key])
+                if not json[key] is None:
+                    value = OfferConditionRefundBeforeDeparture(json[key])
+                else:
+                    value = json[key]
             setattr(self, key, value)
 
 
