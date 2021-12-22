@@ -38,6 +38,17 @@ def test_get_offers(requests_mock):
         assert len(offers) == 1
         offer = offers[0]
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
+        assert len(offer.slices) == 2
+        slice_1 = offer.slices[0]
+        assert slice_1.conditions["change_before_departure"]["allowed"] is True
+        assert (
+            slice_1.conditions["change_before_departure"]["penalty_amount"] == "100.00"
+        )
+        assert (
+            slice_1.conditions["change_before_departure"]["penalty_currency"] == "GBP"
+        )
+        slice_2 = offer.slices[1]
+        assert slice_2.conditions["change_before_departure"] is None
 
 
 def test_offer_update_passenger(requests_mock):
