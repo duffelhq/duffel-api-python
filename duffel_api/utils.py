@@ -13,13 +13,13 @@ def maybe_parse_date_entries(key, value):
         "pay_by",
         "confirmed_at",
         "cancelled_at",
-        "synced_at",
     ]:
         return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
 
     if key in [
         "price_guarantee_expires_at",
         "payment_required_by",
+        "synced_at",
     ]:
         return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
 
