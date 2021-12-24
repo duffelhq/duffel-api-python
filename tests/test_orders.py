@@ -1,3 +1,4 @@
+import datetime
 import pytest
 
 from duffel_api.api import OrderCreate, OrderUpdate
@@ -10,6 +11,7 @@ def test_get_order_by_id(requests_mock):
     with fixture("get-order-by-id", url, requests_mock.get, 200) as client:
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.slices) == 1
         assert len(order.passengers) == 1
         assert not order.live_mode
@@ -35,6 +37,7 @@ def test_get_orders(requests_mock):
         assert len(orders) == 1
         order = orders[0]
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
 
 
 def test_create_order(requests_mock):
@@ -61,6 +64,7 @@ def test_create_order(requests_mock):
             .execute()
         )
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.services) == 1
         service = order.services[0]
         assert service.id == "ser_00009UhD4ongolulWd9123"
@@ -124,6 +128,7 @@ def test_update_order(requests_mock):
         )
 
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
         assert order.metadata == {
             "customer_prefs": "window seat",
             "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2",
