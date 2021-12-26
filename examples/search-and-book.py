@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 from decimal import Decimal
 
 from duffel_api import Duffel
@@ -7,7 +7,7 @@ from duffel_api import Duffel
 if __name__ == "__main__":
     print("Duffel Flights API - search, book and cancel example")
     client = Duffel()
-    departure_date = date.today().replace(date.today().year + 1).strftime("%Y-%m-%d")
+    departure_date = (date.today() + timedelta(weeks=52)).strftime("%Y-%m-%d")
     slices = [
         {
             "origin": "LHR",
