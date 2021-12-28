@@ -34,5 +34,5 @@ toml==0.10.2
 tomli==2.0.0
 tox==3.24.4
 typing_extensions==4.0.1
-virtualenv==20.10.0
+virtualenv==20.11.0
 wrapt==1.13.3
