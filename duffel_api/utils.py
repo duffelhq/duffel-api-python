@@ -11,7 +11,6 @@ def maybe_parse_date_entries(key, value):
         "created_at",
         "updated_at",
         "pay_by",
-        "confirmed_at",
         "cancelled_at",
     ]:
         return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
@@ -37,7 +36,7 @@ def maybe_parse_date_entries(key, value):
         t = datetime.strptime(value, "%Y-%m-%d")
         return date(t.year, t.month, t.day)
 
-    if key == "expires_at":
+    if key in ["confirmed_at", "expires_at"]:
         # There are inconsistent formats used for this field depending on the
         # endpoint
         if len(value) == 20:

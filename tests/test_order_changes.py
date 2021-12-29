@@ -15,6 +15,7 @@ def test_get_order_change_by_id(requests_mock):
         assert order_change.id == "ocr_0000A3tQSmKyqOrcySrGbo"
         assert order_change.change_total_amount == "30.50"
         assert order_change.change_total_currency == "GBP"
+        assert order_change.confirmed_at == datetime.datetime(2020, 1, 17, 11, 51, 43)
         assert order_change.created_at == datetime.datetime(
             2020, 4, 11, 15, 48, 11, 642000
         )
@@ -55,9 +56,7 @@ def test_confirm_order_change(requests_mock):
 
         assert order_change.id == "ocr_0000A3tQSmKyqOrcySrGbo"
         assert order_change.order_id == "ord_0000A3tQcCRZ9R8OY0QlxA"
-        assert order_change.confirmed_at == datetime.datetime(
-            2020, 1, 17, 11, 51, 43, 114803
-        )
+        assert order_change.confirmed_at == datetime.datetime(2020, 1, 17, 11, 51, 43)
         assert order_change.refund_to == "voucher"
 
 
