@@ -40,7 +40,7 @@ def test_get_orders(requests_mock):
         assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
 
 
-def test_create_order(requests_mock):
+def test_create_instant_order(requests_mock):
     url = "air/orders"
     with fixture("create-order", url, requests_mock.post, 201) as client:
         passengers = [
@@ -61,6 +61,35 @@ def test_create_order(requests_mock):
             creation.passengers(passengers)
             .selected_offers(["offer-id"])
             .payments(payments)
+            .execute()
+        )
+        assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert len(order.services) == 1
+        service = order.services[0]
+        assert service.id == "ser_00009UhD4ongolulWd9123"
+
+
+def test_create_hold_order(requests_mock):
+    url = "air/orders"
+    with fixture("create-order", url, requests_mock.post, 201) as client:
+        passengers = [
+            {
+                "born_on": "2000-01-12",
+                "email": "8567@example.com",
+                "family_name": "Doe",
+                "given_name": "Jack",
+                "gender": "m",
+                "id": "pas_00009hj8USM7Ncg31cBANZ",
+                "phone_number": "00333333333",
+                "title": "mr",
+            }
+        ]
+        creation = client.orders.create()
+        order = (
+            creation.passengers(passengers)
+            .selected_offers(["offer-id"])
+            .hold()
             .execute()
         )
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"

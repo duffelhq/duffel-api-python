@@ -111,9 +111,28 @@ class OrderCreate:
             ):
                 raise OrderCreate.InvalidPassenger(passenger)
 
-    def pay_later(self):
-        """Set payment type to 'pay_later'. If this isn't called the type is 'instant'"""
-        self._payment_type = "pay_later"
+    def _instant_order(self):
+        return self._payment_type is not None and self._payment_type != "hold"
+
+    def _set_order_data(self):
+        data = {
+            "type": self._payment_type,
+            "passengers": self._passengers,
+            "services": self._services,
+            "selected_offers": self._selected_offers,
+        }
+
+        if self._instant_order():
+            data["payments"] = self._payments
+        else:
+            data["type"] = self._payment_type
+
+        self._request_body_data = data
+        return self
+
+    def hold(self):
+        """Set payment type to 'hold'. If this isn't called the type is 'instant'"""
+        self._payment_type = "hold"
         return self
 
     def selected_offers(self, selected_offers):
@@ -149,20 +168,14 @@ class OrderCreate:
     def execute(self):
         """POST /air/orders - trigger the call to create the order"""
         OrderCreate._validate_passengers(self._passengers)
-        OrderCreate._validate_payments(self._payments)
+        if self._instant_order():
+            OrderCreate._validate_payments(self._payments)
         OrderCreate._validate_services(self._services)
         OrderCreate._validate_selected_offers(self._selected_offers)
+        self._set_order_data()
         res = self._client.do_post(
             self._client._url,
-            body={
-                "data": {
-                    "type": self._payment_type,
-                    "passengers": self._passengers,
-                    "services": self._services,
-                    "selected_offers": self._selected_offers,
-                    "payments": self._payments,
-                }
-            },
+            body={"data": self._request_body_data},
         )
         return Order(res["data"])
 
