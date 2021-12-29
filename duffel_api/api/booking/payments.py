@@ -35,7 +35,7 @@ class PaymentCreate:
         if payment["type"] not in ["arc_bsp_cash", "balance", "payments"]:
             raise PaymentClient.InvalidPaymentType(payment["type"])
 
-    def order_id(self, order_id):
+    def order(self, order_id):
         self._order_id = order_id
         return self
 
