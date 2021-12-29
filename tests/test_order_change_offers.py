@@ -61,3 +61,4 @@ def test_get_order_change_offers(requests_mock):
         assert len(order_change_offers) == 1
         offer = order_change_offers[0]
         assert offer.id == "oco_0000A3vUda8dKRtUSQPSXw"
+        assert offer.refund_to == "original_form_of_payment"
