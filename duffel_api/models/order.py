@@ -125,7 +125,8 @@ class OrderSliceSegmentPassenger:
             if key == "baggages":
                 value = [OrderSliceSegmentPassengerBaggage(v) for v in value]
             elif key == "seat":
-                value = OrderSliceSegmentPassengerSeat(value)
+                if value is not None:
+                    value = OrderSliceSegmentPassengerSeat(value)
             elif key == "cabin_class":
                 if value not in OrderSliceSegmentPassenger.allowed_cabin_classes:
                     raise OrderSliceSegmentPassenger.InvalidCabinClass(value)

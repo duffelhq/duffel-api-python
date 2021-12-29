@@ -11,12 +11,30 @@ def test_get_order_by_id(requests_mock):
     with fixture("get-order-by-id", url, requests_mock.get, 200) as client:
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert not order.live_mode
+        assert len(order.passengers) == 1
         assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.slices) == 1
-        assert len(order.passengers) == 1
-        assert not order.live_mode
         slice = order.slices[0]
         assert slice.origin_type == "airport"
+        assert len(order.slices[0].segments) == 1
+        assert len(order.slices[0].segments[0].passengers) == 1
+        passenger = order.slices[0].segments[0].passengers[0]
+        assert len(passenger.baggages) == 1
+        assert passenger.baggages[0].quantity == 1
+        assert passenger.baggages[0].type == "checked"
+        assert passenger.cabin_class == "economy"
+        assert passenger.cabin_class_marketing_name == "Economy Basic"
+        assert passenger.passenger_id == "passenger_0"
+        assert passenger.seat is not None
+        assert passenger.seat.designator == "14B"
+        assert len(passenger.seat.disclosures) == 2
+        assert passenger.seat.disclosures[0] == "Do not seat children in exit row seats"
+        assert (
+            passenger.seat.disclosures[1]
+            == "Do not seat passengers with special needs in exit row seats"
+        )
+        assert passenger.seat.name == "Exit row seat"
 
 
 def test_get_orders(requests_mock):
@@ -37,6 +55,17 @@ def test_get_orders(requests_mock):
         assert len(orders) == 1
         order = orders[0]
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
+        assert len(order.slices) == 1
+        assert len(order.slices[0].segments) == 1
+        assert len(order.slices[0].segments[0].passengers) == 1
+        passenger = order.slices[0].segments[0].passengers[0]
+        assert len(passenger.baggages) == 1
+        assert passenger.baggages[0].quantity == 1
+        assert passenger.baggages[0].type == "checked"
+        assert passenger.cabin_class == "economy"
+        assert passenger.cabin_class_marketing_name == "Economy Basic"
+        assert passenger.passenger_id == "passenger_0"
+        assert passenger.seat is None
         assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
 
 
