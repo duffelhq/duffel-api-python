@@ -18,11 +18,8 @@ class OrderChange:
     """
 
     allowed_refund_types = [
-        "arc_bsp_cash",
-        "balance",
-        "card",
+        "original_form_of_payment",
         "voucher",
-        "awaiting_payment",
     ]
 
     class InvalidRefundType(Exception):
@@ -31,7 +28,11 @@ class OrderChange:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key == "refund_to" and value not in OrderChange.allowed_refund_types:
+            if (
+                key == "refund_to"
+                and value is not None
+                and value not in OrderChange.allowed_refund_types
+            ):
                 raise OrderChange.InvalidRefundType(value)
             if key == "slices":
                 value = OrderChangeSlices(value)

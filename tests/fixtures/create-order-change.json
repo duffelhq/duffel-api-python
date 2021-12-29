@@ -12,7 +12,7 @@
     "order_id": "ord_0000A3tQcCRZ9R8OY0QlxA",
     "penalty_amount": "15.50",
     "penalty_currency": "GBP",
-    "refund_to": "voucher",
+    "refund_to": null,
     "slices": {
       "add": [
         {
