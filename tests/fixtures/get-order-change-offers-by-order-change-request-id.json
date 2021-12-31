@@ -11,7 +11,7 @@
       "order_change_id": "oce_0000A4QasEUIjJ6jHKfhHU",
       "penalty_amount": "10.50",
       "penalty_currency": "GBP",
-      "refund_to": "arc_bsp_cash",
+      "refund_to": "original_form_of_payment",
       "slices": {
         "add": [
           {

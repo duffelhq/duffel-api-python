@@ -20,6 +20,7 @@ class OrderChangeOffer:
         "arc_bsp_cash",
         "balance",
         "card",
+        "original_form_of_payment",
         "voucher",
         "awaiting_payment",
     ]
