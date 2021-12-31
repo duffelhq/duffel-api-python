@@ -1,4 +1,4 @@
-astroid==2.9.0
+astroid==2.9.1
 backports.entry-points-selectable==1.1.1
 black==21.12b0
 click==8.0.3
