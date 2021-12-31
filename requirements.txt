@@ -19,7 +19,7 @@ packaging==21.3
 pathspec==0.9.0
 platformdirs==2.4.0
 pluggy==1.0.0
-psutil==5.8.0
+psutil==5.9.0
 py==1.11.0
 pycodestyle==2.8.0
 pyflakes==2.4.0
