@@ -236,14 +236,7 @@
                   "cabin_class": "economy",
                   "cabin_class_marketing_name": "Economy Basic",
                   "passenger_id": "passenger_0",
-                  "seat": {
-                    "designator": "14B",
-                    "disclosures": [
-                      "Do not seat children in exit row seats",
-                      "Do not seat passengers with special needs in exit row seats"
-                    ],
-                    "name": "Exit row seat"
-                  }
+                  "seat": null
                 }
               ]
             }
