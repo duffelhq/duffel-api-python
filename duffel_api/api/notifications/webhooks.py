@@ -24,7 +24,7 @@ class WebhookClient(HttpClient):
         return WebhookUpdate(self, id_)
 
     def ping(self, id_):
-        """Ping a webook.
+        """Ping a webhook.
 
         Send a ping, a "fake event" notification, to a webhook.
         """
@@ -40,10 +40,12 @@ class WebhookCreate(object):
         self._client = client
 
     def events(self, events):
+        """Add events"""
         self._events = events
         return self
 
     def url(self, url):
+        """Add URL"""
         self._url = url
         return self
 
@@ -64,6 +66,7 @@ class WebhookUpdate(object):
         self._id = id
 
     def active(self, active):
+        """Set webhook to active"""
         self._active = active
         return self
 

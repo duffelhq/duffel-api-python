@@ -30,16 +30,19 @@ class PaymentCreate:
 
     @staticmethod
     def _validate_payment(payment):
+        """Validate payment details"""
         if set(payment.keys()) != set(["amount", "currency", "type"]):
             raise PaymentClient.InvalidPayment(payment)
         if payment["type"] not in ["arc_bsp_cash", "balance", "payments"]:
             raise PaymentClient.InvalidPaymentType(payment["type"])
 
     def order(self, order_id):
+        """Add order identifier"""
         self._order_id = order_id
         return self
 
     def payment(self, payment):
+        """Add payment details"""
         self._payment = payment
         return self
 

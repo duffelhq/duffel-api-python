@@ -53,6 +53,8 @@ class OrderChangeSlices:
 
 
 class OrderChangeSlicesAdd:
+    """The slice to be added"""
+
     allowed_place_types = ["airport", "city"]
 
     class InvalidPlaceType(Exception):
