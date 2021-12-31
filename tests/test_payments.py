@@ -15,7 +15,7 @@ def test_create_payment(requests_mock):
         }
         payment = (
             client.payments.create()
-            .order_id("order-id")
+            .order("order-id")
             .payment(payment_details)
             .execute()
         )
@@ -32,7 +32,7 @@ def test_create_payment_with_invalid_payment_details(requests_mock):
             "currency": "GBP",
             "amount": "30.20",
         }
-        payments_create_client = client.payments.create().order_id("order-id")
+        payments_create_client = client.payments.create().order("order-id")
         with pytest.raises(
             PaymentClient.InvalidPayment,
             match="{'currency': 'GBP', 'amount': '30.20'}",
