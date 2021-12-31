@@ -42,7 +42,7 @@ def test_create_order_change(requests_mock):
         assert order_change.id == "ocr_0000A3tQSmKyqOrcySrGbo"
         assert order_change.order_id == "ord_0000A3tQcCRZ9R8OY0QlxA"
         assert order_change.confirmed_at is None
-        assert order_change.refund_to == "voucher"
+        assert order_change.refund_to is None
 
 
 def test_confirm_order_change(requests_mock):
