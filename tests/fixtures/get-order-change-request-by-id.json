@@ -1,5 +1,6 @@
 {
   "data": {
+    "created_at": "2020-01-17T10:12:11.634Z",
     "id": "ocr_0000A3bQP9RLVfNUcdpLpw",
     "live_mode": true,
     "order_change_offers": [
@@ -318,82 +319,8 @@
         {
           "cabin_class": "economy",
           "departure_date": "2020-04-24",
-          "destination": {
-            "airports": [
-              {
-                "city": {
-                  "iata_code": "NYC",
-                  "iata_country_code": "US",
-                  "id": "cit_nyc_us",
-                  "name": "New York"
-                },
-                "city_name": "New York",
-                "iata_code": "JFK",
-                "iata_country_code": "US",
-                "icao_code": "KJFK",
-                "id": "arp_jfk_us",
-                "latitude": 40.640556,
-                "longitude": -73.778519,
-                "name": "John F. Kennedy International Airport",
-                "time_zone": "America/New_York"
-              }
-            ],
-            "city": {
-              "iata_code": "NYC",
-              "iata_country_code": "US",
-              "id": "cit_nyc_us",
-              "name": "New York"
-            },
-            "city_name": "New York",
-            "iata_city_code": "NYC",
-            "iata_code": "JFK",
-            "iata_country_code": "US",
-            "icao_code": "KJFK",
-            "id": "arp_jfk_us",
-            "latitude": 40.640556,
-            "longitude": -73.778519,
-            "name": "John F. Kennedy International Airport",
-            "time_zone": "America/New_York",
-            "type": "airport"
-          },
-          "origin": {
-            "airports": [
-              {
-                "city": {
-                  "iata_code": "LON",
-                  "iata_country_code": "GB",
-                  "id": "cit_lon_gb",
-                  "name": "London"
-                },
-                "city_name": "London",
-                "iata_code": "LHR",
-                "iata_country_code": "GB",
-                "icao_code": "EGLL",
-                "id": "arp_lhr_gb",
-                "latitude": 64.068865,
-                "longitude": -141.951519,
-                "name": "Heathrow",
-                "time_zone": "Europe/London"
-              }
-            ],
-            "city": {
-              "iata_code": "LON",
-              "iata_country_code": "GB",
-              "id": "cit_lon_gb",
-              "name": "London"
-            },
-            "city_name": "London",
-            "iata_city_code": "LON",
-            "iata_code": "LHR",
-            "iata_country_code": "GB",
-            "icao_code": "EGLL",
-            "id": "arp_lhr_gb",
-            "latitude": 64.068865,
-            "longitude": -141.951519,
-            "name": "Heathrow",
-            "time_zone": "Europe/London",
-            "type": "airport"
-          }
+          "destination": "JFK",
+          "origin": "LHR"
         }
       ],
       "remove": [
@@ -401,6 +328,7 @@
           "slice_id": "sli_00009htYpSCXrwaB9Dn123"
         }
       ]
-    }
+    },
+    "updated_at": "2020-01-17T10:12:11.634Z"
   }
 }

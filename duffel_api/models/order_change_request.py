@@ -1,4 +1,3 @@
-from ..models import Place
 from ..utils import maybe_parse_date_entries
 from .order_change_offer import OrderChangeOffer
 
@@ -39,8 +38,6 @@ class OrderChangeRequestSliceAdd:
     def __init__(self, json):
         for key in json:
             value = maybe_parse_date_entries(key, json[key])
-            if key in ["destination", "origin"]:
-                value = Place(value)
             setattr(self, key, value)
 
 
