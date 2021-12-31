@@ -30,6 +30,12 @@ jobs:
       run: pip install build tox tox-gh-actions
     - name: Build package
       run: python -m build
+    - name: Test publishing package to PyPI
+      uses: pypa/gh-action-pypi-publish@master
+      with:
+        user: __token__
+        password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+        repository_url: https://test.pypi.org/legacy/
     - name: Publish package to PyPI
       uses: pypa/gh-action-pypi-publish@master
       with:
