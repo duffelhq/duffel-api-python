@@ -112,9 +112,11 @@ class OrderCreate:
                 raise OrderCreate.InvalidPassenger(passenger)
 
     def _instant_order(self):
+        """Determine whether this order's type is instant"""
         return self._payment_type is not None and self._payment_type != "hold"
 
-    def _set_order_data(self):
+    def _build_order_payload(self):
+        """Build order payload"""
         data = {
             "type": self._payment_type,
             "passengers": self._passengers,
@@ -172,7 +174,7 @@ class OrderCreate:
             OrderCreate._validate_payments(self._payments)
         OrderCreate._validate_services(self._services)
         OrderCreate._validate_selected_offers(self._selected_offers)
-        self._set_order_data()
+        self._build_order_payload()
         res = self._client.do_post(
             self._client._url,
             body={"data": self._request_body_data},
