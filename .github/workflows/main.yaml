@@ -42,6 +42,29 @@ jobs:
         user: __token__
         password: ${{ secrets.PYPI_API_TOKEN }}
 
+  integration-test:
+    runs-on: ubuntu-latest
+
+    env:
+      DUFFEL_ACCESS_TOKEN: ${{ secrets.DUFFEL_ACCESS_TOKEN }}
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install local version of package
+      run: pip install --editable .
+    - name: Run search and book example
+      run: python examples/search-and-book.py
+    - name: Run hold and pay later example
+      run: python examples/hold-and-pay-later.py
+    - name: Run book with seat example
+      run: python examples/book-with-seat.py
+    - name: Run book and change example
+      run: python examples/book-and-change.py
+
   test:
     runs-on: ubuntu-latest
     strategy:
