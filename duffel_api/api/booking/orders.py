@@ -129,8 +129,7 @@ class OrderCreate:
         else:
             data["type"] = self._payment_type
 
-        self._request_body_data = data
-        return self
+        return data
 
     def hold(self):
         """Set payment type to 'hold'. If this isn't called the type is 'instant'"""
@@ -174,10 +173,9 @@ class OrderCreate:
             OrderCreate._validate_payments(self._payments)
         OrderCreate._validate_services(self._services)
         OrderCreate._validate_selected_offers(self._selected_offers)
-        self._build_order_payload()
         res = self._client.do_post(
             self._client._url,
-            body={"data": self._request_body_data},
+            body={"data": self._build_order_payload()},
         )
         return Order(res["data"])
 
