@@ -1,12 +1,13 @@
 """Assorted auxiliary functions"""
-from datetime import datetime, date
+from datetime import date, datetime
+from typing import Any, Union
 
 
-def maybe_parse_date_entries(key, value):
-    """Parse datetime entries, depending on the value of `key`"""
-    if value is None:
+def maybe_parse_date_entries(key: str, value: Any) -> Union[str, datetime, date]:
+    """Parse appropriate datetime or date entries, depending on the value of `key`"""
+    if not isinstance(value, str):
+        # If it's not a string, don't attempt any parsing
         return value
-
     if key in [
         "created_at",
         "updated_at",
@@ -44,6 +45,7 @@ def maybe_parse_date_entries(key, value):
         else:
             return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
 
+    # All other strings
     return value
 
 
