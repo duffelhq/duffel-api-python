@@ -1,9 +1,9 @@
 from ..models import (
-    Airline,
-    Place,
     Aircraft,
+    Airline,
     OfferConditionChangeBeforeDeparture,
     OfferConditionRefundBeforeDeparture,
+    Place,
 )
 from ..utils import maybe_parse_date_entries
 
