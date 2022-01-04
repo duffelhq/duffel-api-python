@@ -53,10 +53,14 @@ class OrderConditions:
 
     def __init__(self, json):
         for key in json:
+            # Bind the value before we go into the control flow for setting it
+            value = None
+
             if key == "change_before_departure":
                 value = OrderConditionChangeBeforeDeparture(json[key])
             elif key == "refund_before_departure":
                 value = OrderConditionRefundBeforeDeparture(json[key])
+
             setattr(self, key, value)
 
 
