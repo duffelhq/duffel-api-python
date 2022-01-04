@@ -1,6 +1,8 @@
 """Http Client, api response and error management"""
 import os
-from requests import Session, Request, codes as http_codes
+
+from requests import Request, Session
+from requests import codes as http_codes
 
 from .utils import version
 
