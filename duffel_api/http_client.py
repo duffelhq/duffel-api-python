@@ -14,7 +14,7 @@ class ClientError(Exception):
 class ApiError(Exception):
     """An error originated from the API"""
 
-    def __init__(self, headers, json, message=None):
+    def __init__(self, headers, json):
         self._headers = headers
         self.meta = json["meta"]
         self.errors = json["errors"]
