@@ -46,7 +46,9 @@ class Pagination:
         self._caller = caller
 
         if params["limit"] > 200:
-            raise ApiError("limit exceeds 200")
+            # We're vaguely faking the structure of the error structure returned
+            # from the API.
+            raise ApiError([], {"errors": [{"message": "limit exceeds 200"}]})
         self._params = params
 
     def __iter__(self):
