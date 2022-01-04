@@ -22,21 +22,35 @@ class Offer:
 
     def __init__(self, json):
         for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            if key == "allowed_passenger_identity_document_types":
-                Offer._validate_passenger_identity_document_types(value)
-            elif key == "conditions":
-                value = OfferConditions(value)
-            elif key == "slices":
-                value = [OfferSlice(v) for v in value]
-            elif key == "passengers":
-                value = [Passenger(v) for v in value]
-            elif key == "payment_requirements":
-                value = PaymentRequirements(value)
-            elif key == "available_services":
-                value = [Service(v) for v in value]
-            elif key == "owner":
-                value = Airline(value)
+            value = json[key]
+
+            if isinstance(value, str):
+                value = maybe_parse_date_entries(key, json[key])
+
+                if key == "allowed_passenger_identity_document_types":
+                    Offer._validate_passenger_identity_document_types(value)
+
+                setattr(self, key, value)
+                continue
+
+            if isinstance(value, dict):
+                if key == "conditions":
+                    value = OfferConditions(value)
+                elif key == "owner":
+                    value = Airline(value)
+                setattr(self, key, value)
+                continue
+
+            if isinstance(value, list):
+                if key == "slices":
+                    value = [OfferSlice(v) for v in value]
+                elif key == "passengers":
+                    value = [Passenger(v) for v in value]
+                elif key == "payment_requirements":
+                    value = PaymentRequirements(value)
+                elif key == "available_services":
+                    value = [Service(v) for v in value]
+
             setattr(self, key, value)
 
     @staticmethod
@@ -55,6 +69,8 @@ class OfferConditions:
 
     def __init__(self, json):
         for key in json:
+            value = json[key]
+
             if key == "change_before_departure":
                 if not json[key] is None:
                     value = OfferConditionChangeBeforeDeparture(json[key])
@@ -166,14 +182,23 @@ class OfferSlice:
 
     def __init__(self, json):
         for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            if key in ["destination", "origin"]:
-                value = Place(value)
-            elif key in ["destination_type", "origin_type"]:
-                if value not in OfferSlice.allowed_place_types:
-                    raise OfferSlice.InvalidPlaceType(value)
-            elif key == "segments":
+            value = json[key]
+
+            if isinstance(value, str):
+                value = maybe_parse_date_entries(key, json[key])
+
+                if key in ["destination", "origin"]:
+                    value = Place(value)
+                elif key in ["destination_type", "origin_type"]:
+                    if value not in OfferSlice.allowed_place_types:
+                        raise OfferSlice.InvalidPlaceType(value)
+
+                setattr(self, key, value)
+                continue
+
+            if key == "segments":
                 value = [OfferSliceSegment(v) for v in value]
+
             # TODO(nlopes): maybe convert duration to a timedelta or Duration
             setattr(self, key, value)
 
@@ -185,15 +210,25 @@ class OfferSliceSegment:
 
     def __init__(self, json):
         for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            if key == "aircraft" and value:
-                value = Aircraft(value)
-            elif key in ["marketing_carrier", "operating_carrier"] and value:
-                value = Airline(value)
-            elif key in ["destination", "origin"]:
-                value = Place(value)
-            elif key == "passengers":
-                value = [OfferSliceSegmentPassenger(p) for p in value]
+            value = json[key]
+
+            if isinstance(value, str):
+                value = maybe_parse_date_entries(key, json[key])
+                setattr(self, key, value)
+                continue
+
+            if isinstance(value, dict):
+                if key == "aircraft" and value:
+                    value = Aircraft(value)
+                elif key in ["marketing_carrier", "operating_carrier"] and value:
+                    value = Airline(value)
+                elif key in ["destination", "origin"]:
+                    value = Place(value)
+
+            if isinstance(value, list):
+                if key == "passengers":
+                    value = [OfferSliceSegmentPassenger(p) for p in value]
+
             setattr(self, key, value)
 
 
