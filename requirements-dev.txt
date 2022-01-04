@@ -2,7 +2,7 @@ attrs==21.4.0
 backports.entry-points-selectable==1.1.1
 black==21.12b0
 certifi==2021.10.8
-charset-normalizer==2.0.9
+charset-normalizer==2.0.10
 click==8.0.3
 colorama==0.4.4
 coverage==6.2
