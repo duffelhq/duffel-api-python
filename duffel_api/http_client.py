@@ -1,6 +1,8 @@
 """Http Client, api response and error management"""
 import os
-from requests import Session, Request, codes as http_codes
+
+from requests import Request, Session
+from requests import codes as http_codes
 
 from .utils import version
 
@@ -12,7 +14,7 @@ class ClientError(Exception):
 class ApiError(Exception):
     """An error originated from the API"""
 
-    def __init__(self, headers, json, message=None):
+    def __init__(self, headers, json):
         self._headers = headers
         self.meta = json["meta"]
         self.errors = json["errors"]
@@ -44,7 +46,9 @@ class Pagination:
         self._caller = caller
 
         if params["limit"] > 200:
-            raise ApiError("limit exceeds 200")
+            # We're vaguely faking the structure of the error structure returned
+            # from the API.
+            raise ApiError([], {"errors": [{"message": "limit exceeds 200"}]})
         self._params = params
 
     def __iter__(self):
