@@ -19,34 +19,39 @@ class Order:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
-
-            if isinstance(value, str):
-                value = maybe_parse_date_entries(key, json[key])
-                setattr(self, key, value)
-                continue
-
-            if isinstance(value, dict):
-                if key == "conditions":
-                    value = OrderConditions(value)
-                elif key == "owner":
-                    value = Airline(value)
-                elif key == "payment_status":
-                    value = OrderPaymentStatus(value)
-                setattr(self, key, value)
-                continue
-
-            if isinstance(value, list):
-                if key == "documents":
-                    value = [OrderDocument(v) for v in value]
-                elif key == "passengers":
-                    value = [OrderPassenger(v) for v in value]
-                elif key == "services":
-                    value = [OrderService(v) for v in value]
-                elif key == "slices":
-                    value = [OrderSlice(v) for v in value]
+            value = Order.__maybe_init_value(key, json)
 
             setattr(self, key, value)
+
+    @staticmethod
+    def __maybe_init_value(key, json):
+        value = json[key]
+
+        if isinstance(value, str):
+            value = maybe_parse_date_entries(key, json[key])
+        elif isinstance(value, dict):
+            # Metadata is customer-specified data, so we don't try and parse it
+            if key == "metadata":
+                return value
+
+            parsers = {
+                "conditions": OrderConditions,
+                "owner": Airline,
+                "payment_status": OrderPaymentStatus,
+            }
+
+            value = parsers[key](value)
+        elif isinstance(value, list):
+            parsers = {
+                "documents": OrderDocument,
+                "passengers": OrderPassenger,
+                "services": OrderService,
+                "slices": OrderSlice,
+            }
+
+            value = [parsers[key](v) for v in value]
+
+        return value
 
 
 class OrderConditions:

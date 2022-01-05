@@ -22,36 +22,40 @@ class Offer:
 
     def __init__(self, json):
         for key in json:
-            value = json[key]
-
-            if isinstance(value, str):
-                value = maybe_parse_date_entries(key, json[key])
-
-                if key == "allowed_passenger_identity_document_types":
-                    Offer._validate_passenger_identity_document_types(value)
-
-                setattr(self, key, value)
-                continue
-
-            if isinstance(value, dict):
-                if key == "conditions":
-                    value = OfferConditions(value)
-                elif key == "owner":
-                    value = Airline(value)
-                setattr(self, key, value)
-                continue
-
-            if isinstance(value, list):
-                if key == "slices":
-                    value = [OfferSlice(v) for v in value]
-                elif key == "passengers":
-                    value = [Passenger(v) for v in value]
-                elif key == "payment_requirements":
-                    value = PaymentRequirements(value)
-                elif key == "available_services":
-                    value = [Service(v) for v in value]
+            value = Offer.__maybe_init_value(key, json)
 
             setattr(self, key, value)
+
+    @staticmethod
+    def __maybe_init_value(key, json):
+        value = json[key]
+
+        if isinstance(value, str):
+            value = maybe_parse_date_entries(key, json[key])
+
+        if isinstance(value, dict):
+            parsers = {
+                "conditions": OfferConditions,
+                "owner": Airline,
+                "payment_requirements": PaymentRequirements,
+            }
+
+            value = parsers[key](value)
+
+        if isinstance(value, list):
+            if key == "allowed_passenger_identity_document_types":
+                Offer._validate_passenger_identity_document_types(value)
+                return
+
+            parsers = {
+                "slices": OfferSlice,
+                "passengers": Passenger,
+                "available_services": Service,
+            }
+
+            value = [parsers[key](v) for v in value]
+
+        return value
 
     @staticmethod
     def _validate_passenger_identity_document_types(document_types):
