@@ -12,13 +12,21 @@ class OfferRequest:
 
     def __init__(self, json):
         for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            if key == "offers":
-                value = [Offer(v) for v in value]
-            elif key == "passengers":
-                value = [Passenger(v) for v in value]
-            elif key == "slices":
-                value = [Slice(v) for v in value]
+            value = json[key]
+
+            if isinstance(value, str):
+                value = maybe_parse_date_entries(key, json[key])
+                setattr(self, key, value)
+                continue
+
+            if isinstance(value, list):
+                if key == "offers":
+                    value = [Offer(v) for v in value]
+                elif key == "passengers":
+                    value = [Passenger(v) for v in value]
+                elif key == "slices":
+                    value = [Slice(v) for v in value]
+
             setattr(self, key, value)
 
 

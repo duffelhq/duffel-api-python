@@ -46,15 +46,6 @@
       "payment_required_by": null,
       "price_guarantee_expires_at": null
     },
-    "payments": [
-      {
-        "amount": "30.20",
-        "created_at": "2020-04-11T15:48:11.642Z",
-        "currency": "GBP",
-        "id": "pay_00009hthhsUZ8W4LxQgkjo",
-        "type": "balance"
-      }
-    ],
     "services": [
       {
         "id": "ser_00009UhD4ongolulWd9123",

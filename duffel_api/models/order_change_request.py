@@ -10,12 +10,21 @@ class OrderChangeRequest:
 
     def __init__(self, json):
         for key in json:
-            value = maybe_parse_date_entries(key, json[key])
+            value = json[key]
 
-            if key == "order_change_offers":
-                value = [OrderChangeOffer(v) for v in value]
-            elif key == "slices":
-                value = OrderChangeRequestSlice(value)
+            if isinstance(value, str):
+                value = maybe_parse_date_entries(key, json[key])
+                setattr(self, key, value)
+                continue
+
+            if isinstance(value, dict):
+                if key == "slices":
+                    value = OrderChangeRequestSlice(value)
+
+            if isinstance(value, list):
+                if key == "order_change_offers":
+                    value = [OrderChangeOffer(v) for v in value]
+
             setattr(self, key, value)
 
 
