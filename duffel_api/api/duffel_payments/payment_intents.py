@@ -53,6 +53,7 @@ class PaymentIntentCreate:
         self._amount = None
         self._currency = None
 
+    @staticmethod
     def _validate_payment_keys(payment_details):
         """Validate that payment keys are correct"""
         if set(payment_details.keys()) != set(["amount", "currency"]):
