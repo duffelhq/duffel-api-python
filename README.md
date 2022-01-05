@@ -7,7 +7,7 @@ Python client library for the [Duffel API](https://duffel.com/docs/api).
 
 ## Requirements
 
-- Python 3.6+
+- Python 3.7+
 
 ## Getting started
 

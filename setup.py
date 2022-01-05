@@ -21,6 +21,6 @@ setup(
         "Intended Audience :: Developers",
     ],
     keywords="duffel api flights airports airlines aircraft",
-    python_requires=">=3.6",
+    python_requires=">=3.7",
     install_requires=["requests>=2.25"],
 )
