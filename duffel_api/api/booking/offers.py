@@ -38,6 +38,8 @@ class OfferClient(HttpClient):
         given_name,
         loyalty_programme_accounts,
     ):
+        """Validates passenger details"""
+
         if not offer_id.strip():
             raise OfferClient.InvalidOfferId(offer_id)
         if not offer_passenger_id.strip():

@@ -181,6 +181,8 @@ class OrderCreate:
 
 
 class OrderUpdate:
+    """Auxiliary class to provide methods for order update related data"""
+
     class InvalidMetadata(Exception):
         """Invalid metadata data provided"""
 
