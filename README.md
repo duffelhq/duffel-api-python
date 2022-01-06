@@ -3,6 +3,7 @@
 versions](https://img.shields.io/pypi/pyversions/duffel-api.svg)](https://pypi.org/project/duffel-api/)
 [![Build Status](https://github.com/duffelhq/duffel-api-python/actions/workflows/main.yaml/badge.svg)](https://github.com/duffelhq/duffel-api-python/actions/workflows/main.yaml)
 [![Code style:black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Downloads](https://pepy.tech/badge/duffel-api/month)](https://pepy.tech/project/duffel-api/month)
 
 # duffel-api
 
