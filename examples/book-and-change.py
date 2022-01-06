@@ -2,12 +2,11 @@ from datetime import date, timedelta
 
 from duffel_api import Duffel
 
-
 if __name__ == "__main__":
     print("Duffel Flights API - book and change example")
     client = Duffel()
     departure_date = date.today().replace(date.today().year + 1)
-    slices = [
+    offer_request_slices = [
         {
             "origin": "LHR",
             "destination": "STN",
@@ -17,7 +16,7 @@ if __name__ == "__main__":
     offer_request = (
         client.offer_requests.create()
         .passengers([{"type": "adult"}])
-        .slices(slices)
+        .slices(offer_request_slices)
         .execute()
     )
 
@@ -72,7 +71,7 @@ if __name__ == "__main__":
         % (order.id, order.booking_reference)
     )
 
-    slices = {
+    order_change_request_slices = {
         "add": [
             {
                 "cabin_class": "economy",
@@ -91,7 +90,9 @@ if __name__ == "__main__":
     }
 
     order_change_request = (
-        client.order_change_requests.create(order.id).slices(slices).execute()
+        client.order_change_requests.create(order.id)
+        .slices(order_change_request_slices)
+        .execute()
     )
 
     order_change_offers = client.order_change_offers.list(order_change_request.id)
