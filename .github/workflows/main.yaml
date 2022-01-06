@@ -100,7 +100,7 @@ jobs:
       with:
         python-version: 3.9
     - name: Install dependencies
-      run: pip install build tox tox-gh-actions
+      run: pip install tox tox-gh-actions
     - name: Check with pyright
       run: tox -e pyright
     - name: Check with mypy
