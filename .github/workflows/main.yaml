@@ -60,6 +60,8 @@ jobs:
       run: python examples/search-and-book.py
     - name: Run hold and pay later example
       run: python examples/hold-and-pay-later.py
+    - name: Run book with checked baggage example
+      run: python examples/book-with-baggage.py
     - name: Run book with seat example
       run: python examples/book-with-seat.py
     - name: Run book and change example
