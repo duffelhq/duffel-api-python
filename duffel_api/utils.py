@@ -46,7 +46,7 @@ def maybe_parse_date_entries(key: str, value: Any) -> Union[str, datetime, date]
     return value
 
 
-def version():
+def version() -> str:
     """Return the version specified in the package (setup.py) during runtime"""
     import pkg_resources
 
