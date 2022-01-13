@@ -374,7 +374,8 @@
       "tax_currency": "GBP",
       "total_amount": "45.00",
       "total_currency": "GBP",
-      "total_emissions_kg": "460"
+      "total_emissions_kg": "460",
+      "updated_at": "2020-01-17T10:12:14.545Z"
     }
   ],
   "meta": {

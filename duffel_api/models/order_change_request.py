@@ -1,58 +1,107 @@
-from ..utils import maybe_parse_date_entries
-from .order_change_offer import OrderChangeOffer
+from dataclasses import dataclass
+from datetime import date, datetime
+from typing import Sequence
+
+from duffel_api.models import OrderChangeOffer
+from duffel_api.utils import get_and_transform
 
 
+@dataclass
+class OrderChangeRequestSliceAdd:
+    """The slice to be added"""
+
+    cabin_class: str
+    departure_date: date
+    destination: str
+    origin: str
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            cabin_class=json["cabin_class"],
+            departure_date=date.fromisoformat(json["departure_date"]),
+            destination=json["destination"],
+            origin=json["origin"],
+        )
+
+
+@dataclass
+class OrderChangeRequestSliceRemove:
+    """The slice to be removed"""
+
+    slice_id: str
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            slice_id=json["slice_id"],
+        )
+
+
+@dataclass
+class OrderChangeRequestSlices:
+    """The slices to be added and/or removed"""
+
+    add: Sequence[OrderChangeRequestSliceAdd]
+    remove: Sequence[OrderChangeRequestSliceRemove]
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            add=get_and_transform(
+                json,
+                "add",
+                lambda value: [
+                    OrderChangeRequestSliceAdd.from_json(slice) for slice in value
+                ],
+                [],
+            ),
+            remove=get_and_transform(
+                json,
+                "remove",
+                lambda value: [
+                    OrderChangeRequestSliceRemove.from_json(slice) for slice in value
+                ],
+                [],
+            ),
+        )
+
+
+@dataclass
 class OrderChangeRequest:
     """To change an order, you'll need to create an order change request. An
     order change request describes the slices of an existing paid order that you
     want to remove and search criteria for new slices you want to add.
     """
 
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
+    id: str
+    live_mode: bool
+    created_at: datetime
+    updated_at: datetime
+    order_id: str
+    slices: OrderChangeRequestSlices
+    order_change_offers: Sequence[OrderChangeOffer]
 
-            if isinstance(value, str):
-                value = maybe_parse_date_entries(key, json[key])
-                setattr(self, key, value)
-                continue
-
-            if isinstance(value, dict):
-                if key == "slices":
-                    value = OrderChangeRequestSlice(value)
-
-            if isinstance(value, list):
-                if key == "order_change_offers":
-                    value = [OrderChangeOffer(v) for v in value]
-
-            setattr(self, key, value)
-
-
-class OrderChangeRequestSlice:
-    """The slices to be added and/or removed"""
-
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
-            if key == "add":
-                value = [OrderChangeRequestSliceAdd(v) for v in value]
-            if key == "remove":
-                value = [OrderChangeRequestSliceRemove(v) for v in value]
-            setattr(self, key, value)
-
-
-class OrderChangeRequestSliceAdd:
-    """The slice to be added"""
-
-    def __init__(self, json):
-        for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            setattr(self, key, value)
-
-
-class OrderChangeRequestSliceRemove:
-    """The slice to be removed"""
-
-    def __init__(self, json):
-        for key in json:
-            setattr(self, key, json[key])
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            id=json["id"],
+            live_mode=json["live_mode"],
+            order_id=json["order_id"],
+            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            updated_at=datetime.strptime(json["updated_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            slices=OrderChangeRequestSlices.from_json(json["slices"]),
+            order_change_offers=get_and_transform(
+                json,
+                "order_change_offers",
+                lambda value: [
+                    OrderChangeOffer.from_json(order_change_offer)
+                    for order_change_offer in value
+                ],
+                [],
+            ),
+        )

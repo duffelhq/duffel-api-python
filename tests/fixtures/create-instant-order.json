@@ -24,6 +24,10 @@
     ],
     "id": "ord_00009hthhsUZ8W4LxQgkjo",
     "live_mode": false,
+    "metadata": {
+      "customer_prefs": "window seat",
+      "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2"
+    },
     "owner": {
       "iata_code": "BA",
       "id": "aln_00001876aqC8c5umZmrRds",
@@ -49,6 +53,14 @@
     "services": [
       {
         "id": "ser_00009UhD4ongolulWd9123",
+        "metadata": {
+          "designator": "14B",
+          "name": "Exit row seat",
+          "disclosures": [
+            "Do not seat children in exit row seats",
+            "Do not seat passengers with special needs in exit row seats"
+          ]
+        },
         "passenger_ids": [
           "pas_00009hj8USM7Ncg31cBCLL"
         ],
@@ -58,7 +70,7 @@
         ],
         "total_amount": "15.00",
         "total_currency": "GBP",
-        "type": "baggage"
+        "type": "seat"
       }
     ],
     "slices": [

@@ -25,6 +25,10 @@
       ],
       "id": "ord_00009hthhsUZ8W4LxQgkjo",
       "live_mode": false,
+      "metadata": {
+        "customer_prefs": "window seat",
+        "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2"
+      },
       "owner": {
         "iata_code": "BA",
         "id": "aln_00001876aqC8c5umZmrRds",

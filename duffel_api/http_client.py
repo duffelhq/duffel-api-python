@@ -61,7 +61,7 @@ class Pagination:
         while "meta" in response:
             after = response["meta"]["after"]
             for entry in response["data"]:
-                yield self._caller(entry)
+                yield self._caller.from_json(entry)
 
             if after is None:
                 break

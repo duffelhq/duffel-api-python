@@ -9,6 +9,25 @@
         "allowed_passenger_identity_document_types": [
           "passport"
         ],
+        "available_payment_types": "payments",
+        "available_services": [
+          {
+            "id": "ase_00009UhD4ongolulWd9123",
+            "maximum_quantity": 1,
+            "metadata": {
+              "type": "checked"
+            },
+            "passenger_ids": [
+              "pas_00009hj8USM7Ncg31cBCLL"
+            ],
+            "segment_ids": [
+              "seg_00009hj8USM7Ncg31cB456"
+            ],
+            "total_amount": "15.00",
+            "total_currency": "GBP",
+            "type": "baggage"
+          }
+        ],
         "base_amount": "30.20",
         "base_currency": "GBP",
         "conditions": {
@@ -217,13 +236,22 @@
         "tax_currency": "GBP",
         "total_amount": "45.00",
         "total_currency": "GBP",
-        "total_emissions_kg": "460"
+        "total_emissions_kg": "460",
+        "updated_at": "2020-01-17T10:12:14.545Z"
       }
     ],
     "passengers": [
       {
         "age": 14,
+        "family_name": "Earhart",
+        "given_name": "Amelia",
         "id": "pas_00009hj8USM7Ncg31cBCL",
+        "loyalty_programme_accounts": [
+          {
+            "account_number": "12901014",
+            "airline_iata_code": "BA"
+          }
+        ],
         "type": "adult"
       }
     ],

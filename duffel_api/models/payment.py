@@ -1,6 +1,9 @@
-from ..utils import maybe_parse_date_entries
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
 
 
+@dataclass
 class Payment:
     """To pay for an unpaid order you've previously created, you'll need to create a
     payment for it.
@@ -10,14 +13,32 @@ class Payment:
 
     """
 
-    allowed_types = ["arc_bsp_cash", "balance", "payments"]
+    id: str
+    live_mode: bool
+    type: str
+    amount: str
+    currency: Optional[str]
+    created_at: datetime
+
+    allowed_types = ["arc_bsp_cash", "balance"]
 
     class InvalidType(Exception):
         """Invalid payment type provided"""
 
-    def __init__(self, json):
-        for key in json:
-            value = maybe_parse_date_entries(key, json[key])
-            if key == "type" and value not in Payment.allowed_types:
-                raise Payment.InvalidType(value)
-            setattr(self, key, value)
+    def __post_init__(self):
+        if self.type not in Payment.allowed_types:
+            raise Payment.InvalidType(self.type)
+
+        return self
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            id=json["id"],
+            type=json["type"],
+            live_mode=json["live_mode"],
+            amount=json["amount"],
+            currency=json.get("currency"),
+            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+        )

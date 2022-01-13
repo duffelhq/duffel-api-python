@@ -1,3 +1,184 @@
+from dataclasses import dataclass
+from typing import Optional, Sequence
+
+from duffel_api.utils import get_and_transform
+
+
+@dataclass
+class SeatMapCabinRowSectionElementSeatService:
+    """A seat for a passenger. If the available_services list is empty (which will be
+    represented as an empty list : []), the seat is unavailable.
+
+    For display, all seats should be displayed with the same static width.
+
+    """
+
+    id: str
+    passenger_id: str
+    total_amount: str
+    total_currency: str
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            id=json["id"],
+            passenger_id=json["passenger_id"],
+            total_amount=json["total_amount"],
+            total_currency=json["total_currency"],
+        )
+
+
+@dataclass
+class SeatMapCabinWings:
+    """Where the wings of the aircraft are in relation to rows in the cabin.
+
+    The numbers correspond to the indices of the first and the last row which are
+    overwing. You can use this to draw a visual representation of the wings to help
+    users get a better idea of what they will see outside their window.
+
+    The indices are 0th-based and are for all rows, not just those that have seats.
+
+    This is null when no rows of the cabin are overwing.
+    """
+
+    first_row_index: int
+    last_row_index: int
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            first_row_index=json["first_row_index"],
+            last_row_index=json["last_row_index"],
+        )
+
+
+@dataclass
+class SeatMapCabinRowSectionElement:
+    """The element that makes up a section"""
+
+    type: str
+    # Only for seat element
+    designator: Optional[str]
+    name: Optional[str]
+    disclosures: Optional[Sequence[str]]
+    available_services: Optional[Sequence[SeatMapCabinRowSectionElementSeatService]]
+
+    allowed_types = [
+        "seat",
+        "bassinet",
+        "empty",
+        "exit_row",
+        "lavatory",
+        "galley",
+        "closet",
+        "stairs",
+    ]
+
+    class InvalidType(Exception):
+        """Invalid seat map cabin row section element provided"""
+
+    def __post_init__(self):
+        if self.type not in SeatMapCabinRowSectionElement.allowed_types:
+            raise SeatMapCabinRowSectionElement.InvalidType(self.type)
+
+        return self
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            type=json["type"],
+            designator=json.get("designator"),
+            name=json.get("name"),
+            disclosures=json.get("disclosures"),
+            available_services=get_and_transform(
+                json,
+                "available_services",
+                lambda value: [
+                    SeatMapCabinRowSectionElementSeatService.from_json(service)
+                    for service in value
+                ],
+            ),
+        )
+
+
+@dataclass
+class SeatMapCabinRowSection:
+    """Each row is divided into sections by one or more aisles."""
+
+    elements: Sequence[SeatMapCabinRowSectionElement]
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            elements=get_and_transform(
+                json,
+                "elements",
+                lambda value: [
+                    SeatMapCabinRowSectionElement.from_json(element)
+                    for element in value
+                ],
+                [],
+            ),
+        )
+
+
+@dataclass
+class SeatMapCabinRow:
+    """Row sections are broken up by aisles. Rows are ordered from front to back of the
+    aircraft.
+    """
+
+    sections: Sequence[SeatMapCabinRowSection]
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            sections=get_and_transform(
+                json,
+                "sections",
+                lambda value: [
+                    SeatMapCabinRowSection.from_json(section) for section in value
+                ],
+                [],
+            ),
+        )
+
+
+@dataclass
+class SeatMapCabin:
+    """Cabins are ordered by deck from lowest to highest, and then within each deck from
+    the front to back of the aircraft.
+    """
+
+    cabin_class: str
+    deck: int
+    wings: Optional[SeatMapCabinWings]
+    aisles: int
+    rows: Sequence[SeatMapCabinRow]
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            cabin_class=json["cabin_class"],
+            deck=json["deck"],
+            wings=get_and_transform(json, "wings", SeatMapCabinWings.from_json),
+            aisles=json["aisles"],
+            rows=get_and_transform(
+                json,
+                "rows",
+                lambda value: [SeatMapCabinRow.from_json(row) for row in value],
+                [],
+            ),
+        )
+
+
+@dataclass
 class SeatMap:
     """Seat maps are used to build a rich experience for your customers so they can select
     a seat as part of an order.
@@ -22,123 +203,24 @@ class SeatMap:
 
     If these elements don't fill the whole section, they should be displayed as
     middle-aligned by default.
-
     """
 
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
-            if key == "cabins":
-                value = [SeatMapCabin(v) for v in value]
-            setattr(self, key, value)
+    id: str
+    slice_id: str
+    segment_id: str
+    cabins: Sequence[SeatMapCabin]
 
-
-class SeatMapCabin:
-    """Cabins are ordered by deck from lowest to highest, and then within each deck from
-    the front to back of the aircraft.
-
-    """
-
-    allowed_classes = ["first", "business", "premium_economy", "economy"]
-
-    class InvalidClass(Exception):
-        """Invalid seat map cabin class provided"""
-
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
-            if key == "cabin_class" and value not in SeatMapCabin.allowed_classes:
-                raise SeatMapCabin.InvalidClass(value)
-            elif key == "wings" and value:
-                value = SeatMapCabinWings(value)
-            elif key == "rows":
-                value = [SeatMapCabinRow(r) for r in value]
-            setattr(self, key, value)
-
-
-class SeatMapCabinRow:
-    """Row sections are broken up by aisles. Rows are ordered from front to back of the
-    aircraft.
-
-    """
-
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
-            if key == "sections":
-                value = [SeatMapCabinRowSection(s) for s in value]
-            setattr(self, key, value)
-
-
-class SeatMapCabinRowSection:
-    """Each row is divided into sections by one or more aisles."""
-
-    def __init__(self, json):
-        for key in json:
-            value = json[key]
-            if key == "elements":
-                value = [SeatMapCabinRowSectionElement(s) for s in value]
-            setattr(self, key, value)
-
-
-class SeatMapCabinRowSectionElement:
-    """The element that makes up a section"""
-
-    allowed_types = [
-        "seat",
-        "bassinet",
-        "empty",
-        "exit_row",
-        "lavatory",
-        "galley",
-        "closet",
-        "stairs",
-    ]
-
-    class InvalidType(Exception):
-        """Invalid seat map cabin row section element provided"""
-
-    def __init__(self, json):
-        element_type = json["type"]
-        if element_type not in SeatMapCabinRowSectionElement.allowed_types:
-            raise SeatMapCabinRowSectionElement.InvalidType(element_type)
-
-        if element_type == "seat":
-            for key in json:
-                value = json[key]
-                if key == "available_services":
-                    value = [SeatMapCabinRowSectionElementSeatService(s) for s in value]
-                setattr(self, key, value)
-        else:
-            setattr(self, "type", element_type)
-
-
-class SeatMapCabinRowSectionElementSeatService:
-    """A seat for a passenger. If the available_services list is empty (which will be
-    represented as an empty list : []), the seat is unavailable.
-
-    For display, all seats should be displayed with the same static width.
-
-    """
-
-    def __init__(self, json):
-        for key in json:
-            setattr(self, key, json[key])
-
-
-class SeatMapCabinWings:
-    """Where the wings of the aircraft are in relation to rows in the cabin.
-
-    The numbers correspond to the indices of the first and the last row which are
-    overwing. You can use this to draw a visual representation of the wings to help
-    users get a better idea of what they will see outside their window.
-
-    The indices are 0th-based and are for all rows, not just those that have seats.
-
-    This is null when no rows of the cabin are overwing.
-
-    """
-
-    def __init__(self, json):
-        for key in json:
-            setattr(self, key, json[key])
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            id=json["id"],
+            slice_id=json["slice_id"],
+            segment_id=json["segment_id"],
+            cabins=get_and_transform(
+                json,
+                "cabins",
+                lambda value: [SeatMapCabin.from_json(cabin) for cabin in value],
+                [],
+            ),
+        )

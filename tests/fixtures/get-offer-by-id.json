@@ -8,6 +8,9 @@
       {
         "id": "ase_00009UhD4ongolulWd9123",
         "maximum_quantity": 1,
+        "metadata": {
+          "type": "checked" 
+        },
         "passenger_ids": [
           "pas_00009hj8USM7Ncg31cBCLL"
         ],

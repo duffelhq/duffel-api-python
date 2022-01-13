@@ -1,5 +1,5 @@
 from ...http_client import HttpClient, Pagination
-from ...models import Offer, Passenger
+from ...models import Offer, OfferPassenger
 
 
 class OfferClient(HttpClient):
@@ -69,7 +69,7 @@ class OfferClient(HttpClient):
         params = {}
         if return_available_services:
             params["return_available_services"] = "true"
-        return Offer(
+        return Offer.from_json(
             self.do_get("{}/{}".format(self._url, id_), query_params=params)["data"]
         )
 
@@ -119,4 +119,4 @@ class OfferClient(HttpClient):
 
         res = self.do_patch(url, body=body)
 
-        return Passenger(res["data"])
+        return OfferPassenger.from_json(res["data"])

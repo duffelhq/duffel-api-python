@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime
+
 import pytest
 
 from duffel_api.api import OrderCreate, OrderUpdate
@@ -12,10 +13,12 @@ def test_get_order_by_id(requests_mock):
         order = client.orders.get("id")
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
         assert not order.live_mode
+        assert order.payment_status.awaiting_payment
         assert len(order.passengers) == 1
-        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert order.synced_at == datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.slices) == 1
         slice = order.slices[0]
+        assert slice.conditions.change_before_departure.allowed
         assert slice.origin_type == "airport"
         assert len(order.slices[0].segments) == 1
         assert len(order.slices[0].segments[0].passengers) == 1
@@ -66,7 +69,7 @@ def test_get_orders(requests_mock):
         assert passenger.cabin_class_marketing_name == "Economy Basic"
         assert passenger.passenger_id == "passenger_0"
         assert passenger.seat is None
-        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert order.synced_at == datetime(2020, 4, 11, 15, 48, 11)
 
 
 def test_create_instant_order(requests_mock):
@@ -96,7 +99,7 @@ def test_create_instant_order(requests_mock):
         assert order.payment_status.awaiting_payment is False
         assert order.payment_status.payment_required_by is None
         assert order.payment_status.price_guarantee_expires_at is None
-        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert order.synced_at == datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.services) == 1
         service = order.services[0]
         assert service.id == "ser_00009UhD4ongolulWd9123"
@@ -126,13 +129,13 @@ def test_create_hold_order(requests_mock):
         )
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
         assert order.payment_status.awaiting_payment is True
-        assert order.payment_status.payment_required_by == datetime.datetime(
+        assert order.payment_status.payment_required_by == datetime(
             2020, 1, 17, 10, 42, 14
         )
-        assert order.payment_status.price_guarantee_expires_at == datetime.datetime(
+        assert order.payment_status.price_guarantee_expires_at == datetime(
             2020, 1, 17, 10, 42, 14
         )
-        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert order.synced_at == datetime(2020, 4, 11, 15, 48, 11)
         assert len(order.services) == 1
         service = order.services[0]
         assert service.id == "ser_00009UhD4ongolulWd9123"
@@ -196,7 +199,7 @@ def test_update_order(requests_mock):
         )
 
         assert order.id == "ord_00009hthhsUZ8W4LxQgkjo"
-        assert order.synced_at == datetime.datetime(2020, 4, 11, 15, 48, 11)
+        assert order.synced_at == datetime(2020, 4, 11, 15, 48, 11)
         assert order.metadata == {
             "customer_prefs": "window seat",
             "payment_intent_id": "pit_00009htYpSCXrwaB9DnUm2",

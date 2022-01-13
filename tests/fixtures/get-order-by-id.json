@@ -60,6 +60,14 @@
     "services": [
       {
         "id": "ser_00009UhD4ongolulWd9123",
+        "metadata": {
+          "designator": "14B",
+          "name": "Exit row seat",
+          "disclosures": [
+            "Do not seat children in exit row seats",
+            "Do not seat passengers with special needs in exit row seats"
+          ]
+        },
         "passenger_ids": [
           "pas_00009hj8USM7Ncg31cBCLL"
         ],
@@ -69,7 +77,7 @@
         ],
         "total_amount": "15.00",
         "total_currency": "GBP",
-        "type": "baggage"
+        "type": "seat"
       }
     ],
     "slices": [

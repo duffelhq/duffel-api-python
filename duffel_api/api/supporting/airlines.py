@@ -11,7 +11,7 @@ class AirlineClient(HttpClient):
 
     def get(self, id_):
         """GET /air/airlines/:id"""
-        return Airline(self.do_get("{}/{}".format(self._url, id_))["data"])
+        return Airline.from_json(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, limit=50):
         """GET /air/airlines"""

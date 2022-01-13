@@ -24,8 +24,8 @@ def test_get_order_change_by_id(requests_mock):
         )
         assert order_change.new_total_amount == "121.30"
         assert order_change.new_total_currency == "GBP"
-        assert order_change.penalty_amount == "15.50"
-        assert order_change.penalty_currency == "GBP"
+        assert order_change.penalty_total_amount == "15.50"
+        assert order_change.penalty_total_currency == "GBP"
         assert order_change.refund_to == "voucher"
         assert order_change.order_id == "ord_0000A3tQcCRZ9R8OY0QlxA"
         assert isinstance(order_change.slices.add, type([]))
