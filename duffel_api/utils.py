@@ -32,10 +32,7 @@ def maybe_parse_date_entries(key: str, value: Any) -> Union[str, datetime, date]
         return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
 
     if key in ["departure_date", "born_on"]:
-        # Once we no longer support python 3.6 we can replace these two lines with:
-        # date.fromisoformat(value)
-        t = datetime.strptime(value, "%Y-%m-%d")
-        return date(t.year, t.month, t.day)
+        return date.fromisoformat(value)
 
     if key in ["confirmed_at", "expires_at"]:
         # There are inconsistent formats used for this field depending on the
