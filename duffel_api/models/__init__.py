@@ -1,7 +1,6 @@
 from .aircraft import Aircraft
 from .airline import Airline
-from .airport import Airport
-from .city import City
+from .airport import Airport, City, Place, Refund
 from .loyalty_programme_account import LoyaltyProgrammeAccount
 from .offer import (
     Offer,
@@ -21,8 +20,6 @@ from .order_change_offer import OrderChangeOffer
 from .order_change_request import OrderChangeRequest
 from .payment import Payment
 from .payment_intent import PaymentIntent
-from .place import Place
-from .refund import Refund
 from .seat_map import SeatMap
 from .webhook import Webhook
 
