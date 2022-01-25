@@ -40,8 +40,8 @@ if __name__ == "__main__":
 
     payments = [
         {
-            "currency": selected_offer.total_currency,
-            "amount": selected_offer.total_amount,
+            "currency": priced_offer.total_currency,
+            "amount": priced_offer.total_amount,
             "type": "balance",
         }
     ]
