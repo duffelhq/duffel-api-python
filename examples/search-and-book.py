@@ -22,33 +22,27 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print("Created offer request: %s" % (offer_request.id))
+    print(f"Created offer request: {offer_request.id}")
 
     offers = client.offers.list(offer_request.id)
     offers_list = list(enumerate(offers))
 
-    print("Got %d offers" % len(offers_list))
+    print(f"Got {len(offers_list)} offers")
 
     selected_offer = offers_list[0][1]
 
-    print("Selected offer %s to book" % (selected_offer.id))
+    print(f"Selected offer {selected_offer.id} to book")
 
     priced_offer = client.offers.get(selected_offer.id, return_available_services=True)
 
     print(
-        "The final price for offer %s is %s (%s)"
-        % (priced_offer.id, priced_offer.total_amount, priced_offer.total_currency)
+        f"The final price for offer {priced_offer.id} is {priced_offer.total_amount} ({priced_offer.total_currency})"
     )
 
     available_service = priced_offer.available_services[0]
 
     print(
-        "Adding an extra bag with service %s, costing %s (%s)"
-        % (
-            available_service.id,
-            available_service.total_amount,
-            available_service.total_currency,
-        )
+        f"Adding an extra bag with service {available_service.id}, costing {available_service.total_amount} ({available_service.total_currency})"
     )
 
     total_amount = str(
@@ -89,22 +83,14 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print(
-        "Created order %s with booking reference %s"
-        % (order.id, order.booking_reference)
-    )
+    print(f"Created order {order.id} with booking reference {order.booking_reference}")
 
     order_cancellation = client.order_cancellations.create(order.id)
 
     print(
-        "Requested refund quote for order %s – %s (%s) is available"
-        % (
-            order.id,
-            order_cancellation.refund_amount,
-            order_cancellation.refund_currency,
-        )
+        f"Requested refund quote for order {order.id} – {order_cancellation.refund_amount} ({order_cancellation.refund_currency}) is available"
     )
 
     client.order_cancellations.confirm(order_cancellation.id)
 
-    print("Confirmed refund quote for order %s" % (order.id))
+    print(f"Confirmed refund quote for order {order.id}")
