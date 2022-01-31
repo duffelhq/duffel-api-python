@@ -21,16 +21,16 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print("Created offer request: %s" % (offer_request.id))
+    print(f"Created offer request: {offer_request.id}")
 
     offers = client.offers.list(offer_request.id)
     offers_list = list(enumerate(offers))
 
-    print("Got %d offers" % len(offers_list))
+    print(f"Got {len(offers_list)} offers")
 
     selected_offer = offers_list[0][1]
 
-    print("Selected offer %s to book" % (selected_offer.id))
+    print(f"Selected offer {selected_offer.id} to book")
 
     priced_offer = client.offers.get(selected_offer.id)
     passengers = [
@@ -55,15 +55,13 @@ if __name__ == "__main__":
     )
 
     print(
-        "Created hold order %s with booking reference %s"
-        % (order.id, order.booking_reference)
+        f"Created hold order {order.id} with booking reference {order.booking_reference}"
     )
 
     updated_order = client.orders.get(order.id)
 
     print(
-        "Retrieved order and up-to-date price is %s (%s)"
-        % (updated_order.total_amount, updated_order.total_currency)
+        f"Retrieved order and up-to-date price is {updated_order.total_amount} ({updated_order.total_currency})"
     )
 
     payment = (
@@ -79,8 +77,8 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print("Paid for order %s with payment %s" % (order.id, payment.id))
+    print(f"Paid for order {order.id} with payment {payment.id}")
 
     paid_order = client.orders.get(order.id)
 
-    print("After payment, order has %d documents" % len(paid_order.documents))
+    print(f"After payment, order has {len(paid_order.documents)} documents")

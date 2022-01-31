@@ -20,22 +20,21 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print("Created offer request: %s" % (offer_request.id))
+    print(f"Created offer request: {offer_request.id}")
 
     offers = client.offers.list(offer_request.id)
     offers_list = list(enumerate(offers))
 
-    print("Got %d offers" % len(offers_list))
+    print(f"Got {len(offers_list)} offers")
 
     selected_offer = offers_list[0][1]
 
-    print("Selected offer %s to book" % (selected_offer.id))
+    print(f"Selected offer {selected_offer.id} to book")
 
     priced_offer = client.offers.get(selected_offer.id)
 
     print(
-        "The final price for offer %s is %s (%s)"
-        % (priced_offer.id, priced_offer.total_amount, priced_offer.total_currency)
+        f"The final price for offer {priced_offer.id} is {priced_offer.total_amount} ({priced_offer.total_currency})"
     )
 
     payments = [
@@ -66,10 +65,7 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print(
-        "Created order %s with booking reference %s"
-        % (order.id, order.booking_reference)
-    )
+    print(f"Created order {order.id} with booking reference {order.booking_reference}")
 
     order_change_request_slices = {
         "add": [
@@ -99,13 +95,12 @@ if __name__ == "__main__":
     order_change_offers_list = list(enumerate(order_change_offers))
 
     print(
-        "Got %d options for changing the order; picking first option"
-        % (len(order_change_offers_list))
+        f"Got {len(order_change_offers_list)} options for changing the order; picking first option"
     )
 
     order_change = client.order_changes.create(order_change_offers_list[0][1].id)
 
-    print("Created order change %s, confirming..." % order_change.id)
+    print(f"Created order change {order_change.id}, confirming...")
 
     payment = {
         "amount": order_change.change_total_amount,
@@ -116,10 +111,5 @@ if __name__ == "__main__":
     client.order_changes.confirm(order_change.id, payment)
 
     print(
-        "Processed change to order %s costing %s (%s)"
-        % (
-            order.id,
-            order_change.change_total_amount,
-            order_change.change_total_currency,
-        )
+        f"Processed change to order {order.id} costing {order_change.change_total_amount} ({order_change.change_total_currency})"
     )

@@ -22,22 +22,21 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print("Created offer request: %s" % (offer_request.id))
+    print(f"Created offer request: {offer_request.id}")
 
     offers = client.offers.list(offer_request.id)
     offers_list = list(enumerate(offers))
 
-    print("Got %d offers" % len(offers_list))
+    print(f"Got {len(offers_list)} offers")
 
     selected_offer = offers_list[0][1]
 
-    print("Selected offer %s to book" % (selected_offer.id))
+    print(f"Selected offer {selected_offer.id} to book")
 
     priced_offer = client.offers.get(selected_offer.id)
 
     print(
-        "The final price for offer %s is %s (%s)"
-        % (priced_offer.id, priced_offer.total_amount, priced_offer.total_currency)
+        f"The final price for offer {priced_offer.id} is {priced_offer.total_amount} ({priced_offer.total_currency})"
     )
 
     seat_maps = client.seat_maps.get(priced_offer.id)
@@ -58,12 +57,7 @@ if __name__ == "__main__":
     available_seat_service = available_seat.available_services[0]
 
     print(
-        "Adding seat %s costing %s (%s)"
-        % (
-            available_seat.designator,
-            available_seat_service.total_amount,
-            available_seat_service.total_currency,
-        )
+        f"Adding seat {available_seat.designator} costing {available_seat_service.total_amount} ({available_seat_service.total_currency})"
     )
 
     total_amount = str(
@@ -106,7 +100,4 @@ if __name__ == "__main__":
         .execute()
     )
 
-    print(
-        "Created order %s with booking reference %s"
-        % (order.id, order.booking_reference)
-    )
+    print(f"Created order {order.id} with booking reference {order.booking_reference}")
