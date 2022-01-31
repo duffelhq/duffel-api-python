@@ -16,7 +16,9 @@ class OrderChangeRequestClient(HttpClient):
 
     def get(self, id_):
         """GET /air/order_change_requests/:id"""
-        return OrderChangeRequest(self.do_get("{}/{}".format(self._url, id_))["data"])
+        return OrderChangeRequest.from_json(
+            self.do_get("{}/{}".format(self._url, id_))["data"]
+        )
 
 
 class OrderChangeRequestCreate:
@@ -66,4 +68,4 @@ class OrderChangeRequestCreate:
                 }
             },
         )
-        return OrderChangeRequest(res["data"])
+        return OrderChangeRequest.from_json(res["data"])

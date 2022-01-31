@@ -10,8 +10,8 @@
     "new_total_amount": "121.30",
     "new_total_currency": "GBP",
     "order_id": "ord_0000A3tQcCRZ9R8OY0QlxA",
-    "penalty_amount": "15.50",
-    "penalty_currency": "GBP",
+    "penalty_total_amount": "15.50",
+    "penalty_total_currency": "GBP",
     "refund_to": "voucher",
     "slices": {
       "add": [

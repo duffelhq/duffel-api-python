@@ -53,4 +53,4 @@ class PaymentCreate:
             self._client._url,
             body={"data": {"order_id": self._order_id, "payment": self._payment}},
         )
-        return Payment(res["data"])
+        return Payment.from_json(res["data"])

@@ -18,7 +18,7 @@ def test_get_airline_by_id_without_iata_code(requests_mock):
         airline = client.airlines.get("id")
         assert airline.id == "some-id"
         assert airline.name == "Duffel Airways"
-        assert not hasattr(airline, "iata_code")
+        assert airline.iata_code is None
 
 
 def test_get_airlines(requests_mock):

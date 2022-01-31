@@ -55,7 +55,7 @@ class WebhookCreate(object):
             self._client._url,
             body={"data": {"events": self._events, "url": self._url}},
         )
-        return Webhook(res["data"])
+        return Webhook.from_json(res["data"])
 
 
 class WebhookUpdate(object):
@@ -79,4 +79,4 @@ class WebhookUpdate(object):
             body={"data": {"active": self._active}},
         )
 
-        return Webhook(res["data"])
+        return Webhook.from_json(res["data"])

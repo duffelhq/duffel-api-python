@@ -15,7 +15,7 @@ class OrderClient(HttpClient):
 
     def get(self, id_):
         """GET /air/orders/:id."""
-        return Order(self.do_get("{}/{}".format(self._url, id_))["data"])
+        return Order.from_json(self.do_get("{}/{}".format(self._url, id_))["data"])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
         """GET /air/orders."""
@@ -177,7 +177,7 @@ class OrderCreate:
             self._client._url,
             body={"data": self._build_order_payload()},
         )
-        return Order(res["data"])
+        return Order.from_json(res["data"])
 
 
 class OrderUpdate:
@@ -213,4 +213,4 @@ class OrderUpdate:
             url,
             body={"data": {"metadata": self._metadata}},
         )
-        return Order(res["data"])
+        return Order.from_json(res["data"])

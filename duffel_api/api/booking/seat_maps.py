@@ -12,4 +12,4 @@ class SeatMapClient(HttpClient):
     def get(self, offer_id):
         """GET /air/seat_maps"""
         data = self.do_get(self._url, query_params={"offer_id": offer_id})["data"]
-        return [SeatMap(m) for m in data]
+        return [SeatMap.from_json(m) for m in data]

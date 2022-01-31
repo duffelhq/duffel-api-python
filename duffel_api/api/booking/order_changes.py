@@ -26,7 +26,9 @@ class OrderChangeClient(HttpClient):
 
     def get(self, id_):
         """GET /air/order_changes/:id."""
-        return OrderChange(self.do_get("{}/{}".format(self._url, id_))["data"])
+        return OrderChange.from_json(
+            self.do_get("{}/{}".format(self._url, id_))["data"]
+        )
 
     def create(self, selected_order_change_offer):
         """Create a pending order change.
@@ -42,7 +44,7 @@ class OrderChangeClient(HttpClient):
             self._url,
             body={"data": {"selected_order_change_offer": selected_order_change_offer}},
         )
-        return OrderChange(res["data"])
+        return OrderChange.from_json(res["data"])
 
     def confirm(self, id_, payment_):
         """Confirm an order change.
@@ -76,4 +78,4 @@ class OrderChangeClient(HttpClient):
                 }
             },
         )
-        return OrderChange(res["data"])
+        return OrderChange.from_json(res["data"])

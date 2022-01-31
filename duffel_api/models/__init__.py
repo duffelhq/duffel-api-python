@@ -1,13 +1,12 @@
 from .aircraft import Aircraft
-from .airport import Airport, City
 from .airline import Airline
+from .airport import Airport, City, Place, Refund
 from .loyalty_programme_account import LoyaltyProgrammeAccount
-from .passenger import Passenger
-from .place import Place
 from .offer import (
     Offer,
     OfferConditionChangeBeforeDeparture,
     OfferConditionRefundBeforeDeparture,
+    OfferPassenger,
 )
 from .offer_request import OfferRequest
 from .order import (
@@ -30,9 +29,9 @@ __all__ = [
     "Airport",
     "City",
     "LoyaltyProgrammeAccount",
-    "Passenger",
     "Place",
     "Offer",
+    "OfferPassenger",
     "OfferConditionChangeBeforeDeparture",
     "OfferConditionRefundBeforeDeparture",
     "OfferRequest",
@@ -45,6 +44,7 @@ __all__ = [
     "OrderChangeRequest",
     "Payment",
     "PaymentIntent",
+    "Refund",
     "SeatMap",
     "Webhook",
 ]
