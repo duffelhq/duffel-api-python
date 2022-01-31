@@ -15,7 +15,7 @@ class OrderClient(HttpClient):
 
     def get(self, id_):
         """GET /air/orders/:id."""
-        return Order.from_json(self.do_get("{}/{}".format(self._url, id_))["data"])
+        return Order.from_json(self.do_get(f"{self._url}/{id_}")["data"])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
         """GET /air/orders."""

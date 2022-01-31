@@ -28,7 +28,7 @@ class WebhookClient(HttpClient):
 
         Send a ping, a "fake event" notification, to a webhook.
         """
-        url = "{}/{}/actions/ping".format(self._url, id_)
+        url = f"{self._url}/{id_}/actions/ping"
         self.do_post(url)
         return None
 
@@ -72,7 +72,7 @@ class WebhookUpdate(object):
 
     def execute(self):
         """PATCH /air/webhooks/{id}"""
-        url = "{}/{}".format(self._client._url, self._id)
+        url = f"{self._client._url}/{self._id}"
 
         res = self._client.do_patch(
             url,

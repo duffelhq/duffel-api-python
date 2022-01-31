@@ -20,9 +20,7 @@ class OrderCancellationClient(HttpClient):
 
     def get(self, id_):
         """GET /air/order_cancellations/:id."""
-        return OrderCancellation.from_json(
-            self.do_get("{}/{}".format(self._url, id_))["data"]
-        )
+        return OrderCancellation.from_json(self.do_get(f"{self._url}/{id_}")["data"])
 
     def list(self, order_id, limit=50):
         """Retrieve a paginated list of order cancellations."""
@@ -55,5 +53,5 @@ class OrderCancellationClient(HttpClient):
         your customer (e.g. back to their credit/debit card).
 
         """
-        url = "{}/{}/actions/confirm".format(self._url, id_)
+        url = f"{self._url}/{id_}/actions/confirm"
         return OrderCancellation.from_json(self.do_post(url)["data"])

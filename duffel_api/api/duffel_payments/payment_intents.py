@@ -26,9 +26,7 @@ class PaymentIntentClient(HttpClient):
         You should use this API to get the complete, up-to-date information
         about a Payment Intent.
         """
-        return PaymentIntent.from_json(
-            self.do_get("{}/{}".format(self._url, id_))["data"]
-        )
+        return PaymentIntent.from_json(self.do_get(f"{self._url}/{id_}")["data"])
 
     def confirm(self, id_):
         """Confirm a Payment Intent
@@ -40,7 +38,7 @@ class PaymentIntentClient(HttpClient):
         Once confirmed, the amount charged to your customer's card will be added
         to your Balance (minus any Duffel Payment fees).
         """
-        url = "{}/{}/actions/confirm".format(self._url, id_)
+        url = f"{self._url}/{id_}/actions/confirm"
         return PaymentIntent.from_json(self.do_post(url)["data"])
 
 
