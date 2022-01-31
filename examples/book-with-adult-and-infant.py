@@ -50,7 +50,7 @@ if __name__ == "__main__":
     passengers = [
         {
             "born_on": "1976-01-21",
-            "email": "conelia.corde@duffel.com",
+            "email": "conelia.corde@example.com",
             "family_name": "Corde",
             "gender": "f",
             "given_name": "Conelia",
@@ -61,7 +61,7 @@ if __name__ == "__main__":
         },
         {
             "born_on": date.today().replace(date.today().year - 1).strftime("%Y-%m-%d"),
-            "email": "baby.corde@duffel.com",
+            "email": "baby.corde@example.com",
             "family_name": "Corde",
             "gender": "f",
             "given_name": "Baby",
@@ -71,7 +71,7 @@ if __name__ == "__main__":
         },
         {
             "born_on": "2003-10-24",
-            "email": "constantine.corde@duffel.com",
+            "email": "constantine.corde@example.com",
             "family_name": "Corde",
             "gender": "m",
             "given_name": "Constantine",

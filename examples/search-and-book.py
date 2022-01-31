@@ -64,7 +64,7 @@ if __name__ == "__main__":
     passengers = [
         {
             "born_on": "1976-01-21",
-            "email": "conelia.corde@duffel.com",
+            "email": "conelia.corde@example.com",
             "family_name": "Corde",
             "gender": "f",
             "given_name": "Conelia",
