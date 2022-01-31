@@ -70,7 +70,7 @@ class OfferClient(HttpClient):
         if return_available_services:
             params["return_available_services"] = "true"
         return Offer.from_json(
-            self.do_get("{}/{}".format(self._url, id_), query_params=params)["data"]
+            self.do_get(f"{self._url}/{id_}", query_params=params)["data"]
         )
 
     def list(self, offer_request_id, sort=None, max_connections=None, limit=50):

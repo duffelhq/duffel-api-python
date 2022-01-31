@@ -100,9 +100,7 @@ class HttpClient:
             access_token = os.getenv("DUFFEL_ACCESS_TOKEN")
             if not access_token:
                 raise ClientError("must set DUFFEL_ACCESS_TOKEN")
-        self.http_session.headers.update(
-            {"Authorization": "Bearer {}".format(access_token)}
-        )
+        self.http_session.headers.update({"Authorization": f"Bearer {access_token}"})
 
     def _http_call(self, endpoint, method, query_params=None, body=None):
         """Perform the http call and wrap the response in a ApiError in case an error
@@ -120,18 +118,14 @@ class HttpClient:
             try:
                 return response.json()
             except ValueError as err:
-                raise Exception(
-                    "something bad happened: {}".format(response.text)
-                ) from err
+                raise Exception(f"something bad happened: {response.text}") from err
         elif response.status_code == http_codes.no_content:
             return None
         else:
             try:
                 raise ApiError(response.headers, response.json())
             except ValueError as err:
-                raise Exception(
-                    "something bad happened: {}".format(response.text)
-                ) from err
+                raise Exception(f"something bad happened: {response.text}") from err
             raise response.raise_for_status()
 
     def do_get(self, endpoint, method="GET", query_params=None, body=None):
