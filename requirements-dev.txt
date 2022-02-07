@@ -29,4 +29,4 @@ tomli==2.0.0
 tox==3.24.5
 typing-extensions==4.0.1
 urllib3==1.26.8
-virtualenv==20.13.0
+virtualenv==20.13.1
