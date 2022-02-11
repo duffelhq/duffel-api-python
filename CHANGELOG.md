@@ -7,6 +7,30 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.3.1] - 2022-02-11
+
+### Fixed
+- Set `payment_required_by` and `price_guarantee_expires_at` fields on
+  `Offer.PaymentRequirements` as nullable.
+
+  [0.3.1]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.3.1
+
+## [0.3.0] - 2022-02-01
+
+### Added
+- Added a changelog.
+- Added GitHub issue templates.
+- Added contribution code of conduct guidelines.
+- Added type annotations to model classes.
+- Added example of searching and booking using a combination of adult and infant
+  passengers.
+
+  [0.3.0]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.3.0
+
+### Fixed
+- Updated date parsing to use `fromisoformat()`.
+- Updated string interpolation to use f-strings.
+
 ## [0.2.0] - 2022-01-07
 
 ### Added
