@@ -86,19 +86,23 @@ class OfferConditions:
 class PaymentRequirements:
     """The payment requirements for an offer"""
 
-    payment_required_by: datetime
-    price_guarantee_expires_at: datetime
+    payment_required_by: Optional[datetime]
+    price_guarantee_expires_at: Optional[datetime]
     requires_instant_payment: bool
 
     @classmethod
     def from_json(cls, json: dict):
         """Construct a class instance from a JSON response."""
         return cls(
-            payment_required_by=datetime.strptime(
-                json["payment_required_by"], "%Y-%m-%dT%H:%M:%SZ"
+            payment_required_by=get_and_transform(
+                json,
+                "payment_required_by",
+                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
             ),
-            price_guarantee_expires_at=datetime.strptime(
-                json["price_guarantee_expires_at"], "%Y-%m-%dT%H:%M:%SZ"
+            price_guarantee_expires_at=get_and_transform(
+                json,
+                "price_guarantee_expires_at",
+                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
             ),
             requires_instant_payment=json["requires_instant_payment"],
         )
