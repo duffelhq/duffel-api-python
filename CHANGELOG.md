@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.3.1] - 2022-02-11
+
+### Fixed
+- Set `payment_required_by` and `price_guarantee_expires_at` fields on
+  `Offer.PaymentRequirements` as nullable.
+
+  [0.3.1]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.3.1
+
 ## [0.3.0] - 2022-02-01
 
 ### Added
