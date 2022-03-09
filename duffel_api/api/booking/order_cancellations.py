@@ -20,7 +20,9 @@ class OrderCancellationClient(HttpClient):
 
     def get(self, id_):
         """GET /air/order_cancellations/:id."""
-        return OrderCancellation.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        res = self.do_get(f"{self._url}/{id_}")
+        if res is not None:
+            return OrderCancellation.from_json(res["data"])
 
     def list(self, order_id, limit=50):
         """Retrieve a paginated list of order cancellations."""
@@ -39,7 +41,8 @@ class OrderCancellationClient(HttpClient):
 
         """
         res = self.do_post(self._url, body={"data": {"order_id": order_id}})
-        return OrderCancellation.from_json(res["data"])
+        if res is not None:
+            return OrderCancellation.from_json(res["data"])
 
     def confirm(self, id_):
         """Confirm an order cancellation.
@@ -54,4 +57,6 @@ class OrderCancellationClient(HttpClient):
 
         """
         url = f"{self._url}/{id_}/actions/confirm"
-        return OrderCancellation.from_json(self.do_post(url)["data"])
+        res = self.do_post(url)
+        if res is not None:
+            return OrderCancellation.from_json(res["data"])
