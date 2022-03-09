@@ -69,9 +69,10 @@ class OfferClient(HttpClient):
         params = {}
         if return_available_services:
             params["return_available_services"] = "true"
-        return Offer.from_json(
-            self.do_get(f"{self._url}/{id_}", query_params=params)["data"]
-        )
+
+        response = self.do_get(f"{self._url}/{id_}", query_params=params)
+        if response is not None:
+            return Offer.from_json(response["data"])
 
     def list(self, offer_request_id, sort=None, max_connections=None, limit=50):
         """GET /air/offers"""
@@ -118,5 +119,5 @@ class OfferClient(HttpClient):
         }
 
         res = self.do_patch(url, body=body)
-
-        return OfferPassenger.from_json(res["data"])
+        if res is not None:
+            return OfferPassenger.from_json(res["data"])
