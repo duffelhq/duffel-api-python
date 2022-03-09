@@ -1,3 +1,5 @@
+from typing import Any, Dict
+
 from ...http_client import HttpClient, Pagination
 from ...models import Order
 
@@ -15,11 +17,13 @@ class OrderClient(HttpClient):
 
     def get(self, id_):
         """GET /air/orders/:id."""
-        return Order.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        res = self.do_get(f"{self._url}/{id_}")
+        if res is not None:
+            return Order.from_json(res["data"])
 
     def list(self, awaiting_payment=False, sort=None, limit=50):
         """GET /air/orders."""
-        params = {"limit": limit}
+        params: Dict[str, Any] = {"limit": limit}
         if sort:
             if sort not in ["pay_by", "-pay_by"]:
                 raise OrderClient.InvalidSort(sort)
@@ -213,4 +217,5 @@ class OrderUpdate:
             url,
             body={"data": {"metadata": self._metadata}},
         )
-        return Order.from_json(res["data"])
+        if res is not None:
+            return Order.from_json(res["data"])
