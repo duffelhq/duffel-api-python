@@ -11,7 +11,9 @@ class AircraftClient(HttpClient):
 
     def get(self, id_):
         """GET /air/aircraft/:id"""
-        return Aircraft.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        res = self.do_get(f"{self._url}/{id_}")
+        if res is not None:
+            return Aircraft.from_json(res["data"])
 
     def list(self, limit=50):
         """GET /air/aircraft"""

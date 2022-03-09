@@ -11,7 +11,9 @@ class OrderChangeOfferClient(HttpClient):
 
     def get(self, id_):
         """GET /air/order_change_offers/:id"""
-        return OrderChangeOffer.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        res = self.do_get(f"{self._url}/{id_}")
+        if res is not None:
+            return OrderChangeOffer.from_json(res["data"])
 
     def list(self, order_change_request_id, sort=None, max_connections=None, limit=50):
         """GET /air/order_change_offers"""

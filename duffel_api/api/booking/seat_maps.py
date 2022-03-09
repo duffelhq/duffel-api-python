@@ -11,5 +11,6 @@ class SeatMapClient(HttpClient):
 
     def get(self, offer_id):
         """GET /air/seat_maps"""
-        data = self.do_get(self._url, query_params={"offer_id": offer_id})["data"]
-        return [SeatMap.from_json(m) for m in data]
+        res = self.do_get(self._url, query_params={"offer_id": offer_id})
+        if res is not None:
+            return [SeatMap.from_json(m) for m in res["data"]]

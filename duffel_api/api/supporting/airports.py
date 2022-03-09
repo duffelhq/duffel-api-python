@@ -11,7 +11,9 @@ class AirportClient(HttpClient):
 
     def get(self, id_):
         """GET /air/airports/:id"""
-        return Airport.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        res = self.do_get(f"{self._url}/{id_}")
+        if res is not None:
+            return Airport.from_json(res["data"])
 
     def list(self, limit=50):
         """GET /air/airports"""

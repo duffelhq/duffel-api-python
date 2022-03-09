@@ -15,7 +15,10 @@ class OfferRequestClient(HttpClient):
 
     def get(self, id_):
         """GET /air/offer_requests/:id"""
-        return OfferRequest.from_json(self.do_get(f"{self._url}/{id_}")["data"])
+        response = self.do_get(f"{self._url}/{id_}")
+
+        if response is not None:
+            return OfferRequest.from_json(response["data"])
 
     def list(self, limit=50):
         """GET /air/offer_requests"""
