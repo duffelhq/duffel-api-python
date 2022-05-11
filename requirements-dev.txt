@@ -26,7 +26,7 @@ six==1.16.0
 tabulate==0.8.9
 toml==0.10.2
 tomli==2.0.1
-tox==3.24.5
+tox==3.25.0
 typing-extensions==4.1.1
 urllib3==1.26.9
 virtualenv==20.14.1
