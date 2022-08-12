@@ -499,6 +499,7 @@ class Order:
     base_currency: Optional[str]
     booking_reference: str
     cancelled_at: Optional[datetime]
+    content: str
     created_at: datetime
     synced_at: Optional[datetime]
     documents: Sequence[OrderDocument]
@@ -528,6 +529,7 @@ class Order:
                 "cancelled_at",
                 lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ"),
             ),
+            content=json["content"],
             created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
             synced_at=get_and_transform(
                 json,
