@@ -8,8 +8,9 @@ from duffel_api.utils import get_and_transform
 
 @dataclass
 class OfferConditionChangeBeforeDeparture:
-    """Whether the whole offer can be changed before the departure of the first slice. If all
-    of the slices on the offer can be changed then the allowed property will be
+    """Whether the whole offer can be changed before the departure of the first slice.
+
+    If all of the slices on the offer can be changed then the allowed property will be
     true. Refer to the slices for information about change penalties. If any of the slices
     on the offer can't be changed then the allowed property will be false. In this case
     you should refer to the slices conditions to determine if any part of the offer is
@@ -58,8 +59,8 @@ class OfferConditionRefundBeforeDeparture:
 
 @dataclass
 class OfferConditions:
-    """The conditions associated with this offer, describing the kinds of modifications you
-    can make post-booking and any penalties that will apply to those modifications.
+    """The conditions associated with this offer, describing the kinds of modifications
+    you can make post-booking and any penalties that will apply to those modifications.
     """
 
     change_before_departure: Optional[OfferConditionChangeBeforeDeparture]
@@ -135,7 +136,7 @@ class ServiceMetadata:
 
 @dataclass
 class Service:
-    """The services that can be booked along with the offer but are not included by default,
+    """The services that can be booked with the offer but are not included by default,
     for example an additional checked bag. This field is only returned in the [Get single
     offer](https://duffel.com/docs/api/offers/get-offer-by-id) endpoint. When there are no
     services available, or we don't support services for the airline, this list will be
@@ -340,8 +341,8 @@ class OfferSliceConditions:
 
 @dataclass
 class OfferSlice:
-    """Each slice will include one or more segments, the specific flights that the airline is
-    offering to take the passengers from the slice's origin to its destination.
+    """Each slice will include one or more segments, the specific flights that the airline
+    is offering to take the passengers from the slice's origin to its destination.
     """
 
     id: str
