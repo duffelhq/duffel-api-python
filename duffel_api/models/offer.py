@@ -8,8 +8,8 @@ from duffel_api.utils import get_and_transform
 
 @dataclass
 class OfferConditionChangeBeforeDeparture:
-    """Whether the whole offer can be changed before the departure of the first slice. 
-    
+    """Whether the whole offer can be changed before the departure of the first slice.
+
     If all of the slices on the offer can be changed then the allowed property will be
     true. Refer to the slices for information about change penalties. If any of the slices
     on the offer can't be changed then the allowed property will be false. In this case
