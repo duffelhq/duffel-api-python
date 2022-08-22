@@ -1,5 +1,6 @@
 {
   "data": {
+    "available_actions": ["cancel", "update"],
     "base_amount": "30.20",
     "base_currency": "GBP",
     "booking_reference": "RZPNX8",
