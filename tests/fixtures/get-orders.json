@@ -5,6 +5,7 @@
       "base_currency": "GBP",
       "booking_reference": "RZPNX8",
       "cancelled_at": "2020-04-11T15:48:11.642Z",
+      "content": "managed",
       "conditions": {
         "change_before_departure": {
           "allowed": true,
