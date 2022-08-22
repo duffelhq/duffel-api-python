@@ -495,6 +495,7 @@ class Order:
 
     id: str
     live_mode: bool
+    available_actions: Sequence[str]
     base_amount: Optional[str]
     base_currency: Optional[str]
     booking_reference: str
@@ -520,6 +521,7 @@ class Order:
         """Construct a class instance from a JSON response."""
         return cls(
             id=json["id"],
+            available_actions=json["available_actions"],
             live_mode=json["live_mode"],
             base_amount=json.get("base_amount"),
             base_currency=json.get("base_currency"),
