@@ -77,7 +77,7 @@ class HttpClient:
     """Http Client to manage all calls to the Duffel API"""
 
     URL = "https://api.duffel.com"
-    VERSION = "beta"
+    VERSION = "v1"
 
     def __init__(self, access_token=None, api_url=None, api_version=None, **settings):
         if api_url is not None:
