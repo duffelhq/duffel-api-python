@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="duffel-api",
-    version="0.3.1",
+    version="0.4.0",
     author="Duffel Engineering",
     author_email="client-libraries@duffel.com",
     description="Client library for the Duffel API",
