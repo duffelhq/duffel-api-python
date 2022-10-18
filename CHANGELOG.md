@@ -7,6 +7,17 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.4.0] - 2022-02-11
+
+### Added
+
+- `content` field to `Order`s
+
+### Changed
+
+- Changed API versions from `beta` to `v1`
+- Various library version updates
+
 ## [0.3.1] - 2022-02-11
 
 ### Fixed
