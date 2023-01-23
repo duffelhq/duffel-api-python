@@ -47,12 +47,16 @@ class OfferRequestCreate(object):
     class InvalidSlice(Exception):
         """Invalid slice data provided"""
 
+    class InvalidMaxConnectionValue(Exception):
+        """Invalid max connection value provided"""
+
     def __init__(self, client):
         self._client = client
         self._return_offers = "false"
         self._cabin_class = "economy"
         self._passengers = []
         self._slices = []
+        self._max_connections = 1
 
     @staticmethod
     def _validate_cabin_class(cabin_class):
@@ -85,6 +89,12 @@ class OfferRequestCreate(object):
             ):
                 raise OfferRequestCreate.InvalidSlice(travel_slice)
 
+    @staticmethod
+    def _validate_max_connections(max_connections):
+        """Validate the max connection number"""
+        if max_connections < 0:
+            raise OfferRequestCreate.InvalidMaxConnectionValue(max_connections)
+
     def return_offers(self):
         """Set return_offers to 'true'"""
         self._return_offers = "true"
@@ -108,6 +118,12 @@ class OfferRequestCreate(object):
         self._slices = slices
         return self
 
+    def max_connections(self, max_connections):
+        """Set the max_connections for the journey we want to travel"""
+        OfferRequestCreate._validate_max_connections(max_connections)
+        self._max_connections = max_connections
+        return self
+
     def execute(self):
         """POST /air/offer_requests - trigger the call to create the offer_request"""
         OfferRequestCreate._validate_passengers(self._passengers)
@@ -119,6 +135,7 @@ class OfferRequestCreate(object):
                 "data": {
                     "cabin_class": self._cabin_class,
                     "passengers": self._passengers,
+                    "max_connections": self._max_connections,
                     "slices": self._slices,
                 }
             },
