@@ -92,7 +92,7 @@ class OfferRequestCreate(object):
     @staticmethod
     def _validate_max_connections(max_connections):
         """Validate the max connection number"""
-        if max_connections < 0:
+        if not isinstance(max_connections, int) or max_connections < 0:
             raise OfferRequestCreate.InvalidMaxConnectionValue(max_connections)
 
     def return_offers(self):
