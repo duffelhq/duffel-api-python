@@ -25,6 +25,8 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
 - Changed API versions from `beta` to `v1`
 - Various library version updates
 
+  [0.4.0]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.4.0
+
 ## [0.3.1] - 2022-02-11
 
 ### Fixed
