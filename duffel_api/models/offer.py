@@ -439,6 +439,7 @@ class Offer:
     updated_at: datetime
     expires_at: datetime
     owner: Airline
+    partial: bool
     passenger_identity_documents_required: bool
     passengers: Sequence[OfferPassenger]
     payment_requirements: PaymentRequirements
@@ -471,6 +472,7 @@ class Offer:
             updated_at=datetime.strptime(json["updated_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
             expires_at=parse_datetime(json["expires_at"]),
             owner=Airline.from_json(json["owner"]),
+            partial=json["partial"],
             passenger_identity_documents_required=json[
                 "passenger_identity_documents_required"
             ],
