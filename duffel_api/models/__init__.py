@@ -21,6 +21,7 @@ from .order_change_request import OrderChangeRequest
 from .payment import Payment
 from .payment_intent import PaymentIntent
 from .seat_map import SeatMap
+from .session import Session
 from .webhook import Webhook
 
 __all__ = [
@@ -46,5 +47,6 @@ __all__ = [
     "PaymentIntent",
     "Refund",
     "SeatMap",
+    "Session",
     "Webhook",
 ]
