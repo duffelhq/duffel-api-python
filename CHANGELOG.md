@@ -7,6 +7,15 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.4.2] - 2023-02-13
+
+### Added
+- new search flow called multi-step search - more on our [guide]
+- examples on how to use the multi-step search flow
+
+  [0.4.2]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.4.2
+  [guide]: https://duffel.com/docs/guides/multi-step-search
+
 ## [0.4.1] - 2023-01-25
 
 ### Added
