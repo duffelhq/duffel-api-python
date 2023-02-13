@@ -5,7 +5,9 @@ from duffel_api import Duffel
 
 
 if __name__ == "__main__":
-    print("Duffel Flights API - search, book and cancel example")
+    print(
+        "Duffel Flights API - search, book and cancel example for multi-step search - return trip"
+    )
     client = Duffel()
     departure_date = (date.today() + timedelta(weeks=2)).strftime("%Y-%m-%d")
     departure_date_2 = (date.today() + timedelta(weeks=4)).strftime("%Y-%m-%d")
