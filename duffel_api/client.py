@@ -10,6 +10,7 @@ from .api import (
     OrderClient,
     OrderChangeClient,
     OrderChangeOfferClient,
+    PartialOfferRequestClient,
     PaymentClient,
     PaymentIntentClient,
     SeatMapClient,
@@ -101,6 +102,11 @@ class Duffel:
     def order_change_requests(self):
         """Order Change Requests API - /air/order_change_requests"""
         return OrderChangeRequestClient(**self._kwargs)
+
+    @lazy_property
+    def partial_offer_requests(self):
+        """Partial Offer Requests API - /air/partial_offer_requests"""
+        return PartialOfferRequestClient(**self._kwargs)
 
     @lazy_property
     def payment_intents(self):

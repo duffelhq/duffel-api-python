@@ -27,5 +27,6 @@ def test_http_client_error(requests_mock):
     client = HttpClient("some_token", "http://someaddress", "v1")
     with pytest.raises(
         ApiError, match="The airline responded with an unexpected error"
-    ):
+    ) as excinfo:
         client.do_get("/api/stuff")
+    assert excinfo.value.meta["request_id"] == "FmXeZifDA60QOlgAAODB"

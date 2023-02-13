@@ -45,6 +45,7 @@
       "id": "aln_00001876aqC8c5umZmrRds",
       "name": "British Airways"
     },
+    "partial": false,
     "passenger_identity_documents_required": false,
     "passengers": [
       {

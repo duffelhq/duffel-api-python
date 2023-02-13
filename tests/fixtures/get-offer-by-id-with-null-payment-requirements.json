@@ -9,7 +9,7 @@
         "id": "ase_00009UhD4ongolulWd9123",
         "maximum_quantity": 1,
         "metadata": {
-          "type": "checked" 
+          "type": "checked"
         },
         "passenger_ids": [
           "pas_00009hj8USM7Ncg31cBCLL"
@@ -45,6 +45,7 @@
       "id": "aln_00001876aqC8c5umZmrRds",
       "name": "British Airways"
     },
+    "partial": false,
     "passenger_identity_documents_required": false,
     "passengers": [
       {
