@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional, Sequence
 
 from duffel_api.models import Aircraft, Airline, Airport, LoyaltyProgrammeAccount, Place
-from duffel_api.utils import get_and_transform
+from duffel_api.utils import get_and_transform, parse_datetime
 
 
 @dataclass
@@ -499,12 +499,3 @@ class Offer:
             total_currency=json["total_currency"],
             total_emissions_kg=json["total_emissions_kg"],
         )
-
-
-def parse_datetime(value: str) -> datetime:
-    # There are inconsistent formats used for this field depending on the
-    # endpoint
-    if len(value) == 20:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
-    else:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")

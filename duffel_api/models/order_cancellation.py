@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
-from duffel_api.utils import get_and_transform
+from duffel_api.utils import get_and_transform, parse_datetime
 
 
 @dataclass
@@ -57,12 +57,3 @@ class OrderCancellation:
             confirmed_at=get_and_transform(json, "confirmed_at", parse_datetime),
             created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
         )
-
-
-def parse_datetime(value: str) -> datetime:
-    # There are inconsistent formats used for this field depending on the
-    # endpoint
-    if len(value) == 20:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
-    else:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
