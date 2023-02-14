@@ -96,9 +96,7 @@ class PaymentRequirements:
         """Construct a class instance from a JSON response."""
         return cls(
             payment_required_by=get_and_transform(
-                json,
-                "payment_required_by",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
+                json, "payment_required_by", parse_datetime
             ),
             price_guarantee_expires_at=get_and_transform(
                 json,
