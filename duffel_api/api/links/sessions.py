@@ -162,7 +162,7 @@ class LinksSessionCreate(object):
 
     def markup_currency(self, markup_currency: str):
         """The currency of the markup_amount. It should always match the settlement
-        currency of the organisation. This field is required is markup_amount is provided.
+        currency of the organisation. This field is required if markup_amount is provided.
 
         Example: "GBP"
 
