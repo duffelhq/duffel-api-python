@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.5.0] - 2023-02-15
+
+### Added
+- our new Product: [Links] 
+
+  [0.5.0]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.5.0
+  [Links]: https://duffel.com/links
+
 ## [0.4.3] - 2023-02-14
 
 ### Fixed
