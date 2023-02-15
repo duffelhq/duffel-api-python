@@ -13,6 +13,7 @@ from .api import (
     PartialOfferRequestClient,
     PaymentClient,
     PaymentIntentClient,
+    LinksSessionClient,
     SeatMapClient,
     WebhookClient,
 )
@@ -122,6 +123,11 @@ class Duffel:
     def seat_maps(self):
         """Seat Maps API - /air/seat_maps"""
         return SeatMapClient(**self._kwargs)
+
+    @lazy_property
+    def sessions(self):
+        """Links Sessions API - /links/sessions"""
+        return LinksSessionClient(**self._kwargs)
 
     @lazy_property
     def webhooks(self):

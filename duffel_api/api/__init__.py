@@ -1,6 +1,3 @@
-from .supporting.aircraft import AircraftClient
-from .supporting.airports import AirportClient
-from .supporting.airlines import AirlineClient
 from .booking.offer_requests import OfferRequestClient, OfferRequestCreate
 from .booking.offers import OfferClient
 from .booking.orders import OrderClient, OrderCreate, OrderUpdate
@@ -15,12 +12,18 @@ from .booking.partial_offer_requests import (
 from .booking.payments import PaymentClient
 from .booking.seat_maps import SeatMapClient
 from .duffel_payments.payment_intents import PaymentIntentClient, PaymentIntentCreate
+from .links.sessions import LinksSessionClient, LinksSessionCreate
 from .notifications.webhooks import WebhookClient
+from .supporting.aircraft import AircraftClient
+from .supporting.airports import AirportClient
+from .supporting.airlines import AirlineClient
 
 __all__ = [
     "AircraftClient",
     "AirportClient",
     "AirlineClient",
+    "LinksSessionClient",
+    "LinksSessionCreate",
     "OfferRequestClient",
     "OfferRequestCreate",
     "OfferClient",
