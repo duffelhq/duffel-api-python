@@ -8,7 +8,7 @@ colorama==0.4.6
 coverage==6.5.0
 distlib==0.3.6
 filelock==3.8.0
-flake8==5.0.4
+flake8==6.0.0
 idna==3.4
 interrogate==1.5.0
 mccabe==0.7.0
@@ -18,8 +18,8 @@ pathspec==0.10.2
 platformdirs==2.5.4
 pluggy==1.0.0
 py==1.11.0
-pycodestyle==2.9.1
-pyflakes==2.5.0
+pycodestyle==2.10.0
+pyflakes==3.0.1
 pyparsing==3.0.9
 requests==2.28.1
 six==1.16.0
