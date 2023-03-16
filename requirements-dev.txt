@@ -8,7 +8,7 @@ colorama==0.4.6
 coverage==6.5.0
 distlib==0.3.6
 filelock==3.8.0
-flake8==5.0.4
+flake8==6.0.0
 idna==3.4
 interrogate==1.5.0
 mccabe==0.7.0
