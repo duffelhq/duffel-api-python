@@ -14,7 +14,7 @@ interrogate==1.5.0
 mccabe==0.7.0
 mypy-extensions==0.4.3
 packaging==21.3
-pathspec==0.10.2
+pathspec==0.11.1
 platformdirs==2.5.4
 pluggy==1.0.0
 py==1.11.0
