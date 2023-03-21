@@ -28,5 +28,5 @@ toml==0.10.2
 tomli==2.0.1
 tox==4.4.7
 typing-extensions==4.5.0
-urllib3==1.26.12
+urllib3==1.26.15
 virtualenv==20.21.0
