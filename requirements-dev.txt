@@ -13,7 +13,7 @@ idna==3.4
 interrogate==1.5.0
 mccabe==0.7.0
 mypy-extensions==1.0.0
-packaging==23.0
+packaging==23.1
 pathspec==0.11.1
 platformdirs==3.2.0
 pluggy==1.0.0
