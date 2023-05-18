@@ -32,7 +32,14 @@ def parse_datetime(value: str) -> datetime:
     """Parse a datetime string regardless of having milliseconds or not"""
     # There are inconsistent formats used for the field, therefore we try to accomodate
     # instead of making an API breaking change.
-    if len(value) == 20:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+    #
+    # I'm really not happy with this but it helps so I'm leaving it for now.
+    if value.endswith("Z"):
+        if len(value) == 20:
+            return datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ")
+        else:
+            return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
+    if len(value) == 19:
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S")
     else:
-        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ")
+        return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
