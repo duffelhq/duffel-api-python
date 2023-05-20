@@ -99,9 +99,7 @@ class PaymentRequirements:
                 json, "payment_required_by", parse_datetime
             ),
             price_guarantee_expires_at=get_and_transform(
-                json,
-                "price_guarantee_expires_at",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
+                json, "price_guarantee_expires_at", parse_datetime
             ),
             requires_instant_payment=json["requires_instant_payment"],
         )
@@ -251,8 +249,8 @@ class OfferSliceSegment:
         return cls(
             id=json["id"],
             aircraft=get_and_transform(json, "aircraft", Aircraft.from_json),
-            arriving_at=datetime.strptime(json["arriving_at"], "%Y-%m-%dT%H:%M:%S"),
-            departing_at=datetime.strptime(json["departing_at"], "%Y-%m-%dT%H:%M:%S"),
+            arriving_at=parse_datetime(json["arriving_at"]),
+            departing_at=parse_datetime(json["departing_at"]),
             destination=Airport.from_json(json["destination"]),
             destination_terminal=json.get("destination_terminal"),
             origin=Airport.from_json(json["origin"]),
@@ -466,8 +464,8 @@ class Offer:
             base_amount=json["base_amount"],
             base_currency=json["base_currency"],
             conditions=OfferConditions.from_json(json["conditions"]),
-            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
-            updated_at=datetime.strptime(json["updated_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            created_at=parse_datetime(json["created_at"]),
+            updated_at=parse_datetime(json["updated_at"]),
             expires_at=parse_datetime(json["expires_at"]),
             owner=Airline.from_json(json["owner"]),
             partial=json["partial"],

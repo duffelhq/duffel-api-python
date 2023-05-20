@@ -2,6 +2,8 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional
 
+from duffel_api.utils import parse_datetime
+
 
 @dataclass
 class Payment:
@@ -40,5 +42,5 @@ class Payment:
             live_mode=json["live_mode"],
             amount=json["amount"],
             currency=json.get("currency"),
-            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            created_at=parse_datetime(json["created_at"]),
         )
