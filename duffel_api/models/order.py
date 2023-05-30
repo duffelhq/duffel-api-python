@@ -3,7 +3,7 @@ from datetime import datetime
 from typing import Optional, Sequence, Union
 
 from duffel_api.models import Aircraft, Airline, Airport, LoyaltyProgrammeAccount, Place
-from duffel_api.utils import get_and_transform
+from duffel_api.utils import get_and_transform, parse_datetime
 
 
 @dataclass
@@ -200,8 +200,8 @@ class OrderSliceSegment:
         return cls(
             id=json["id"],
             aircraft=get_and_transform(json, "aircraft", Aircraft.from_json),
-            arriving_at=datetime.strptime(json["arriving_at"], "%Y-%m-%dT%H:%M:%S"),
-            departing_at=datetime.strptime(json["departing_at"], "%Y-%m-%dT%H:%M:%S"),
+            arriving_at=parse_datetime(json["arriving_at"]),
+            departing_at=parse_datetime(json["departing_at"]),
             destination=Airport.from_json(json["destination"]),
             destination_terminal=json.get("destination_terminal"),
             origin=Airport.from_json(json["origin"]),
@@ -420,12 +420,12 @@ class OrderPaymentStatus:
             payment_required_by=get_and_transform(
                 json,
                 "payment_required_by",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
+                parse_datetime,
             ),
             price_guarantee_expires_at=get_and_transform(
                 json,
                 "price_guarantee_expires_at",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
+                parse_datetime,
             ),
         )
 
@@ -529,14 +529,14 @@ class Order:
             cancelled_at=get_and_transform(
                 json,
                 "cancelled_at",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%fZ"),
+                parse_datetime,
             ),
             content=json["content"],
-            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            created_at=parse_datetime(json["created_at"]),
             synced_at=get_and_transform(
                 json,
                 "synced_at",
-                lambda value: datetime.strptime(value, "%Y-%m-%dT%H:%M:%SZ"),
+                parse_datetime,
             ),
             documents=get_and_transform(
                 json,

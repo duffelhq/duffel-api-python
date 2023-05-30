@@ -3,7 +3,7 @@ from datetime import date, datetime
 from typing import Optional, Sequence, Union
 
 from duffel_api.models import Airport, City, LoyaltyProgrammeAccount, Offer
-from duffel_api.utils import get_and_transform
+from duffel_api.utils import get_and_transform, parse_datetime
 
 
 @dataclass
@@ -120,5 +120,5 @@ class OfferRequest:
                 ],
                 [],
             ),
-            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            created_at=parse_datetime(json["created_at"]),
         )

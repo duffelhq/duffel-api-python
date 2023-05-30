@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Optional, Sequence
 
-from duffel_api.utils import get_and_transform
+from duffel_api.utils import get_and_transform, parse_datetime
 
 
 @dataclass
@@ -144,6 +144,6 @@ class Refund:
             status=json["status"],
             destination=json["destination"],
             arrival=json["arrival"],
-            created_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
-            updated_at=datetime.strptime(json["created_at"], "%Y-%m-%dT%H:%M:%S.%fZ"),
+            created_at=parse_datetime(json["created_at"]),
+            updated_at=parse_datetime(json["updated_at"]),
         )
