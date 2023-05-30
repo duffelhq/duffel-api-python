@@ -2,7 +2,12 @@ from datetime import datetime
 
 import pytest
 
-from duffel_api.utils import parse_datetime
+from duffel_api.utils import parse_datetime, version
+
+
+def test_version():
+    # We only check for any content for now
+    assert version()
 
 
 def test_parse_datetime():
