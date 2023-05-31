@@ -8,15 +8,20 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
 
-## [Unreleased]
+## [0.6.0] - 2023-05-31
 
 ### Added
 - Added support and testing for Python 3.11.
+- Removed python 3.7 support - now requires >=3.8
+- Fixed parsing of datetimes
+- Removed deprecated pkg_resources usage
+
+  [0.6.0]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.6.0
 
 ## [0.5.0] - 2023-02-15
 
 ### Added
-- our new Product: [Links] 
+- our new Product: [Links]
 
   [0.5.0]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.5.0
   [Links]: https://duffel.com/links
