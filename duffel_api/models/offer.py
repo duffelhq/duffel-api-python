@@ -223,6 +223,8 @@ class OfferSliceSegmentPassenger:
 
 @dataclass
 class OfferSliceSegmentStop:
+    """Additional segment-specific information about the stops, if any, included in the segment"""
+
     id: str
     duration: str
     arriving_at: datetime
@@ -234,8 +236,12 @@ class OfferSliceSegmentStop:
         """Construct a class instance from a JSON response."""
         return cls(
             id=json["id"],
-            arriving_at=parse_datetime(json["arriving_at"]),
-            departing_at=parse_datetime(json["departing_at"]),
+            arriving_at=get_and_transform(
+                json, "arriving_at", parse_datetime
+            ),
+            departing_at=get_and_transform(
+                json, "departing_at", parse_datetime
+            ),
             airport=Airport.from_json(json["airport"]),
             duration=json.get("duration"),
         )
