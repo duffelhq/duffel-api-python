@@ -20,6 +20,8 @@ def test_get_partial_offer_request_by_id(requests_mock):
         offer = offer_request.offers[0]
         assert offer.partial
         assert offer.id == "off_00009htYpSCXrwaB9DnUm0"
+        assert offer.slices[0].segments[0].id == "seg_00009htYpSCXrwaB9Dn456"
+        assert offer.slices[0].segments[0].stops[0].id == "sto_00009htYpSCXrwaB9Dn456"
 
 
 def test_create_partial_offer_request(requests_mock):
