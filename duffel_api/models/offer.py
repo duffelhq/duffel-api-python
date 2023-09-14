@@ -222,6 +222,32 @@ class OfferSliceSegmentPassenger:
 
 
 @dataclass
+class OfferSliceSegmentStop:
+    """Additional segment-specific information about the stops, if any, included in the segment"""
+
+    id: str
+    duration: str
+    arriving_at: datetime
+    departing_at: datetime
+    airport: Airport
+
+    @classmethod
+    def from_json(cls, json: dict):
+        """Construct a class instance from a JSON response."""
+        return cls(
+            id=json["id"],
+            arriving_at=get_and_transform(
+                json, "arriving_at", parse_datetime
+            ),
+            departing_at=get_and_transform(
+                json, "departing_at", parse_datetime
+            ),
+            airport=Airport.from_json(json["airport"]),
+            duration=json.get("duration"),
+        )
+
+
+@dataclass
 class OfferSliceSegment:
     """The segments - that is, specific flights - that the airline is offering
     to get the passengers from the `origin` to the `destination`
@@ -242,6 +268,7 @@ class OfferSliceSegment:
     operating_carrier: Airline
     operating_carrier_flight_number: Optional[str]
     passengers: Sequence[OfferSliceSegmentPassenger]
+    stops: Sequence[OfferSliceSegmentStop]
 
     @classmethod
     def from_json(cls, json: dict):
@@ -267,6 +294,15 @@ class OfferSliceSegment:
                 lambda value: [
                     OfferSliceSegmentPassenger.from_json(passenger)
                     for passenger in value
+                ],
+                [],
+            ),
+            stops=get_and_transform(
+                json,
+                "stops",
+                lambda value: [
+                    OfferSliceSegmentStop.from_json(stop)
+                    for stop in value
                 ],
                 [],
             ),
