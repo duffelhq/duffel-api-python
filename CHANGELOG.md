@@ -12,7 +12,7 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
 ### Added
 - OfferRequest now includes `client_key`
 
-[0.6.01]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.6.1
+[0.6.1]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.6.1
 
 ## [0.6.0] - 2023-05-31
 
