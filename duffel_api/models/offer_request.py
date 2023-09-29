@@ -86,6 +86,7 @@ class OfferRequest:
     """
 
     id: str
+    client_key: str
     live_mode: bool
     cabin_class: str
     created_at: datetime
@@ -98,6 +99,7 @@ class OfferRequest:
         """Construct a class instance from a JSON response."""
         return cls(
             id=json["id"],
+            client_key=json["client_key"],
             live_mode=json["live_mode"],
             cabin_class=json["cabin_class"],
             offers=get_and_transform(
