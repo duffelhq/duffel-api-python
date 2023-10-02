@@ -7,6 +7,13 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.6.2] - 2023-10-02
+
+### Added
+- OfferRequest now includes `client_key`
+
+  [0.6.2]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.6.2
+
 ## [0.6.1] - 2023-09-16
 
 ### Added
