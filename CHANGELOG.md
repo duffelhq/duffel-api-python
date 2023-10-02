@@ -7,6 +7,14 @@ The format is based on [Keep a Changelog] and this project adheres to [Semantic 
   [Keep a Changelog]: http://keepachangelog.com/en/1.0.0/
   [Semantic Versioning]: http://semver.org/spec/v2.0.0.html
 
+## [0.6.1] - 2023-09-16
+
+### Added
+- Offer slice segments now include stops
+  We're considering this a fix, not an addition, as it should always have been there,
+  therefore it's 0.6.1, not 0.7.0.
+
+  [0.6.1]: https://github.com/duffelhq/duffel-api-python/releases/tag/0.6.1
 
 ## [0.6.0] - 2023-05-31
 
