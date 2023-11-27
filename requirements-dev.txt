@@ -9,7 +9,7 @@ coverage==7.3.2
 distlib==0.3.7
 filelock==3.13.1
 flake8==6.1.0
-idna==3.4
+idna==3.6
 interrogate==1.5.0
 mccabe==0.7.0
 mypy-extensions==1.0.0
