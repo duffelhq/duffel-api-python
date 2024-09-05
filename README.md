@@ -1,3 +1,12 @@
+> [!WARNING] 
+> This client library is not currently being supported by Duffel due to a lack of adoption.
+> 
+> You're welcome to fork the repositories and continue maintaining them for your own use.
+>
+> If, in the future, there's sufficient demand for a particular client library, we'll reconsider our decision to officially support it.
+
+---
+
 [![PyPI](https://img.shields.io/pypi/v/duffel-api?style=flat-square)](https://pypi.org/project/duffel-api/)
 [![Supported Python
 versions](https://img.shields.io/pypi/pyversions/duffel-api.svg)](https://pypi.org/project/duffel-api/)
